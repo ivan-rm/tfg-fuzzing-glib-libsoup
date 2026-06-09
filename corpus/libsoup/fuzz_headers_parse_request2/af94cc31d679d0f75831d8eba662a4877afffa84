@@ -1,0 +1,15 @@
+GET /index.htm, HTTP/1.1
+pt: *&*
+Ax.htm: keep-alive
+X-Custom-He;degent: Mozilla/5.0
+Accept: */*
+Accept-Encodingntent-ngLet:4h 2
+Contenccept-E\co:name
+CoBMent-Lectioom-Headegent: Mozilla/5.0
+·Accept: */*
+Accept-Encodingntent-Lengt:4h 2
+Content-Lenname
+CoBMent-Lectioom-Headegent: Mozilla/5.0
+·Accept: */*
+Accept-Encodingntent-Lengt:4h 2
+Content-Length:ntent-LeContenth:q=2

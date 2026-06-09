@@ -1,0 +1,4 @@
+GET /inde@.html HTTP/1.1
+Host:Conne               100-continue                
+: ºozilla/2.0
+Accept: */*

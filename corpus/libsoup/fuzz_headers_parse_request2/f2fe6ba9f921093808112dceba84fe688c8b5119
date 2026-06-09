@@ -1,0 +1,4 @@
+GET zilla/5.0 (tp://localhost/previous-page
+Cookie: session=value_12345; theme=dark
+Ca›he-Control: no-cache
+Conne'ction> close

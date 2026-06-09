@@ -1,0 +1,29 @@
+GET /index.h|ml HTTP/1.1
+Expect: calhost
+Usoor-Aec
+AccepExpect: 
+
+coding: gzip, deflate
+Connection: keep-alive
+X-Custom-Hr-Agent: Mozilla/5.0’
+Accept: */*
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+
+coding: gzip,ent: Mozilla/5.0’
+Accept: */*
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+
+coding: gzip, defleot
+aCnnection: keep-alive
+X-Custom-Header: fuzzing

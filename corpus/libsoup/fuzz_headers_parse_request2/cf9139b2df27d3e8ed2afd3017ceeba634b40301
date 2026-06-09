@@ -1,0 +1,9 @@
+POST ?upload HTTP/1.1
+Content-Type: multipart/form-BC124
+Contenmultipart/form-dTPNG
+
+Expect: dorm-datat-Lengt‰PNG
+
+Expect: daryABC123--atat-Lengt‰PNG
+
+Expect: daryABC123--

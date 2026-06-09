@@ -1,0 +1,536 @@
+fuzz_decode_data_uri.c:fuzz_set_logging_func:
+   18|    141|{
+   19|    141|#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+   20|    141|        if (!set_logger)
+  ------------------
+  |  Branch (20:13): [True: 1, False: 140]
+  ------------------
+   21|      1|        {
+   22|      1|                set_logger = 1;
+   23|      1|                g_log_set_writer_func (empty_logging_func, NULL, NULL);
+   24|      1|        }
+   25|    141|#endif
+   26|    141|}
+fuzz_decode_data_uri.c:empty_logging_func:
+   10|      1|{
+   11|      1|        return G_LOG_WRITER_HANDLED;
+   12|      1|}
+
+LLVMFuzzerTestOneInput:
+    5|    141|{
+    6|    141|    GBytes *bytes;
+    7|    141|    char *data_uri;
+    8|       |
+    9|    141|    fuzz_set_logging_func ();
+   10|       |
+   11|    141|    data_uri = g_strdup_printf ("data:%.*s", (int)size, data);
+   12|       |    // g_print("%s", data_uri);
+   13|    141|    bytes = soup_uri_decode_data_uri (data_uri, NULL);
+   14|       |
+   15|    141|    g_clear_pointer (&bytes, g_bytes_unref);
+  ------------------
+  |  |  136|    141|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|    141|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|    141|  {                                                      \
+  |  |  138|    141|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|    141|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|    141|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|    141|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|    141|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|    141|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|    141|    *_pp = NULL;                                         \
+  |  |  142|    141|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 107, False: 34]
+  |  |  ------------------
+  |  |  143|    141|      (destroy) (_ptr);                                  \
+  |  |  144|    141|  }                                                      \
+  |  |  145|    141|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|    141|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 141]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|    141|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+   16|    141|    g_free (data_uri);
+   17|       |
+   18|    141|    return 0;
+   19|    141|}
+
+soup_uri_decode_data_uri:
+  343|    141|{
+  344|    141|        GUri *soup_uri;
+  345|    141|        const char *comma, *start, *end;
+  346|    141|        gboolean base64 = FALSE;
+  ------------------
+  |  |  929|    141|#define	FALSE	(0)
+  ------------------
+  347|    141|        char *uri_string;
+  348|    141|        GBytes *bytes;
+  349|       |
+  350|    141|        g_return_val_if_fail (uri != NULL, NULL);
+  ------------------
+  |  |  663|    141|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|    141|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|    141|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|    141|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|    141|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|    141| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    141|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|    141|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|    141|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 141, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|    141|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    141|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    141|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|    141|   else                                         \
+  |  |  |  |  |  |  |  | 1244|    141|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|    141|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    141|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    141|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|    141|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 141, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|    141|      { } \
+  |  |  666|    141|    else \
+  |  |  667|    141|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|    141|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|    141|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 141]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  351|       |
+  352|    141|        soup_uri = g_uri_parse (uri, SOUP_HTTP_URI_FLAGS, NULL);
+  ------------------
+  |  |   40|    141|#define SOUP_HTTP_URI_FLAGS (G_URI_FLAGS_HAS_PASSWORD | G_URI_FLAGS_ENCODED_PATH | G_URI_FLAGS_ENCODED_QUERY | G_URI_FLAGS_ENCODED_FRAGMENT | G_URI_FLAGS_SCHEME_NORMALIZE)
+  ------------------
+  353|    141|        if (!soup_uri)
+  ------------------
+  |  Branch (353:13): [True: 2, False: 139]
+  ------------------
+  354|      2|                return NULL;
+  355|       |
+  356|    139|        if (g_strcmp0 (g_uri_get_scheme (soup_uri), "data") || g_uri_get_host (soup_uri) != NULL) {
+  ------------------
+  |  Branch (356:13): [True: 0, False: 139]
+  |  Branch (356:64): [True: 31, False: 108]
+  ------------------
+  357|     31|                g_uri_unref (soup_uri);
+  358|     31|                return NULL;
+  359|     31|        }
+  360|       |
+  361|    108|        if (content_type)
+  ------------------
+  |  Branch (361:13): [True: 0, False: 108]
+  ------------------
+  362|      0|                *content_type = NULL;
+  363|       |
+  364|    108|#if !GLIB_CHECK_VERSION (2, 83, 1)
+  365|       |        /* g_uri_to_string() is picky about paths that start with `//` and will assert, clean them up.
+  366|       |         * https://gitlab.gnome.org/GNOME/glib/-/merge_requests/4407 */
+  367|    108|        const char *path = g_uri_get_path (soup_uri);
+  368|    108|        if (path[0] == '/' && path[1] == '/') {
+  ------------------
+  |  Branch (368:13): [True: 31, False: 77]
+  |  Branch (368:31): [True: 1, False: 30]
+  ------------------
+  369|      1|                char *new_path = g_strconcat ("/.", path, NULL);
+  370|      1|                GUri *new_uri = soup_uri_copy (soup_uri, SOUP_URI_PATH, new_path, SOUP_URI_NONE);
+  371|       |
+  372|      1|                g_uri_unref (soup_uri);
+  373|      1|                g_free (new_path);
+  374|       |
+  375|      1|                soup_uri = new_uri;
+  376|      1|        }
+  377|    108|#endif
+  378|       |
+  379|    108|        uri_string = g_uri_to_string (soup_uri);
+  380|    108|        g_uri_unref (soup_uri);
+  381|    108|        if (!uri_string)
+  ------------------
+  |  Branch (381:13): [True: 0, False: 108]
+  ------------------
+  382|      0|                return NULL;
+  383|       |
+  384|    108|        start = uri_string + 5;
+  385|    108|        comma = strchr (start, ',');
+  386|    108|        if (comma && comma != start) {
+  ------------------
+  |  Branch (386:13): [True: 40, False: 68]
+  |  Branch (386:22): [True: 39, False: 1]
+  ------------------
+  387|       |                /* Deal with MIME type / params */
+  388|     39|                if (comma >= start + BASE64_INDICATOR_LEN && !g_ascii_strncasecmp (comma - BASE64_INDICATOR_LEN, BASE64_INDICATOR, BASE64_INDICATOR_LEN)) {
+  ------------------
+  |  |  328|     78|#define BASE64_INDICATOR_LEN (sizeof (";base64") - 1)
+  ------------------
+                              if (comma >= start + BASE64_INDICATOR_LEN && !g_ascii_strncasecmp (comma - BASE64_INDICATOR_LEN, BASE64_INDICATOR, BASE64_INDICATOR_LEN)) {
+  ------------------
+  |  |  328|     37|#define BASE64_INDICATOR_LEN (sizeof (";base64") - 1)
+  ------------------
+                              if (comma >= start + BASE64_INDICATOR_LEN && !g_ascii_strncasecmp (comma - BASE64_INDICATOR_LEN, BASE64_INDICATOR, BASE64_INDICATOR_LEN)) {
+  ------------------
+  |  |  327|     37|#define BASE64_INDICATOR     ";base64"
+  ------------------
+                              if (comma >= start + BASE64_INDICATOR_LEN && !g_ascii_strncasecmp (comma - BASE64_INDICATOR_LEN, BASE64_INDICATOR, BASE64_INDICATOR_LEN)) {
+  ------------------
+  |  |  328|     37|#define BASE64_INDICATOR_LEN (sizeof (";base64") - 1)
+  ------------------
+  |  Branch (388:21): [True: 37, False: 2]
+  |  Branch (388:62): [True: 22, False: 15]
+  ------------------
+  389|     22|                        end = comma - BASE64_INDICATOR_LEN;
+  ------------------
+  |  |  328|     22|#define BASE64_INDICATOR_LEN (sizeof (";base64") - 1)
+  ------------------
+  390|     22|                        base64 = TRUE;
+  ------------------
+  |  |  933|     22|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|     22|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  391|     22|                } else
+  392|     17|                        end = comma;
+  393|       |
+  394|     39|                if (end != start && content_type)
+  ------------------
+  |  Branch (394:21): [True: 18, False: 21]
+  |  Branch (394:37): [True: 0, False: 18]
+  ------------------
+  395|      0|                        *content_type = g_uri_unescape_segment (start, end, NULL);
+  396|     39|        }
+  397|       |
+  398|    108|        if (content_type && !*content_type)
+  ------------------
+  |  Branch (398:13): [True: 0, False: 108]
+  |  Branch (398:29): [True: 0, False: 0]
+  ------------------
+  399|      0|                *content_type = g_strdup ("text/plain;charset=US-ASCII");
+  ------------------
+  |  |  324|      0|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  400|       |
+  401|    108|        if (comma)
+  ------------------
+  |  Branch (401:13): [True: 40, False: 68]
+  ------------------
+  402|     40|                start = comma + 1;
+  403|       |
+  404|    108|        if (*start) {
+  ------------------
+  |  Branch (404:13): [True: 88, False: 20]
+  ------------------
+  405|     88|                bytes = g_uri_unescape_bytes (start, -1, NULL, NULL);
+  406|       |
+  407|     88|                if (base64 && bytes) {
+  ------------------
+  |  Branch (407:21): [True: 21, False: 67]
+  |  Branch (407:31): [True: 21, False: 0]
+  ------------------
+  408|     21|                        if (g_bytes_get_size (bytes) <= 1)
+  ------------------
+  |  Branch (408:29): [True: 1, False: 20]
+  ------------------
+  409|     21|                                g_clear_pointer (&bytes, g_bytes_unref);
+  ------------------
+  |  |  136|      1|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|      1|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|      1|  {                                                      \
+  |  |  138|      1|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|      1|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|      1|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|      1|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|      1|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|      1|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|      1|    *_pp = NULL;                                         \
+  |  |  142|      1|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 1, False: 0]
+  |  |  ------------------
+  |  |  143|      1|      (destroy) (_ptr);                                  \
+  |  |  144|      1|  }                                                      \
+  |  |  145|      1|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|      1|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 1]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|     21|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+  410|     20|                        else {
+  411|     20|                                gsize content_length;
+  412|     20|                                GByteArray *unescaped_array = g_bytes_unref_to_array (bytes);
+  413|     20|                                g_base64_decode_inplace ((gchar*)unescaped_array->data, &content_length);
+  414|     20|                                unescaped_array->len = content_length;
+  415|     20|                                bytes = g_byte_array_free_to_bytes (unescaped_array);
+  416|     20|                        }
+  417|     21|                }
+  418|     88|        } else {
+  419|     20|                bytes = g_bytes_new_static (NULL, 0);
+  420|     20|        }
+  421|    108|        g_free (uri_string);
+  422|       |
+  423|    108|        return bytes;
+  424|    108|}
+soup_uri_copy:
+  485|      1|{
+  486|      1|        va_list args;
+  487|      1|        SoupURIComponent component = first_component;
+  488|      1|        gpointer values[SOUP_URI_FRAGMENT + 1];
+  489|      1|        gboolean values_to_set[SOUP_URI_FRAGMENT + 1];
+  490|      1|        GUriFlags flags = g_uri_get_flags (uri);
+  491|       |
+  492|      1|        g_return_val_if_fail (uri != NULL, NULL);
+  ------------------
+  |  |  663|      1|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      1|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|      1|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|      1|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|      1|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|      1| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      1|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|      1|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|      1|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 1, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|      1|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|      1|   else                                         \
+  |  |  |  |  |  |  |  | 1244|      1|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|      1|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|      1|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 1, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|      1|      { } \
+  |  |  666|      1|    else \
+  |  |  667|      1|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|      1|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      1|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 1]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  493|       |
+  494|      1|        memset (&values_to_set, 0, sizeof (values_to_set));
+  495|       |
+  496|      1|        va_start (args, first_component);
+  497|      2|        while (component != SOUP_URI_NONE) {
+  ------------------
+  |  Branch (497:16): [True: 1, False: 1]
+  ------------------
+  498|      1|                if (component == SOUP_URI_PORT)
+  ------------------
+  |  Branch (498:21): [True: 0, False: 1]
+  ------------------
+  499|      0|                        values[component] = GINT_TO_POINTER (va_arg (args, gint));
+  500|      1|                else
+  501|      1|                        values[component] = va_arg (args, gpointer);
+  502|      1|                values_to_set[component] = TRUE;
+  ------------------
+  |  |  933|      1|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      1|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  503|      1|                component = va_arg (args, SoupURIComponent);
+  504|      1|        }
+  505|      1|        va_end (args);
+  506|       |
+  507|      1|        if (values_to_set[SOUP_URI_PASSWORD])
+  ------------------
+  |  Branch (507:13): [True: 0, False: 1]
+  ------------------
+  508|      0|                flags |= G_URI_FLAGS_HAS_PASSWORD;
+  509|      1|        if (values_to_set[SOUP_URI_AUTH_PARAMS])
+  ------------------
+  |  Branch (509:13): [True: 0, False: 1]
+  ------------------
+  510|      0|                flags |= G_URI_FLAGS_HAS_AUTH_PARAMS;
+  511|      1|        if (values_to_set[SOUP_URI_PATH])
+  ------------------
+  |  Branch (511:13): [True: 1, False: 0]
+  ------------------
+  512|      1|                flags |= G_URI_FLAGS_ENCODED_PATH;
+  513|      1|        if (values_to_set[SOUP_URI_QUERY])
+  ------------------
+  |  Branch (513:13): [True: 0, False: 1]
+  ------------------
+  514|      0|                flags |= G_URI_FLAGS_ENCODED_QUERY;
+  515|      1|        if (values_to_set[SOUP_URI_FRAGMENT])
+  ------------------
+  |  Branch (515:13): [True: 0, False: 1]
+  ------------------
+  516|      0|                flags |= G_URI_FLAGS_ENCODED_FRAGMENT;
+  517|      1|        return g_uri_build_with_user (
+  518|      1|                flags,
+  519|      1|                values_to_set[SOUP_URI_SCHEME] ? values[SOUP_URI_SCHEME] : g_uri_get_scheme (uri),
+  ------------------
+  |  Branch (519:17): [True: 0, False: 1]
+  ------------------
+  520|      1|                values_to_set[SOUP_URI_USER] ? values[SOUP_URI_USER] : g_uri_get_user (uri),
+  ------------------
+  |  Branch (520:17): [True: 0, False: 1]
+  ------------------
+  521|      1|                values_to_set[SOUP_URI_PASSWORD] ? values[SOUP_URI_PASSWORD] : g_uri_get_password (uri),
+  ------------------
+  |  Branch (521:17): [True: 0, False: 1]
+  ------------------
+  522|      1|                values_to_set[SOUP_URI_AUTH_PARAMS] ? values[SOUP_URI_AUTH_PARAMS] : g_uri_get_auth_params (uri),
+  ------------------
+  |  Branch (522:17): [True: 0, False: 1]
+  ------------------
+  523|      1|                values_to_set[SOUP_URI_HOST] ? values[SOUP_URI_HOST] : g_uri_get_host (uri),
+  ------------------
+  |  Branch (523:17): [True: 0, False: 1]
+  ------------------
+  524|      1|                values_to_set[SOUP_URI_PORT] ? GPOINTER_TO_INT (values[SOUP_URI_PORT]) : get_maybe_default_port (uri),
+  ------------------
+  |  Branch (524:17): [True: 0, False: 1]
+  ------------------
+  525|      1|                values_to_set[SOUP_URI_PATH] ? values[SOUP_URI_PATH] : g_uri_get_path (uri),
+  ------------------
+  |  Branch (525:17): [True: 1, False: 0]
+  ------------------
+  526|      1|                values_to_set[SOUP_URI_QUERY] ? values[SOUP_URI_QUERY] : g_uri_get_query (uri),
+  ------------------
+  |  Branch (526:17): [True: 0, False: 1]
+  ------------------
+  527|      1|                values_to_set[SOUP_URI_FRAGMENT] ? values[SOUP_URI_FRAGMENT] : g_uri_get_fragment (uri)
+  ------------------
+  |  Branch (527:17): [True: 0, False: 1]
+  ------------------
+  528|      1|        );
+  529|      1|}
+soup-uri-utils.c:get_maybe_default_port:
+  445|      1|{
+  446|      1|        const char *scheme = g_uri_get_scheme (uri);
+  447|      1|        int port = g_uri_get_port (uri);
+  448|       |
+  449|      1|        switch (port) {
+  450|      0|        case 80:
+  ------------------
+  |  Branch (450:9): [True: 0, False: 1]
+  ------------------
+  451|      0|                if (!strcmp (scheme, "http") || !strcmp (scheme, "ws"))
+  ------------------
+  |  Branch (451:21): [True: 0, False: 0]
+  |  Branch (451:49): [True: 0, False: 0]
+  ------------------
+  452|      0|                        return -1;
+  453|      0|                break;
+  454|      0|        case 443:
+  ------------------
+  |  Branch (454:9): [True: 0, False: 1]
+  ------------------
+  455|      0|                if (!strcmp (scheme, "https") || !strcmp (scheme, "wss"))
+  ------------------
+  |  Branch (455:21): [True: 0, False: 0]
+  |  Branch (455:50): [True: 0, False: 0]
+  ------------------
+  456|      0|                        return -1;
+  457|      0|                break;
+  458|      1|        default:
+  ------------------
+  |  Branch (458:9): [True: 1, False: 0]
+  ------------------
+  459|      1|                break;
+  460|      1|        }
+  461|       |
+  462|      1|        return port;
+  463|      1|}
+

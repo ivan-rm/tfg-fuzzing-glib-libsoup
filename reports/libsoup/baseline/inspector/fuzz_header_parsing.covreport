@@ -1,0 +1,481 @@
+fuzz_header_parsing.c:fuzz_set_logging_func:
+   18|    423|{
+   19|    423|#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+   20|    423|        if (!set_logger)
+  ------------------
+  |  Branch (20:13): [True: 1, False: 422]
+  ------------------
+   21|      1|        {
+   22|      1|                set_logger = 1;
+   23|      1|                g_log_set_writer_func (empty_logging_func, NULL, NULL);
+   24|      1|        }
+   25|    423|#endif
+   26|    423|}
+
+LLVMFuzzerTestOneInput:
+    5|    435|{
+    6|    435|        GHashTable *elements;
+    7|       |
+    8|       |        // We only accept NUL terminated strings
+    9|    435|        if (!size || data[size - 1] != '\0')
+  ------------------
+  |  Branch (9:13): [True: 0, False: 435]
+  |  Branch (9:22): [True: 12, False: 423]
+  ------------------
+   10|     12|                return 0;
+   11|       |
+   12|    423|        fuzz_set_logging_func ();
+   13|       |
+   14|    423|        elements = soup_header_parse_param_list((char*)data);
+   15|       |
+   16|    423|        g_hash_table_unref(elements);
+   17|       |
+   18|    423|        return 0;
+   19|    435|}
+
+soup_header_parse_param_list:
+  836|    423|{
+  837|    423|	g_return_val_if_fail (header != NULL, NULL);
+  ------------------
+  |  |  663|    423|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|    423|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|    423|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|    423|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|    423|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|    423| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    423|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|    423|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|    423|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 423, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|    423|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    423|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    423|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|    423|   else                                         \
+  |  |  |  |  |  |  |  | 1244|    423|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|    423|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    423|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    423|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|    423|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 423, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|    423|      { } \
+  |  |  666|    423|    else \
+  |  |  667|    423|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|    423|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|    423|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 423]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  838|       |
+  839|    423|	return parse_param_list (header, ',', FALSE);
+  ------------------
+  |  |  929|    423|#define	FALSE	(0)
+  ------------------
+  840|    423|}
+soup-headers.c:parse_list:
+  464|    423|{
+  465|    423|	GSList *list = NULL;
+  466|    423|	const char *end;
+  467|       |
+  468|    423|	header = skip_delims (header, delim);
+  469|   243k|	while (*header) {
+  ------------------
+  |  Branch (469:9): [True: 242k, False: 423]
+  ------------------
+  470|   242k|		end = skip_item (header, delim);
+  471|   242k|		list = g_slist_prepend (list, g_strndup (header, end - header));
+  472|   242k|		header = skip_delims (end, delim);
+  473|   242k|	}
+  474|       |
+  475|    423|	return g_slist_reverse (list);
+  476|    423|}
+soup-headers.c:skip_lws:
+  412|  99.2k|{
+  413|   109k|	while (g_ascii_isspace (*s))
+  ------------------
+  |  |   86|   109k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 10.5k, False: 99.2k]
+  |  |  ------------------
+  ------------------
+  414|  10.5k|		s++;
+  415|  99.2k|	return s;
+  416|  99.2k|}
+soup-headers.c:skip_delims:
+  428|   243k|{
+  429|       |	/* The grammar allows for multiple delimiters */
+  430|   498k|	while (g_ascii_isspace (*s) || *s == delim)
+  ------------------
+  |  |   86|   997k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 11.0k, False: 487k]
+  |  |  ------------------
+  ------------------
+  |  Branch (430:33): [True: 244k, False: 243k]
+  ------------------
+  431|   255k|		s++;
+  432|   243k|	return s;
+  433|   243k|}
+soup-headers.c:skip_item:
+  437|   242k|{
+  438|   242k|	gboolean quoted = FALSE;
+  ------------------
+  |  |  929|   242k|#define	FALSE	(0)
+  ------------------
+  439|   242k|	const char *start = s;
+  440|       |
+  441|       |	/* A list item ends at the last non-whitespace character
+  442|       |	 * before a delimiter which is not inside a quoted-string. Or
+  443|       |	 * at the end of the string.
+  444|       |	 */
+  445|       |
+  446|  1.94M|	while (*s) {
+  ------------------
+  |  Branch (446:9): [True: 1.94M, False: 397]
+  ------------------
+  447|  1.94M|		if (*s == '"')
+  ------------------
+  |  Branch (447:7): [True: 118k, False: 1.82M]
+  ------------------
+  448|   118k|			quoted = !quoted;
+  449|  1.82M|		else if (quoted) {
+  ------------------
+  |  Branch (449:12): [True: 649k, False: 1.17M]
+  ------------------
+  450|   649k|			if (*s == '\\' && *(s + 1))
+  ------------------
+  |  Branch (450:8): [True: 16.5k, False: 632k]
+  |  Branch (450:22): [True: 16.5k, False: 8]
+  ------------------
+  451|  16.5k|				s++;
+  452|  1.17M|		} else {
+  453|  1.17M|			if (*s == delim)
+  ------------------
+  |  Branch (453:8): [True: 242k, False: 933k]
+  ------------------
+  454|   242k|				break;
+  455|  1.17M|		}
+  456|  1.70M|		s++;
+  457|  1.70M|	}
+  458|       |
+  459|   242k|	return unskip_lws (s, start);
+  460|   242k|}
+soup-headers.c:unskip_lws:
+  420|   373k|{
+  421|   385k|	while (s > start && g_ascii_isspace (*(s - 1)))
+  ------------------
+  |  |   86|   353k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 11.4k, False: 341k]
+  |  |  ------------------
+  ------------------
+  |  Branch (421:9): [True: 353k, False: 31.6k]
+  ------------------
+  422|  11.4k|		s--;
+  423|   373k|	return s;
+  424|   373k|}
+soup-headers.c:parse_param_list:
+  752|    423|{
+  753|    423|	GHashTable *params;
+  754|    423|	GSList *list, *iter;
+  755|       |
+  756|    423|	params = g_hash_table_new_full (soup_str_case_hash, 
+  757|    423|					soup_str_case_equal,
+  758|    423|					g_free, g_free);
+  759|       |
+  760|    423|	list = parse_list (header, delim);
+  761|   243k|	for (iter = list; iter; iter = iter->next) {
+  ------------------
+  |  Branch (761:20): [True: 242k, False: 423]
+  ------------------
+  762|   242k|		char *item, *eq, *name_end;
+  763|   242k|		gboolean override, duplicated;
+  764|   242k|		GString *parsed_value = NULL;
+  765|       |
+  766|   242k|		item = iter->data;
+  767|   242k|		override = FALSE;
+  ------------------
+  |  |  929|   242k|#define	FALSE	(0)
+  ------------------
+  768|       |
+  769|   242k|		eq = strchr (item, '=');
+  770|   242k|		if (eq) {
+  ------------------
+  |  Branch (770:7): [True: 130k, False: 111k]
+  ------------------
+  771|   130k|			name_end = (char *)unskip_lws (eq, item);
+  772|   130k|			if (name_end == item) {
+  ------------------
+  |  Branch (772:8): [True: 31.6k, False: 99.2k]
+  ------------------
+  773|       |				/* That's no good... */
+  774|  31.6k|				g_free (item);
+  775|  31.6k|				continue;
+  776|  31.6k|			}
+  777|       |
+  778|  99.2k|			*name_end = '\0';
+  779|       |
+  780|  99.2k|			parsed_value = g_string_new ((char *)skip_lws (eq + 1));
+  781|       |
+  782|  99.2k|			if (name_end[-1] == '*' && name_end > item + 1) {
+  ------------------
+  |  Branch (782:8): [True: 60.6k, False: 38.6k]
+  |  Branch (782:31): [True: 59.5k, False: 1.16k]
+  ------------------
+  783|  59.5k|				name_end[-1] = '\0';
+  784|  59.5k|				if (!decode_rfc5987_inplace (parsed_value)) {
+  ------------------
+  |  Branch (784:9): [True: 55.3k, False: 4.13k]
+  ------------------
+  785|  55.3k|					g_string_free (parsed_value, TRUE);
+  ------------------
+  |  |  933|  55.3k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  55.3k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  786|  55.3k|					g_free (item);
+  787|  55.3k|					continue;
+  788|  55.3k|				}
+  789|  4.13k|				override = TRUE;
+  ------------------
+  |  |  933|  4.13k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  4.13k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  790|  39.7k|			} else if (parsed_value->str[0] == '"')
+  ------------------
+  |  Branch (790:15): [True: 25.6k, False: 14.1k]
+  ------------------
+  791|  25.6k|				decode_quoted_string_inplace (parsed_value);
+  792|  99.2k|		}
+  793|       |
+  794|   155k|		duplicated = g_hash_table_lookup_extended (params, item, NULL, NULL);
+  795|       |
+  796|   155k|		if (strict && duplicated) {
+  ------------------
+  |  Branch (796:7): [True: 0, False: 155k]
+  |  Branch (796:17): [True: 0, False: 0]
+  ------------------
+  797|      0|			soup_header_free_param_list (params);
+  798|      0|			params = NULL;
+  799|      0|			g_slist_foreach (iter, (GFunc)g_free, NULL);
+  800|      0|			if (parsed_value)
+  ------------------
+  |  Branch (800:8): [True: 0, False: 0]
+  ------------------
+  801|      0|				g_string_free (parsed_value, TRUE);
+  ------------------
+  |  |  933|      0|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      0|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  802|      0|			break;
+  803|   155k|		} else if (override || !duplicated) {
+  ------------------
+  |  Branch (803:14): [True: 4.13k, False: 151k]
+  |  Branch (803:26): [True: 1.91k, False: 149k]
+  ------------------
+  804|  6.04k|			g_hash_table_replace (params, item, parsed_value ? g_string_free (parsed_value, FALSE) : NULL);
+  ------------------
+  |  |  929|  4.71k|#define	FALSE	(0)
+  ------------------
+  |  Branch (804:40): [True: 4.71k, False: 1.32k]
+  ------------------
+  805|   149k|		} else {
+  806|   149k|			if (parsed_value)
+  ------------------
+  |  Branch (806:8): [True: 39.1k, False: 110k]
+  ------------------
+  807|  39.1k|				g_string_free (parsed_value, TRUE);
+  ------------------
+  |  |  933|  39.1k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  39.1k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  808|   149k|			g_free (item);
+  809|   149k|		}
+  810|   155k|	}
+  811|       |
+  812|    423|	g_slist_free (list);
+  813|    423|	return params;
+  814|    423|}
+soup-headers.c:decode_rfc5987_inplace:
+  710|  59.5k|{
+  711|  59.5k|	char *q, *decoded;
+  712|  59.5k|	gboolean iso_8859_1 = FALSE;
+  ------------------
+  |  |  929|  59.5k|#define	FALSE	(0)
+  ------------------
+  713|  59.5k|	const char *encoded_string = encoded_gstring->str;
+  714|       |
+  715|  59.5k|	q = strchr (encoded_string, '\'');
+  716|  59.5k|	if (!q)
+  ------------------
+  |  Branch (716:6): [True: 19.9k, False: 39.5k]
+  ------------------
+  717|  19.9k|		return FALSE;
+  ------------------
+  |  |  929|  19.9k|#define	FALSE	(0)
+  ------------------
+  718|  39.5k|	if (g_ascii_strncasecmp (encoded_string, "UTF-8",
+  ------------------
+  |  Branch (718:6): [True: 8.44k, False: 31.1k]
+  ------------------
+  719|  39.5k|				 q - encoded_string) == 0)
+  720|  8.44k|		;
+  721|  31.1k|	else if (g_ascii_strncasecmp (encoded_string, "iso-8859-1",
+  ------------------
+  |  Branch (721:11): [True: 21.3k, False: 9.76k]
+  ------------------
+  722|  31.1k|				      q - encoded_string) == 0)
+  723|  21.3k|		iso_8859_1 = TRUE;
+  ------------------
+  |  |  933|  21.3k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  21.3k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  724|  9.76k|	else
+  725|  9.76k|		return FALSE;
+  ------------------
+  |  |  929|  9.76k|#define	FALSE	(0)
+  ------------------
+  726|       |
+  727|  29.8k|	q = strchr (q + 1, '\'');
+  728|  29.8k|	if (!q)
+  ------------------
+  |  Branch (728:6): [True: 24.5k, False: 5.26k]
+  ------------------
+  729|  24.5k|		return FALSE;
+  ------------------
+  |  |  929|  24.5k|#define	FALSE	(0)
+  ------------------
+  730|       |
+  731|  5.26k|	decoded = g_uri_unescape_string (q + 1, NULL);
+  732|  5.26k|	if (decoded == NULL)
+  ------------------
+  |  Branch (732:6): [True: 1.13k, False: 4.13k]
+  ------------------
+  733|  1.13k|		return FALSE;
+  ------------------
+  |  |  929|  1.13k|#define	FALSE	(0)
+  ------------------
+  734|       |
+  735|  4.13k|	if (iso_8859_1) {
+  ------------------
+  |  Branch (735:6): [True: 227, False: 3.90k]
+  ------------------
+  736|    227|		char *utf8 =  g_convert_with_fallback (decoded, -1, "UTF-8",
+  737|    227|						       "iso-8859-1", "_",
+  738|    227|						       NULL, NULL, NULL);
+  739|    227|		g_free (decoded);
+  740|    227|		if (!utf8)
+  ------------------
+  |  Branch (740:7): [True: 0, False: 227]
+  ------------------
+  741|      0|			return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+  742|    227|		decoded = utf8;
+  743|    227|	}
+  744|       |
+  745|  4.13k|	g_string_assign (encoded_gstring, decoded);
+  746|  4.13k|	g_free (decoded);
+  747|  4.13k|	return TRUE;
+  ------------------
+  |  |  933|  4.13k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  4.13k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  748|  4.13k|}
+soup-headers.c:decode_quoted_string_inplace:
+  694|  25.6k|{
+  695|  25.6k|	char *quoted_string = quoted_gstring->str;
+  696|  25.6k|	char *src, *dst;
+  697|       |
+  698|  25.6k|	src = quoted_string + 1;
+  699|  25.6k|	dst = quoted_string;
+  700|  91.6k|	while (*src && *src != '"') {
+  ------------------
+  |  Branch (700:9): [True: 70.2k, False: 21.4k]
+  |  Branch (700:17): [True: 66.0k, False: 4.23k]
+  ------------------
+  701|  66.0k|		if (*src == '\\' && *(src + 1))
+  ------------------
+  |  Branch (701:7): [True: 5.81k, False: 60.1k]
+  |  Branch (701:23): [True: 2.10k, False: 3.70k]
+  ------------------
+  702|  2.10k|			src++;
+  703|  66.0k|		*dst++ = *src++;
+  704|  66.0k|	}
+  705|  25.6k|	*dst = '\0';
+  706|  25.6k|}
+
+soup_str_case_hash:
+   26|   161k|{
+   27|   161k|	const char *p = key;
+   28|   161k|	guint h = g_ascii_toupper(*p);
+   29|       |
+   30|   161k|	if (h)
+  ------------------
+  |  Branch (30:6): [True: 161k, False: 0]
+  ------------------
+   31|   386k|		for (p += 1; *p != '\0'; p++)
+  ------------------
+  |  Branch (31:16): [True: 224k, False: 161k]
+  ------------------
+   32|   224k|			h = (h << 5) - h + g_ascii_toupper(*p);
+   33|       |
+   34|   161k|	return h;
+   35|   161k|}
+soup_str_case_equal:
+   49|   157k|{
+   50|   157k|	const char *string1 = v1;
+   51|   157k|	const char *string2 = v2;
+   52|       |
+   53|   157k|	return g_ascii_strcasecmp (string1, string2) == 0;
+   54|   157k|}
+

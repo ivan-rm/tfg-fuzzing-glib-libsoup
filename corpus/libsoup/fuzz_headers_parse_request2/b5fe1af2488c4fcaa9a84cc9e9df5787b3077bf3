@@ -1,0 +1,16 @@
+GET /index.html HTTP/1.1
+Host: localhost
+CottpOnly
+ Secure; HttpOnly
+Link: </stcharset=utf-1; charset=iso-8859e
+A: 1
+B: 2
+Content-Type: text/B: 2
+Content-Type: text/htmlÊßœ—arsety
+Link: </stcharset=utf-1; charset=iso-8859e
+A: 1
+B: 2
+Content-Type: text/B: 2
+Content-Type: text/arset=utf-8; bharset=iso-4429,1r-with-no-name
+Co9ader-Fuzz: u s2
+Content-Type:h: 42

@@ -1,0 +1,21 @@
+GET <? HTTP/1.0
+TTP/1.1
+, deflate
+Connection: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Transfer-Encoding: chunked
+to@g

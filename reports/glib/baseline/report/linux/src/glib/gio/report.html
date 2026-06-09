@@ -1,0 +1,2974 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <meta charset='UTF-8'>
+    <link rel='stylesheet' type='text/css' href='../../../../style.css'>
+    <!-- Custom style overrides -->
+    <style>
+      /* Copyright 2018 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+th, td {
+  padding: 5px 16px;
+}
+
+tbody td, tfoot td {
+  font-size: 14px;
+}
+
+thead th {
+  font-size: 16px;
+}
+
+thead th, tfoot td {
+  background-color: #f5f5f5;
+  border-left: 1px solid #e4e4e4;
+  border-right: 1px solid #e4e4e4;
+  color: #484848;
+  text-transform: uppercase;
+}
+
+tbody tr:hover td, tfoot tr:hover td {
+  background-color: #f5f5f5;
+  border-color: #e4e4e4 !important;
+}
+    </style>
+  </head>
+  <body>
+    <h2>Coverage Report</h2>
+    <p>
+      View results by:
+            <a href='../../../directory_view_index.html'>Directories</a>
+              | <a href='../../../file_view_index.html'>Files</a>
+          </p>
+    <div class='centered'><table>
+  <thead>
+    <tr>
+      <th class="column-entry-bold">Path</th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.LINE)" title=
+          "Line coverage is the percentage of code lines which have been executed at least once. Only executable lines within function bodies are considered to be code lines.">
+        Line Coverage
+      </th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.FUNCTION)" title=
+          "Function coverage is the percentage of functions which have been executed at least once. A function is considered to be executed if any of its instantiations are executed.">
+        Function Coverage
+      </th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.REGION)" title=
+          "Region coverage is the percentage of code regions which have been executed at least once. A code region may span multiple lines (e.g in a large function body with no control flow). However, it's also possible for a single line to contain multiple code regions (e.g in 'return x || y &amp;&amp; z').">
+        Region Coverage
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr class="light-row">
+      <td>
+                  <pre><a href='inotify/report.html'>inotify/</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/847)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/57)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1632)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='xdgmime/report.html'>xdgmime/</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2846)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/131)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2812)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gaction.c.html'>gaction.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/151)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/531)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gactiongroup.c.html'>gactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/23)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/799)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gactiongroupexporter.c.html'>gactiongroupexporter.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/349)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/489)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gactionmap.c.html'>gactionmap.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/75)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/215)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gappinfo.c.html'>gappinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/619)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/70)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2395)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gapplication.c.html'>gapplication.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1217)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/86)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3407)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gapplicationcommandline.c.html'>gapplicationcommandline.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/239)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/725)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gapplicationimpl-dbus.c.html'>gapplicationimpl-dbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/566)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/678)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gasyncinitable.c.html'>gasyncinitable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/82)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/316)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gasyncresult.c.html'>gasyncresult.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/171)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gbufferedinputstream.c.html'>gbufferedinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 24.35% (150/616)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.11% (13/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 22.21% (229/1031)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gbytesicon.c.html'>gbytesicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/91)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/198)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gcancellable.c.html'>gcancellable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/269)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/23)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/687)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gcontenttype-fdo.c.html'>gcontenttype-fdo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/875)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/49)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1151)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gcontenttype.c.html'>gcontenttype.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/357)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gcontextspecificgroup.c.html'>gcontextspecificgroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/135)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/162)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gconverter.c.html'>gconverter.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/46)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/261)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gconverterinputstream.c.html'>gconverterinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/338)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/399)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gconverteroutputstream.c.html'>gconverteroutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/352)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/320)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gcredentials.c.html'>gcredentials.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/489)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdatagrambased.c.html'>gdatagrambased.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/94)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/918)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdatainputstream.c.html'>gdatainputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 33.33% (213/639)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.00% (9/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 18.34% (250/1363)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdataoutputstream.c.html'>gdataoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/255)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/694)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusactiongroup.c.html'>gdbusactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/279)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/425)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusaddress.c.html'>gdbusaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/933)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1117)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusauth.c.html'>gdbusauth.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1022)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1309)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusauthmechanism.c.html'>gdbusauthmechanism.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/152)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/719)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusauthmechanismanon.c.html'>gdbusauthmechanismanon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/124)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/913)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusauthmechanismexternal.c.html'>gdbusauthmechanismexternal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/203)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/931)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusauthmechanismsha1.c.html'>gdbusauthmechanismsha1.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/809)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1669)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusauthobserver.c.html'>gdbusauthobserver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/70)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/74)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusconnection.c.html'>gdbusconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3919)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/168)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8972)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusconnection.h.html'>gdbusconnection.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbuserror.c.html'>gdbuserror.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/389)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1151)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusinterface.c.html'>gdbusinterface.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/32)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/233)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusinterfaceskeleton.c.html'>gdbusinterfaceskeleton.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/463)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1226)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusintrospection.c.html'>gdbusintrospection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1265)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/75)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1855)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusmessage.c.html'>gdbusmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 68.64% (1620/2360)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 44.79% (43/96)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 40.21% (1734/4312)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusmethodinvocation.c.html'>gdbusmethodinvocation.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/276)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1064)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusnamewatching.c.html'>gdbusnamewatching.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/455)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/632)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusobject.c.html'>gdbusobject.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/99)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusobjectskeleton.c.html'>gdbusobjectskeleton.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/246)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/590)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusprivate.c.html'>gdbusprivate.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1243)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/67)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1980)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusproxy.c.html'>gdbusproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1543)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/71)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2611)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdbusutils.c.html'>gdbusutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 20.36% (90/442)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 40.00% (6/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.73% (203/789)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdebugcontroller.c.html'>gdebugcontroller.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/117)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdebugcontrollerdbus.c.html'>gdebugcontrollerdbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/247)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/496)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdelayedsettingsbackend.c.html'>gdelayedsettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/262)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/303)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdesktopappinfo.c.html'>gdesktopappinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2884)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/153)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3978)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdocumentportal.c.html'>gdocumentportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/179)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/280)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdrive.c.html'>gdrive.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/296)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/30)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1357)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdtlsclientconnection.c.html'>gdtlsclientconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/58)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/239)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdtlsconnection.c.html'>gdtlsconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/285)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1422)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdtlsserverconnection.c.html'>gdtlsserverconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdummyfile.c.html'>gdummyfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/463)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/32)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/553)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdummyproxyresolver.c.html'>gdummyproxyresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/44)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/108)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gdummytlsbackend.c.html'>gdummytlsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/147)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/257)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gemblem.c.html'>gemblem.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/178)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/440)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gemblemedicon.c.html'>gemblemedicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/219)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/522)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfdonotificationbackend.c.html'>gfdonotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/326)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/377)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfile.c.html'>gfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3674)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/254)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10182)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfileattribute.c.html'>gfileattribute.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/405)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/37)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1254)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfiledescriptorbased.c.html'>gfiledescriptorbased.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/77)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfileenumerator.c.html'>gfileenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/360)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1000)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfileicon.c.html'>gfileicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/153)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/319)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfileinfo.c.html'>gfileinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1285)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/112)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7779)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfileinputstream.c.html'>gfileinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/168)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/409)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfileiostream.c.html'>gfileiostream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/280)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/30)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/578)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfilemonitor.c.html'>gfilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/88)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/305)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfileoutputstream.c.html'>gfileoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/221)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/548)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfilterinputstream.c.html'>gfilterinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 55.56% (70/126)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 58.33% (7/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 49.49% (97/196)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gfilteroutputstream.c.html'>gfilteroutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/124)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/199)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='ggtknotificationbackend.c.html'>ggtknotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/46)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='ghttpproxy.c.html'>ghttpproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/208)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/306)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gicon.c.html'>gicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/378)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/655)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='ginetaddress.c.html'>ginetaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 50.51% (198/392)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 44.44% (12/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.04% (335/1014)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='ginetaddressmask.c.html'>ginetaddressmask.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 68.32% (138/202)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 62.50% (10/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.13% (155/429)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='ginetsocketaddress.c.html'>ginetsocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 58.30% (130/223)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 70.59% (12/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 41.02% (217/529)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='ginitable.c.html'>ginitable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 73.81% (31/42)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 83.33% (5/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 70.83% (102/144)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='ginputstream.c.html'>ginputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  9.50% (65/684)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.78% (8/45)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 12.65% (206/1628)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gioerror.c.html'>gioerror.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/190)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/118)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='giomodule-priv.c.html'>giomodule-priv.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/103)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='giomodule.c.html'>giomodule.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/719)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/891)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gioscheduler.c.html'>gioscheduler.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/129)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/237)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='giostream.c.html'>giostream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/380)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/722)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='giounix-private.c.html'>giounix-private.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='giptosmessage.c.html'>giptosmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gipv6tclassmessage.c.html'>gipv6tclassmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gkeyfilesettingsbackend.c.html'>gkeyfilesettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/558)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/839)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gloadableicon.c.html'>gloadableicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/67)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/250)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfile.c.html'>glocalfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1951)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/77)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1927)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfileenumerator.c.html'>glocalfileenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/215)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfileinfo.c.html'>glocalfileinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1791)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/51)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1947)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfileinfo.h.html'>glocalfileinfo.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/50)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/39)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfileinputstream.c.html'>glocalfileinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/126)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/146)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfileiostream.c.html'>glocalfileiostream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/43)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/73)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfilemonitor.c.html'>glocalfilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/491)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/39)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/949)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalfileoutputstream.c.html'>glocalfileoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/771)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/771)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='glocalvfs.c.html'>glocalvfs.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/99)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/152)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmarshal-internal.c.html'>gmarshal-internal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1843)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/56)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2134)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemoryinputstream.c.html'>gmemoryinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 47.62% (100/210)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 48.00% (12/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.20% (125/249)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemorymonitor.c.html'>gmemorymonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/56)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemorymonitorbase.c.html'>gmemorymonitorbase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/110)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemorymonitordbus.c.html'>gmemorymonitordbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/72)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemorymonitorpoll.c.html'>gmemorymonitorpoll.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/130)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemorymonitorportal.c.html'>gmemorymonitorportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/62)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/92)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemorymonitorpsi.c.html'>gmemorymonitorpsi.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/242)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/304)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemoryoutputstream.c.html'>gmemoryoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/327)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/487)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmemorysettingsbackend.c.html'>gmemorysettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/75)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/94)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gmount.c.html'>gmount.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/323)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1373)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnativesocketaddress.c.html'>gnativesocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/54)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/190)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnativevolumemonitor.c.html'>gnativevolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworkaddress.c.html'>gnetworkaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 32.64% (203/622)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 32.50% (13/40)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 27.03% (250/925)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworking.c.html'>gnetworking.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 87.50% (14/16)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.00% (9/18)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworkmonitor.c.html'>gnetworkmonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/85)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/169)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworkmonitorbase.c.html'>gnetworkmonitorbase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/321)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/311)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworkmonitornetlink.c.html'>gnetworkmonitornetlink.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/310)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/433)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworkmonitornm.c.html'>gnetworkmonitornm.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/206)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/186)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworkmonitorportal.c.html'>gnetworkmonitorportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/403)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/377)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnetworkservice.c.html'>gnetworkservice.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/390)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/481)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnotification.c.html'>gnotification.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/274)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/890)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnotificationbackend.c.html'>gnotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/214)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gnullsettingsbackend.c.html'>gnullsettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/54)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gopenuriportal.c.html'>gopenuriportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/261)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/279)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='goutputstream.c.html'>goutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1308)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/84)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3575)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpermission.c.html'>gpermission.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/411)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpollableinputstream.c.html'>gpollableinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  7.69% (4/52)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.00% (2/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.52% (41/234)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpollableoutputstream.c.html'>gpollableoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/123)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/494)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpollableutils.c.html'>gpollableutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/106)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/129)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpollfilemonitor.c.html'>gpollfilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/104)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/174)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gportalnotificationbackend.c.html'>gportalnotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/45)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gportalsupport.c.html'>gportalsupport.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/85)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/94)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpowerprofilemonitor.c.html'>gpowerprofilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/51)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpowerprofilemonitordbus.c.html'>gpowerprofilemonitordbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/109)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/172)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gpowerprofilemonitorportal.c.html'>gpowerprofilemonitorportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/81)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/122)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gproxy.c.html'>gproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/45)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/186)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gproxyaddress.c.html'>gproxyaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/167)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/120)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gproxyaddressenumerator.c.html'>gproxyaddressenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/501)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/547)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gproxyresolver.c.html'>gproxyresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/65)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/335)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gproxyresolverportal.c.html'>gproxyresolverportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/100)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/170)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gremoteactiongroup.c.html'>gremoteactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/51)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gresolver.c.html'>gresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/508)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/40)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1372)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gresource.c.html'>gresource.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/635)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/675)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gresourcefile.c.html'>gresourcefile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/478)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/58)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/606)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsandbox.c.html'>gsandbox.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/59)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/72)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gseekable.c.html'>gseekable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  6.25% (2/32)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.57% (2/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 19.25% (41/213)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsettings-mapping.c.html'>gsettings-mapping.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/473)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1169)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsettings.c.html'>gsettings.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1267)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/96)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2592)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsettingsbackend.c.html'>gsettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/320)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/891)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsettingsschema.c.html'>gsettingsschema.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/831)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/57)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1405)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsimpleaction.c.html'>gsimpleaction.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/237)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/453)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsimpleactiongroup.c.html'>gsimpleactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/159)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/292)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsimpleasyncresult.c.html'>gsimpleasyncresult.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/323)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/37)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1262)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsimplepermission.c.html'>gsimplepermission.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocket.c.html'>gsocket.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2369)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/102)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4756)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketaddress.c.html'>gsocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  8.89% (16/180)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.00% (4/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 10.63% (37/348)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketaddressenumerator.c.html'>gsocketaddressenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/176)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketclient.c.html'>gsocketclient.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1058)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1457)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketconnectable.c.html'>gsocketconnectable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 34.62% (9/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 60.00% (3/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 47.71% (73/153)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketconnection.c.html'>gsocketconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/260)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/547)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketcontrolmessage.c.html'>gsocketcontrolmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/89)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/230)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketinputstream.c.html'>gsocketinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/84)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/108)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocketoutputstream.c.html'>gsocketoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/107)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/162)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocks4aproxy.c.html'>gsocks4aproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/246)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/179)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocks4proxy.c.html'>gsocks4proxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/39)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsocks5proxy.c.html'>gsocks5proxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/681)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/490)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsrvtarget.c.html'>gsrvtarget.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/91)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/112)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gsubprocess.c.html'>gsubprocess.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/727)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/50)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2064)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtask.c.html'>gtask.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/607)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1956)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtcpconnection.c.html'>gtcpconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/155)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/180)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtcpwrapperconnection.c.html'>gtcpwrapperconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/69)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/227)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gthemedicon.c.html'>gthemedicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/282)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/663)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gthreadedresolver.c.html'>gthreadedresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 25.61% (219/855)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 16.28% (7/43)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.90% (222/1240)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlsbackend.c.html'>gtlsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/76)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/377)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlscertificate.c.html'>gtlscertificate.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/485)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1071)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlsclientconnection.c.html'>gtlsclientconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/83)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/404)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlsconnection.c.html'>gtlsconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/259)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1031)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlsdatabase.c.html'>gtlsdatabase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/355)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2414)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlsfiledatabase.c.html'>gtlsfiledatabase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlsinteraction.c.html'>gtlsinteraction.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/320)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1359)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlspassword.c.html'>gtlspassword.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/158)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/440)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtlsserverconnection.c.html'>gtlsserverconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gtrashportal.c.html'>gtrashportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/65)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/93)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunionvolumemonitor.c.html'>gunionvolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/317)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/287)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixconnection.c.html'>gunixconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/324)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/510)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixcredentialsmessage.c.html'>gunixcredentialsmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/128)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/241)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixfdlist.c.html'>gunixfdlist.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/126)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/440)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixfdmessage.c.html'>gunixfdmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/107)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/231)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixinputstream.c.html'>gunixinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/291)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixmount.c.html'>gunixmount.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/191)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/215)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixmounts.c.html'>gunixmounts.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1203)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/102)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2861)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixoutputstream.c.html'>gunixoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/310)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/441)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixsocketaddress.c.html'>gunixsocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/230)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/257)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixvolume.c.html'>gunixvolume.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/229)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/406)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gunixvolumemonitor.c.html'>gunixvolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/224)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/176)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gvfs.c.html'>gvfs.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/193)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/628)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gvolume.c.html'>gvolume.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/196)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/923)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gvolumemonitor.c.html'>gvolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/386)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='gzlibdecompressor.c.html'>gzlibdecompressor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/196)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/273)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='strinfo.c.html'>strinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/167)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/119)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='thumbnail-verify.c.html'>thumbnail-verify.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/104)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/110)</pre>
+      </td>
+          </tr>
+      </tbody>
+      <tfoot>
+      <tr class="light-row-bold">
+        <td>
+          <pre>Totals</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre>  4.15% (3272/78901)</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre>  3.26% (170/5214)</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre>  2.68% (4326/161418)</pre>
+        </td>
+              </tr>
+    </tfoot>
+  </table>
+
+<script>
+  const SORT_COLUMN = {
+    LINE: 2,
+    FUNCTION: 3,
+    REGION: 4,
+  }
+
+  const SORT_TYPES = {
+    UNSET: -1,
+    PERCENT: 0,
+    AGGREGATE: 1,
+  }
+
+  var SORT_ORDER = {
+    [SORT_COLUMN.LINE]: [SORT_TYPES.UNSET],
+    [SORT_COLUMN.FUNCTION]: [SORT_TYPES.UNSET],
+    [SORT_COLUMN.REGION]: [SORT_TYPES.UNSET],
+  }
+
+  function sortTable(columnNumber) {
+    SORT_ORDER[columnNumber] = ++SORT_ORDER[columnNumber] % 2;
+
+    let columnSortOrder = SORT_ORDER[columnNumber];
+    let tbody = document.getElementsByTagName("tbody")[0];
+
+    [].slice.call(tbody.rows).sort(function(a, b) {
+      let aColumn = a.cells[columnNumber-1].textContent;
+      let bColumn = b.cells[columnNumber-1].textContent;
+
+      let aColumnCompare, bColumnCompare;
+      if (columnSortOrder == SORT_TYPES.PERCENT) {
+        aColumnCompare = parseFloat(/([0-9.]+)%/.exec(aColumn)[1]);
+        bColumnCompare = parseFloat(/([0-9.]+)%/.exec(bColumn)[1]);
+      } else {
+        aColumnCompare = parseInt(/\/(\d+)/.exec(aColumn)[1]);
+        bColumnCompare = parseInt(/\/(\d+)/.exec(bColumn)[1]);
+      }
+
+      return (
+          aColumnCompare < bColumnCompare ? -1:
+              aColumnCompare > bColumnCompare ? 1 : 0);
+    }).forEach(function(value, index) {
+      tbody.appendChild(value);
+    });
+  }
+
+</script>    </div>
+  </body>
+</html>

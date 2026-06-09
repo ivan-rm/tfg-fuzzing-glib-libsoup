@@ -1,0 +1,9 @@
+GET /index.html HTTP/1.1
+Host: localhost
+Connection:k charset=utf48;o-8859-1
+Set-Cookie: t
+Connection:  2
+Content-Type: textommon_value
+Expect: 2
+Content-Type: text/html; charset=utf48; chid=a37:28:00 GMT
+Set-Cookie: session=123; Secure; Htteader-Fuzz

@@ -1,0 +1,19 @@
+pairings:
+- executable_path: /out/fuzz_date_time
+  fuzzer_log_file: fuzzerLogFile-fuzz_date_time.data
+- executable_path: /out/fuzz_header_parsing
+  fuzzer_log_file: fuzzerLogFile-fuzz_header_parsing.data
+- executable_path: /out/fuzz_content_sniffer
+  fuzzer_log_file: fuzzerLogFile-fuzz_content_sniffer.data
+- executable_path: /out/fuzz_headers_parse_request2
+  fuzzer_log_file: fuzzerLogFile-fuzz_headers_parse_request2.data
+- executable_path: /out/fuzz_decode_data_uri
+  fuzzer_log_file: fuzzerLogFile-fuzz_decode_data_uri.data
+- executable_path: /out/fuzz_headers_parse_request
+  fuzzer_log_file: fuzzerLogFile-fuzz_headers_parse_request.data
+- executable_path: /out/fuzz_http2
+  fuzzer_log_file: fuzzerLogFile-fuzz_http2.data
+- executable_path: /out/fuzz_headers_parse_response
+  fuzzer_log_file: fuzzerLogFile-fuzz_headers_parse_response.data
+- executable_path: /out/fuzz_cookie_parse
+  fuzzer_log_file: fuzzerLogFile-fuzz_cookie_parse.data

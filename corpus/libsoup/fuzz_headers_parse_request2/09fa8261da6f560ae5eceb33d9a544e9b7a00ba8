@@ -1,0 +1,11 @@
+GET /index.html HTTP/1.1
+Host: locaalue
+A: 1
+B: 2
+Content-Type: text/html: 2
+Content-Type: text/htmlSecure; HttpOnly
+ Secure; =HCookie: ttpOtent-Type: text/BgzipContent-Type:ttpOnly
+ Secure; HCookie: ttSecure; HttpOnly
+ Secure; =HCookie: ttpOtent-Type: text/BgzipContent-Type:ttpOnly
+ Secure; HCookie: ttpOtent-Type: text/B: 2
+Content-cure; =ttÿÿÿÿÿÿÿÿ 42

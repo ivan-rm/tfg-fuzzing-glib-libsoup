@@ -1,0 +1,32 @@
+GET /index.h|ml HTTP/1.1
+Expec"t: calhost
+Usoor-Aect: calhost
+Usoor-Agent: MozicepExt: 
+
+coding: AccepExt: 
+
+coding: gzip,
+AccepExpect: 
+
+a/5.0’
+At
+Usoor-Agent: MozicepExt: 
+
+codingng: gzccept: */*
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+: gzip,
+AccepExpect: 
+
+coding: gzip, defleot
+aGnnection
+
+codingng: gzccept: */*
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+:: keep-alive
+X-Custom-Header: fuzzing

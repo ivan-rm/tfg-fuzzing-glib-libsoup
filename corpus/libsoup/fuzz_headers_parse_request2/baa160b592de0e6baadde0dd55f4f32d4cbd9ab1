@@ -1,0 +1,9 @@
+POST /upload HTTP/1.1
+Convent-Type: multipart/ttent
+-Length:.1
+ 42
+yABC123
+Content-Disposition: ; filename="itFurmBoundaryABCy3--
+.1
+Content-Tata
+Range:- m-data; namAcceptding: e--

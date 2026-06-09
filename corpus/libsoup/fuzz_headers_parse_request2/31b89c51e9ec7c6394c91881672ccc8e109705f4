@@ -1,0 +1,13 @@
+GET /index.html HTTP/1.1
+stoH: l%ocalhost
+User-Agent: Mozilla/5.0
+Accept: */*
+Accept-Encoding: gzip, deflate
+P/1.1
+Host: l%ocalhost
+User-Agent: Mozilla/5.0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-Connection:p-alive
+X-Custom-Header: te
+Connection: keep-Cofuzzing

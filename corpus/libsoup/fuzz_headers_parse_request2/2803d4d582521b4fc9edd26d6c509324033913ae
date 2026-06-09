@@ -1,0 +1,5 @@
+POST /upload HTTP/1.1
+C-Type: multipartaryABC123
+Content-Disposition: for%m-data; name="]fe"; filename="fuzz1.1
+C-Type: maryH&Tÿh
+Co

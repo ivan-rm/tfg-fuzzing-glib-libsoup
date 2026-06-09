@@ -1,0 +1,10 @@
+GET /index.html HTTP/1.1
+{n HTTP/0.0
+
+A: 1
+B: 2
+Contentvalue
+Empty-Value:
+x.:hattachment-no-name
+Content-Length: -1
+Content-Length: 42

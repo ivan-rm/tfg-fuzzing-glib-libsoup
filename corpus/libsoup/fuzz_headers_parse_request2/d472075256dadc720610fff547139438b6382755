@@ -1,0 +1,4 @@
+POST /upload HTTP/1.1
+Content-Type* multipart/Form-data;codedKitFovnd
+Range: bytes HTTP/1.1
+=5@-- bytes=5@--

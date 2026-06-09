@@ -1,0 +1,7 @@
+ T HTTP/1.1
+Host: l45
+Excpet: 10GS/0-contit:           
+                     uncommon_value
+A: 2
+B:  HTTP/1/0
+Type: teon

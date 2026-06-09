@@ -1,0 +1,9 @@
+GET <? HTTP/1.0
+TTP/1.1
+, deflate
+Connection: keGIF89aivÍ
+X-uzz: uÿÿÿÿmon_value
+A: 
+1:
+ 2BCoContent-Length: 42
+Cotom-Header: fuzzi@g

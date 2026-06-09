@@ -1,0 +1,10 @@
+GET x.html HTTP/1.1
+tsoH: l%ocalhost
+User-Agent: Mozilla/5.0
+Accept: */*
+AcTP/1.1
+tsoH: l%ocalhost
+User-Agent: Mozilla/5.0
+Accept: */html HTTP/1.1
+Host: localhost
+User-Qgm-Headeri z:fuzng

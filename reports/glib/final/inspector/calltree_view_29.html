@@ -1,0 +1,1521 @@
+<html>
+ <head>
+  <link href="prism.css" rel="stylesheet"/>
+  <link href="https://unpkg.com/dracula-prism/dist/css/dracula-prism.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <script crossorigin="anonymous" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" src="https://code.jquery.com/jquery-3.6.0.min.js">
+  </script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js">
+  </script>
+  <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet"/>
+  <link href="styles.css" rel="stylesheet"/>
+  <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet"/>
+  <div class="top-navbar">
+   <div class="top-navbar-title-wrapper">
+    <div class="top-navbar-title" style="margin-bottom: 10px; font-size:25px">
+     Fuzz introspector: fuzz_utf8_validate
+    </div>
+    <div style="margin:0; font-size: 10px">
+     For issues and ideas:
+     <a href="https://github.com/ossf/fuzz-introspector/issues" style="color:#FFFFFF;">
+      https://github.com/ossf/fuzz-introspector/issues
+     </a>
+    </div>
+   </div>
+  </div>
+  <div class="content-wrapper calltree-page">
+   <div class="content-section calltree-content-section">
+    <div class="report-box">
+     <h1>
+      Fuzz blockers
+     </h1>
+     <p class="no-top-margin">
+      The following nodes represent call sites where fuzz blockers occur.
+     </p>
+     <table class="cell-border compact stripe" data-sort-by-column="0" data-sort-order="desc" id="myTable0">
+      <thead>
+       <tr>
+        <th title="Total amount of callsites blocked">
+         Amount of callsites blocked
+        </th>
+        <th title="Index in call tree where the fuzz blocker is.">
+         Calltree index
+        </th>
+        <th title="Function in which the call site that blocks resides.">
+         Parent function
+        </th>
+        <th>
+         Callsite
+        </th>
+        <th a="" being="" blocked'="" function="" highlighting="" important="" of="" potentially="" s="" title="This is the function with highest cyclomatiic complexity amongstall of the functions that are blocked. As such, it" way="">
+         Largest blocked function
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr>
+        <td>
+         2
+        </td>
+        <td>
+         5
+        </td>
+        <td>
+         g_mutex_lock
+        </td>
+        <td>
+         <span class="text-link" onclick=" scrollToNodeInCT('00005')">
+          call site: 00005
+         </span>
+        </td>
+        <td>
+         g_mutex_unlock
+        </td>
+       </tr>
+       <tr>
+        <td>
+         2
+        </td>
+        <td>
+         8
+        </td>
+        <td>
+         g_mutex_unlock
+        </td>
+        <td>
+         <span class="text-link" onclick=" scrollToNodeInCT('00008')">
+          call site: 00008
+         </span>
+        </td>
+        <td>
+         g_error
+        </td>
+       </tr>
+       <tr>
+        <td>
+         1
+        </td>
+        <td>
+         22
+        </td>
+        <td>
+         load_word
+        </td>
+        <td>
+         <span class="text-link" onclick=" scrollToNodeInCT('00022')">
+          call site: 00022
+         </span>
+        </td>
+        <td>
+         _attribute_aligned
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <h1>
+     Fuzzer calltree
+    </h1>
+    <div id="calltree-wrapper">
+     <div class="call-tree-section-wrapper">
+      <div class="lawngreen-background coverage-line">
+       <span class="coverage-line-inner" data-calltree-idx="00000" data-paddingleft="100px" style="padding-left: 100px">
+        <span class="node-depth-wrapper">
+         0
+        </span>
+        <code class="language-clike">
+         LLVMFuzzerTestOneInput
+        </code>
+        <span class="coverage-line-filename">
+         <a href="/covreport/fuzz_utf8_validate/linux/src/glib/fuzzing/fuzz_utf8_validate.c.html#L22">
+          [function]
+         </a>
+         <a href="#">
+          [call site]
+         </a>
+         <span class="calltree-idx">
+          00000
+         </span>
+        </span>
+       </span>
+       <div class="calltree-line-wrapper open level-0" data-paddingleft="100px">
+        <div class="lawngreen-background coverage-line">
+         <span class="coverage-line-inner" data-calltree-idx="00001" data-paddingleft="116px" style="padding-left: 116px">
+          <span class="node-depth-wrapper">
+           1
+          </span>
+          <code class="language-clike">
+           fuzz_set_logging_func
+          </code>
+          <span class="coverage-line-filename">
+           <a href="/covreport/fuzz_utf8_validate/linux/src/glib/fuzzing/fuzz.h.html#L35">
+            [function]
+           </a>
+           <a href="/covreport/fuzz_utf8_validate/linux/src/glib/fuzzing/fuzz_utf8_validate.c.html#L25">
+            [call site]
+           </a>
+           <span class="calltree-idx">
+            00001
+           </span>
+          </span>
+         </span>
+         <div class="calltree-line-wrapper open level-1" data-paddingleft="116px">
+          <div class="gold-background coverage-line">
+           <span class="coverage-line-inner" data-calltree-idx="00002" data-paddingleft="132px" style="padding-left: 132px">
+            <span class="node-depth-wrapper">
+             2
+            </span>
+            <code class="language-clike">
+             g_log_set_writer_func
+            </code>
+            <span class="coverage-line-filename">
+             <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.c.html#L2001">
+              [function]
+             </a>
+             <a href="/covreport/fuzz_utf8_validate/linux/src/glib/fuzzing/fuzz.h.html#L43">
+              [call site]
+             </a>
+             <span class="calltree-idx">
+              00002
+             </span>
+            </span>
+           </span>
+           <div class="calltree-line-wrapper open level-2" data-paddingleft="132px">
+            <div class="gold-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00003" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               g_return_if_fail
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.h.html#L652">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.c.html#L2006">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00003
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="gold-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00004" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               g_mutex_lock
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread.c.html#L1280">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.c.html#L2008">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00004
+               </span>
+              </span>
+             </span>
+             <div class="calltree-line-wrapper open level-3" data-paddingleft="148px">
+              <div class="gold-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00005" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 g_mutex_lock_impl
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread-posix.c.html#L961">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread.c.html#L1283">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00005
+                 </span>
+                </span>
+               </span>
+               <div class="calltree-line-wrapper open level-4" data-paddingleft="164px">
+                <div class="red-background coverage-line">
+                 <span class="coverage-line-inner" data-calltree-idx="00006" data-paddingleft="180px" style="padding-left: 180px">
+                  <span class="node-depth-wrapper">
+                   5
+                  </span>
+                  <code class="language-clike">
+                   AcquireSRWLockExclusive
+                  </code>
+                  <span class="coverage-line-filename">
+                   <a href="#">
+                    [function]
+                   </a>
+                   <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread-posix.c.html#L95">
+                    [call site]
+                   </a>
+                   <span class="calltree-idx">
+                    00006
+                   </span>
+                  </span>
+                 </span>
+                </div>
+               </div>
+              </div>
+             </div>
+            </div>
+            <div class="red-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00007" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               g_mutex_unlock
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread.c.html#L1296">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.c.html#L2012">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00007
+               </span>
+              </span>
+             </span>
+             <div class="calltree-line-wrapper open level-3" data-paddingleft="148px">
+              <div class="gold-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00008" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 g_mutex_unlock_impl
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread-posix.c.html#L971">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread.c.html#L1299">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00008
+                 </span>
+                </span>
+               </span>
+               <div class="calltree-line-wrapper open level-4" data-paddingleft="164px">
+                <div class="red-background coverage-line">
+                 <span class="coverage-line-inner" data-calltree-idx="00009" data-paddingleft="180px" style="padding-left: 180px">
+                  <span class="node-depth-wrapper">
+                   5
+                  </span>
+                  <code class="language-clike">
+                   ReleaseSRWLockExclusive
+                  </code>
+                  <span class="coverage-line-filename">
+                   <a href="#">
+                    [function]
+                   </a>
+                   <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread-posix.c.html#L107">
+                    [call site]
+                   </a>
+                   <span class="calltree-idx">
+                    00009
+                   </span>
+                  </span>
+                 </span>
+                </div>
+               </div>
+              </div>
+             </div>
+            </div>
+            <div class="red-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00010" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               g_error
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.h.html#L426">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.c.html#L2013">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00010
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="gold-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00011" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               g_mutex_unlock
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gthread.c.html#L1296">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gmessages.c.html#L2021">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00011
+               </span>
+              </span>
+             </span>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="lawngreen-background coverage-line">
+         <span class="coverage-line-inner" data-calltree-idx="00012" data-paddingleft="116px" style="padding-left: 116px">
+          <span class="node-depth-wrapper">
+           1
+          </span>
+          <code class="language-clike">
+           g_utf8_validate_len
+          </code>
+          <span class="coverage-line-filename">
+           <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2275">
+            [function]
+           </a>
+           <a href="/covreport/fuzz_utf8_validate/linux/src/glib/fuzzing/fuzz_utf8_validate.c.html#L29">
+            [call site]
+           </a>
+           <span class="calltree-idx">
+            00012
+           </span>
+          </span>
+         </span>
+         <div class="calltree-line-wrapper open level-1" data-paddingleft="116px">
+          <div class="lawngreen-background coverage-line">
+           <span class="coverage-line-inner" data-calltree-idx="00013" data-paddingleft="132px" style="padding-left: 132px">
+            <span class="node-depth-wrapper">
+             2
+            </span>
+            <code class="language-clike">
+             utf8_verify
+            </code>
+            <span class="coverage-line-filename">
+             <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2082">
+              [function]
+             </a>
+             <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2281">
+              [call site]
+             </a>
+             <span class="calltree-idx">
+              00013
+             </span>
+            </span>
+           </span>
+           <div class="calltree-line-wrapper open level-2" data-paddingleft="132px">
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00014" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               strlen
+              </code>
+              <span class="coverage-line-filename">
+               <a href="#">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2087">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00014
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00015" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2093">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00015
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00016" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               utf8_verify_ascii
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2033">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2103">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00016
+               </span>
+              </span>
+             </span>
+             <div class="calltree-line-wrapper open level-3" data-paddingleft="148px">
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00017" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 strlen
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="#">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2038">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00017
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00018" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 load_u8
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2040">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00018
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00019" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 align_to
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1986">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2042">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00019
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00020" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 utf8_word_is_ascii
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2026">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2046">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00020
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00021" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 load_word
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2003">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2046">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00021
+                 </span>
+                </span>
+               </span>
+               <div class="calltree-line-wrapper open level-4" data-paddingleft="164px">
+                <div class="lawngreen-background coverage-line">
+                 <span class="coverage-line-inner" data-calltree-idx="00022" data-paddingleft="180px" style="padding-left: 180px">
+                  <span class="node-depth-wrapper">
+                   5
+                  </span>
+                  <code class="language-clike">
+                   _attribute_aligned
+                  </code>
+                  <span class="coverage-line-filename">
+                   <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1998">
+                    [function]
+                   </a>
+                   <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2008">
+                    [call site]
+                   </a>
+                   <span class="calltree-idx">
+                    00022
+                   </span>
+                  </span>
+                 </span>
+                </div>
+                <div class="red-background coverage-line">
+                 <span class="coverage-line-inner" data-calltree-idx="00023" data-paddingleft="180px" style="padding-left: 180px">
+                  <span class="node-depth-wrapper">
+                   5
+                  </span>
+                  <code class="language-clike">
+                   _attribute_aligned
+                  </code>
+                  <span class="coverage-line-filename">
+                   <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1998">
+                    [function]
+                   </a>
+                   <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2015">
+                    [call site]
+                   </a>
+                   <span class="calltree-idx">
+                    00023
+                   </span>
+                  </span>
+                 </span>
+                </div>
+               </div>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00024" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 utf8_word_is_ascii
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2026">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2047">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00024
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00025" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 load_word
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2003">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2047">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00025
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00026" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 load_u8
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2054">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00026
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00027" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 load_u8
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2056">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00027
+                 </span>
+                </span>
+               </span>
+              </div>
+              <div class="lawngreen-background coverage-line">
+               <span class="coverage-line-inner" data-calltree-idx="00028" data-paddingleft="164px" style="padding-left: 164px">
+                <span class="node-depth-wrapper">
+                 4
+                </span>
+                <code class="language-clike">
+                 load_u8
+                </code>
+                <span class="coverage-line-filename">
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                  [function]
+                 </a>
+                 <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2065">
+                  [call site]
+                 </a>
+                 <span class="calltree-idx">
+                  00028
+                 </span>
+                </span>
+               </span>
+              </div>
+             </div>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00029" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2110">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00029
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00030" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2110">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00030
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00031" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2122">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00031
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00032" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2122">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00032
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00033" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2124">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00033
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00034" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2124">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00034
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00035" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2135">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00035
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00036" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2135">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00036
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00037" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2137">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00037
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00038" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2137">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00038
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00039" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2148">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00039
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00040" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2148">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00040
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00041" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2150">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00041
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00042" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2150">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00042
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00043" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2161">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00043
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00044" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2161">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00044
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00045" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2163">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00045
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00046" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2163">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00046
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00047" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2174">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00047
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00048" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2174">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00048
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00049" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2176">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00049
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00050" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2176">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00050
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00051" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2178">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00051
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00052" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2178">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00052
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00053" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2189">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00053
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00054" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2189">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00054
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00055" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2191">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00055
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00056" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2191">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00056
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00057" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2193">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00057
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00058" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2193">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00058
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00059" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2204">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00059
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00060" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2204">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00060
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00061" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2206">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00061
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00062" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2206">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00062
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00063" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               UTF8_CHAR_IS_TAIL
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2080">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2208">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00063
+               </span>
+              </span>
+             </span>
+            </div>
+            <div class="lawngreen-background coverage-line">
+             <span class="coverage-line-inner" data-calltree-idx="00064" data-paddingleft="148px" style="padding-left: 148px">
+              <span class="node-depth-wrapper">
+               3
+              </span>
+              <code class="language-clike">
+               load_u8
+              </code>
+              <span class="coverage-line-filename">
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L1988">
+                [function]
+               </a>
+               <a href="/covreport/fuzz_utf8_validate/linux/src/glib/glib/gutf8.c.html#L2208">
+                [call site]
+               </a>
+               <span class="calltree-idx">
+                00064
+               </span>
+              </span>
+             </span>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div id="side-overview-wrapper">
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+   var fuzz_blocker_infos = '{"00005": "", "00008": "", "00022": ""}';
+  </script>
+  <script src="calltree.js">
+  </script>
+ </body>
+</html>

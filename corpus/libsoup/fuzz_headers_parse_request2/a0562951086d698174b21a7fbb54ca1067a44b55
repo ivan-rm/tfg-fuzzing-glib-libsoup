@@ -1,0 +1,10 @@
+GET /index.html HTTP/1.1
+Host: localhost
+Connection: keep-alive
+X-Custom-Header-Fuzz: HTTP/1.1
+
+A: 1
+B: 2
+Content-Type: t:hattachment-no-name
+Content-Length: -3
+Content-Length: 42

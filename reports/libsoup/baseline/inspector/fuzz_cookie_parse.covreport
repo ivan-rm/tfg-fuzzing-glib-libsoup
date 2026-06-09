@@ -1,0 +1,1548 @@
+fuzz_cookie_parse.c:fuzz_set_logging_func:
+   18|  3.25k|{
+   19|  3.25k|#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+   20|  3.25k|        if (!set_logger)
+  ------------------
+  |  Branch (20:13): [True: 1, False: 3.25k]
+  ------------------
+   21|      1|        {
+   22|      1|                set_logger = 1;
+   23|      1|                g_log_set_writer_func (empty_logging_func, NULL, NULL);
+   24|      1|        }
+   25|  3.25k|#endif
+   26|  3.25k|}
+fuzz_cookie_parse.c:empty_logging_func:
+   10|    354|{
+   11|    354|        return G_LOG_WRITER_HANDLED;
+   12|    354|}
+
+LLVMFuzzerTestOneInput:
+    5|  3.26k|{
+    6|       |    // We only accept NUL terminated strings
+    7|  3.26k|    if (!size || data[size - 1] != '\0')
+  ------------------
+  |  Branch (7:9): [True: 0, False: 3.26k]
+  |  Branch (7:18): [True: 8, False: 3.25k]
+  ------------------
+    8|      8|        return 0;
+    9|       |
+   10|  3.25k|    fuzz_set_logging_func ();
+   11|       |
+   12|  3.25k|    SoupCookie *cookie = soup_cookie_parse ((char*)data, NULL);
+   13|       |
+   14|  3.25k|    g_clear_pointer (&cookie, soup_cookie_free);
+  ------------------
+  |  |  136|  3.25k|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|  3.25k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|  3.25k|  {                                                      \
+  |  |  138|  3.25k|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|  3.25k|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|  3.25k|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|  3.25k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|  3.25k|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|  3.25k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|  3.25k|    *_pp = NULL;                                         \
+  |  |  142|  3.25k|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 3.13k, False: 118]
+  |  |  ------------------
+  |  |  143|  3.25k|      (destroy) (_ptr);                                  \
+  |  |  144|  3.25k|  }                                                      \
+  |  |  145|  3.25k|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|  3.25k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3.25k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|  3.25k|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+   15|       |
+   16|  3.25k|    return 0;
+   17|  3.26k|}
+
+soup_cookie_parse:
+  452|  3.25k|{
+  453|  3.25k|        g_return_val_if_fail (cookie != NULL, NULL);
+  ------------------
+  |  |  663|  3.25k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  3.25k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|  3.25k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  3.25k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  3.25k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  3.25k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  3.25k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  3.25k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  3.25k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 3.25k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  3.25k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  3.25k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  3.25k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  3.25k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  3.25k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  3.25k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  3.25k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  3.25k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  3.25k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 3.25k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|  3.25k|      { } \
+  |  |  666|  3.25k|    else \
+  |  |  667|  3.25k|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|  3.25k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  3.25k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3.25k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  454|  3.25k|        g_return_val_if_fail (origin == NULL || g_uri_get_host (origin) != NULL, NULL);
+  ------------------
+  |  |  663|  3.25k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  3.25k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|  3.25k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  3.25k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  3.25k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  3.25k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  3.25k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  3.25k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  6.51k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 3.25k, False: 0]
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 0, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  3.25k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  3.25k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  3.25k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  3.25k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  3.25k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  3.25k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  3.25k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  3.25k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  3.25k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 3.25k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|  3.25k|      { } \
+  |  |  666|  3.25k|    else \
+  |  |  667|  3.25k|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|  3.25k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  3.25k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3.25k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  455|       |
+  456|  3.25k|	return parse_one_cookie (cookie, origin);
+  457|  3.25k|}
+soup_cookie_set_max_age:
+  590|  1.49k|{
+  591|  1.49k|	if (cookie->expires)
+  ------------------
+  |  Branch (591:6): [True: 958, False: 535]
+  ------------------
+  592|    958|		g_date_time_unref (cookie->expires);
+  593|       |
+  594|  1.49k|	if (max_age == -1)
+  ------------------
+  |  Branch (594:6): [True: 0, False: 1.49k]
+  ------------------
+  595|      0|		cookie->expires = NULL;
+  596|  1.49k|	else if (max_age == 0) {
+  ------------------
+  |  Branch (596:11): [True: 923, False: 570]
+  ------------------
+  597|       |		/* Use a date way in the past, to protect against
+  598|       |		 * clock skew.
+  599|       |		 */
+  600|    923|		cookie->expires = g_date_time_new_from_unix_utc (0);
+  601|    923|	} else {
+  602|    570|                GDateTime *now = g_date_time_new_now_utc ();
+  603|    570|                cookie->expires = g_date_time_add_seconds (now, max_age);
+  604|    570|                g_date_time_unref (now);
+  605|    570|        }
+  606|  1.49k|}
+soup_cookie_set_same_site_policy:
+  804|  3.48k|{
+  805|  3.48k|	switch (policy) {
+  806|    224|	case SOUP_SAME_SITE_POLICY_NONE:
+  ------------------
+  |  Branch (806:2): [True: 224, False: 3.25k]
+  ------------------
+  807|    224|	case SOUP_SAME_SITE_POLICY_STRICT:
+  ------------------
+  |  Branch (807:2): [True: 0, False: 3.48k]
+  ------------------
+  808|  3.48k|	case SOUP_SAME_SITE_POLICY_LAX:
+  ------------------
+  |  Branch (808:2): [True: 3.25k, False: 224]
+  ------------------
+  809|  3.48k|                cookie->same_site_policy = policy;
+  810|  3.48k|		break;
+  811|      0|	default:
+  ------------------
+  |  Branch (811:2): [True: 0, False: 3.48k]
+  ------------------
+  812|      0|		g_return_if_reached ();
+  ------------------
+  |  |  676|      0|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  677|      0|    g_log (G_LOG_DOMAIN, \
+  |  |  678|      0|           G_LOG_LEVEL_CRITICAL, \
+  |  |  679|      0|           "file %s: line %d (%s): should not be reached", \
+  |  |  680|      0|           __FILE__, \
+  |  |  681|      0|           __LINE__, \
+  |  |  682|      0|           G_STRFUNC); \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  683|      0|    return; \
+  |  |  684|      0|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  813|  3.48k|	}
+  814|  3.48k|}
+soup_cookie_free:
+  875|  3.25k|{
+  876|  3.25k|	g_return_if_fail (cookie != NULL);
+  ------------------
+  |  |  650|  3.25k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  3.25k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  651|  3.25k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  3.25k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  3.25k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  3.25k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  3.25k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  3.25k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  3.25k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 3.25k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  3.25k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  3.25k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  3.25k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  3.25k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  3.25k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  3.25k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  3.25k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  3.25k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  3.25k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 3.25k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  652|  3.25k|      { } \
+  |  |  653|  3.25k|    else \
+  |  |  654|  3.25k|      { \
+  |  |  655|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  656|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  657|      0|                                  #expr); \
+  |  |  658|      0|        return; \
+  |  |  659|      0|      } \
+  |  |  660|  3.25k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  3.25k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3.25k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  877|       |
+  878|  3.25k|	g_free (cookie->name);
+  879|  3.25k|	g_free (cookie->value);
+  880|  3.25k|	g_free (cookie->domain);
+  881|  3.25k|	g_free (cookie->path);
+  882|  3.25k|	g_clear_pointer (&cookie->expires, g_date_time_unref);
+  ------------------
+  |  |  136|  3.25k|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|  3.25k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|  3.25k|  {                                                      \
+  |  |  138|  3.25k|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|  3.25k|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|  3.25k|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|  3.25k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|  3.25k|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|  3.25k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|  3.25k|    *_pp = NULL;                                         \
+  |  |  142|  3.25k|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 845, False: 2.41k]
+  |  |  ------------------
+  |  |  143|  3.25k|      (destroy) (_ptr);                                  \
+  |  |  144|  3.25k|  }                                                      \
+  |  |  145|  3.25k|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|  3.25k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3.25k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|  3.25k|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+  883|       |
+  884|  3.25k|	g_dataset_destroy (cookie);
+  885|  3.25k|	g_slice_free (SoupCookie, cookie);
+  ------------------
+  |  |   81|  3.25k|#define g_slice_free(type, mem)                                 \
+  |  |  ------------------
+  |  |  |  |  989|  3.25k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |   82|  3.25k|G_STMT_START {                                                  \
+  |  |   83|  3.25k|  if (1) g_slice_free1 (sizeof (type), (mem));			\
+  |  |  ------------------
+  |  |  |  Branch (83:7): [True: 3.25k, Folded]
+  |  |  ------------------
+  |  |   84|  3.25k|  else   (void) ((type*) 0 == (mem)); 				\
+  |  |   85|  3.25k|} G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  3.25k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3.25k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  886|  3.25k|}
+soup-cookie.c:parse_one_cookie:
+  176|  3.25k|{
+  177|  3.25k|	const char *start, *end, *p;
+  178|  3.25k|	gboolean has_value;
+  179|  3.25k|	SoupCookie *cookie;
+  180|       |
+  181|  3.25k|	cookie = g_slice_new0 (SoupCookie);
+  ------------------
+  |  |   54|  3.25k|  (type *) (G_GNUC_EXTENSION ({                                 \
+  |  |  ------------------
+  |  |  |  |   62|  3.25k|#define G_GNUC_EXTENSION __extension__
+  |  |  ------------------
+  |  |   55|  3.25k|    gsize __s = sizeof (type);                                  \
+  |  |   56|  3.25k|    gpointer __p;                                               \
+  |  |   57|  3.25k|    __p = g_slice_alloc (__s);                                  \
+  |  |   58|  3.25k|    memset (__p, 0, __s);                                       \
+  |  |   59|  3.25k|    __p;                                                        \
+  |  |   60|  3.25k|  }))
+  ------------------
+  182|  3.25k|	soup_cookie_set_same_site_policy (cookie, SOUP_SAME_SITE_POLICY_LAX);
+  183|       |
+  184|       |	/* Parse the NAME */
+  185|  3.25k|	start = skip_lws (header);
+  186|  21.5k|	for (p = start; !is_attr_ender (*p); p++)
+  ------------------
+  |  |  133|  21.5k|#define is_attr_ender(ch) ((ch) == '\0' || (ch) == ';' || (ch) == ',' || (ch) == '=')
+  |  |  ------------------
+  |  |  |  Branch (133:28): [True: 85, False: 21.4k]
+  |  |  |  Branch (133:44): [True: 3.08k, False: 18.3k]
+  |  |  |  Branch (133:59): [True: 21, False: 18.3k]
+  |  |  |  Branch (133:74): [True: 65, False: 18.3k]
+  |  |  ------------------
+  ------------------
+  187|  18.3k|		;
+  188|  3.25k|	if (*p == '=') {
+  ------------------
+  |  Branch (188:6): [True: 65, False: 3.19k]
+  ------------------
+  189|     65|		end = unskip_lws (p, start);
+  190|     65|		cookie->name = g_strndup (start, end - start);
+  191|  3.19k|	} else {
+  192|       |		/* No NAME; Set cookie->name to "" and then rewind to
+  193|       |		 * re-parse the string as a VALUE.
+  194|       |		 */
+  195|  3.19k|		cookie->name = g_strdup ("");
+  ------------------
+  |  |  324|  3.19k|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  196|  3.19k|		p = start;
+  197|  3.19k|	}
+  198|       |
+  199|       |	/* Parse the VALUE */
+  200|  3.25k|	cookie->value = parse_value (&p, TRUE);
+  ------------------
+  |  |  933|  3.25k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  3.25k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  201|       |
+  202|  3.25k|        if (!*cookie->name && !*cookie->value) {
+  ------------------
+  |  Branch (202:13): [True: 3.21k, False: 43]
+  |  Branch (202:31): [True: 45, False: 3.16k]
+  ------------------
+  203|     45|            soup_cookie_free (cookie);
+  204|     45|            return NULL;
+  205|     45|        }
+  206|       |
+  207|  3.21k|	if (strlen (cookie->name) + strlen (cookie->value) > 4096) {
+  ------------------
+  |  Branch (207:6): [True: 1, False: 3.21k]
+  ------------------
+  208|      1|		soup_cookie_free (cookie);
+  209|      1|		return NULL;
+  210|      1|	}
+  211|       |
+  212|       |	/* Parse attributes */
+  213|  52.4k|	while (*p == ';') {
+  ------------------
+  |  Branch (213:9): [True: 49.1k, False: 3.21k]
+  ------------------
+  214|  49.1k|		start = skip_lws (p + 1);
+  215|  10.8M|		for (p = start; !is_attr_ender (*p); p++)
+  ------------------
+  |  |  133|  10.8M|#define is_attr_ender(ch) ((ch) == '\0' || (ch) == ';' || (ch) == ',' || (ch) == '=')
+  |  |  ------------------
+  |  |  |  Branch (133:28): [True: 343, False: 10.8M]
+  |  |  |  Branch (133:44): [True: 15.7k, False: 10.8M]
+  |  |  |  Branch (133:59): [True: 4, False: 10.8M]
+  |  |  |  Branch (133:74): [True: 33.1k, False: 10.7M]
+  |  |  ------------------
+  ------------------
+  216|  10.7M|			;
+  217|  49.1k|		end = unskip_lws (p, start);
+  218|       |
+  219|  49.1k|		has_value = (*p == '=');
+  220|  49.1k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  221|       |
+  222|  49.1k|		if (MATCH_NAME ("domain") && has_value) {
+  ------------------
+  |  |  220|  98.3k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  |  |  ------------------
+  |  |  |  Branch (220:27): [True: 2.30k, False: 46.8k]
+  |  |  |  Branch (220:61): [True: 1.31k, False: 999]
+  |  |  ------------------
+  ------------------
+  |  Branch (222:32): [True: 1.11k, False: 194]
+  ------------------
+  223|  1.11k|                        char *new_domain = parse_value (&p, TRUE);
+  ------------------
+  |  |  933|  1.11k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  1.11k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  224|  1.11k|                        if (strlen (new_domain) > MAX_ATTRIBUTE_SIZE) {
+  ------------------
+  |  |  172|  1.11k|#define MAX_ATTRIBUTE_SIZE 1024
+  ------------------
+  |  Branch (224:29): [True: 306, False: 810]
+  ------------------
+  225|    306|                            g_free (new_domain);
+  226|    306|                            continue;
+  227|    306|                        }
+  228|    810|			g_free (cookie->domain);
+  229|    810|			cookie->domain = g_steal_pointer (&new_domain);
+  ------------------
+  |  |  247|    810|#define g_steal_pointer(pp) ((glib_typeof (*pp)) (g_steal_pointer) (pp))
+  ------------------
+  230|    810|			if (!*cookie->domain) {
+  ------------------
+  |  Branch (230:8): [True: 386, False: 424]
+  ------------------
+  231|    386|				g_free (cookie->domain);
+  232|    386|				cookie->domain = NULL;
+  233|    386|			}
+  234|  48.0k|		} else if (MATCH_NAME ("expires") && has_value) {
+  ------------------
+  |  |  220|  96.1k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  |  |  ------------------
+  |  |  |  Branch (220:27): [True: 27.1k, False: 20.8k]
+  |  |  |  Branch (220:61): [True: 24.3k, False: 2.82k]
+  |  |  ------------------
+  ------------------
+  |  Branch (234:40): [True: 24.0k, False: 309]
+  ------------------
+  235|  24.0k|			g_clear_pointer (&cookie->expires, g_date_time_unref);
+  ------------------
+  |  |  136|  24.0k|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|  24.0k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|  24.0k|  {                                                      \
+  |  |  138|  24.0k|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|  24.0k|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|  24.0k|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|  24.0k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|  24.0k|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|  24.0k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|  24.0k|    *_pp = NULL;                                         \
+  |  |  142|  24.0k|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 6.82k, False: 17.2k]
+  |  |  ------------------
+  |  |  143|  24.0k|      (destroy) (_ptr);                                  \
+  |  |  144|  24.0k|  }                                                      \
+  |  |  145|  24.0k|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|  24.0k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 24.0k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|  24.0k|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+  236|  24.0k|			cookie->expires = parse_date (&p);
+  237|  24.0k|		} else if (MATCH_NAME ("httponly")) {
+  ------------------
+  |  |  220|  24.0k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  |  |  ------------------
+  |  |  |  Branch (220:27): [True: 2.31k, False: 21.7k]
+  |  |  |  Branch (220:61): [True: 673, False: 1.64k]
+  |  |  ------------------
+  ------------------
+  238|    673|			cookie->http_only = TRUE;
+  ------------------
+  |  |  933|    673|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    673|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  239|    673|			if (has_value)
+  ------------------
+  |  Branch (239:8): [True: 383, False: 290]
+  ------------------
+  240|    383|				parse_value (&p, FALSE);
+  ------------------
+  |  |  929|    383|#define	FALSE	(0)
+  ------------------
+  241|  23.3k|		} else if (MATCH_NAME ("max-age") && has_value) {
+  ------------------
+  |  |  220|  46.7k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  |  |  ------------------
+  |  |  |  Branch (220:27): [True: 3.13k, False: 20.2k]
+  |  |  |  Branch (220:61): [True: 2.17k, False: 963]
+  |  |  ------------------
+  ------------------
+  |  Branch (241:40): [True: 1.97k, False: 195]
+  ------------------
+  242|  1.97k|			char *max_age_str = parse_value (&p, TRUE), *mae;
+  ------------------
+  |  |  933|  1.97k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  1.97k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  243|  1.97k|                        if (strlen (max_age_str) > MAX_ATTRIBUTE_SIZE) {
+  ------------------
+  |  |  172|  1.97k|#define MAX_ATTRIBUTE_SIZE 1024
+  ------------------
+  |  Branch (243:29): [True: 202, False: 1.77k]
+  ------------------
+  244|    202|                            g_free (max_age_str);
+  245|    202|                            continue;
+  246|    202|                        }
+  247|  1.77k|			long max_age = strtol (max_age_str, &mae, 10);
+  248|  1.77k|			if (!*mae) {
+  ------------------
+  |  Branch (248:8): [True: 1.49k, False: 284]
+  ------------------
+  249|  1.49k|				if (max_age < 0)
+  ------------------
+  |  Branch (249:9): [True: 302, False: 1.19k]
+  ------------------
+  250|    302|					max_age = 0;
+  251|  1.49k|				if (max_age > MAX_AGE_CAP_IN_SECONDS)
+  ------------------
+  |  |  171|  1.49k|#define MAX_AGE_CAP_IN_SECONDS 31536000  // 1 year
+  ------------------
+  |  Branch (251:9): [True: 241, False: 1.25k]
+  ------------------
+  252|    241|					max_age = MAX_AGE_CAP_IN_SECONDS;
+  ------------------
+  |  |  171|    241|#define MAX_AGE_CAP_IN_SECONDS 31536000  // 1 year
+  ------------------
+  253|  1.49k|				soup_cookie_set_max_age (cookie, max_age);
+  254|  1.49k|			}
+  255|  1.77k|			g_free (max_age_str);
+  256|  21.3k|		} else if (MATCH_NAME ("path") && has_value) {
+  ------------------
+  |  |  220|  42.7k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  |  |  ------------------
+  |  |  |  Branch (220:27): [True: 1.83k, False: 19.5k]
+  |  |  |  Branch (220:61): [True: 1.03k, False: 795]
+  |  |  ------------------
+  ------------------
+  |  Branch (256:37): [True: 844, False: 194]
+  ------------------
+  257|    844|                        char *new_path = parse_value (&p, TRUE);
+  ------------------
+  |  |  933|    844|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    844|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  258|    844|                        if (strlen (new_path) > MAX_ATTRIBUTE_SIZE) {
+  ------------------
+  |  |  172|    844|#define MAX_ATTRIBUTE_SIZE 1024
+  ------------------
+  |  Branch (258:29): [True: 174, False: 670]
+  ------------------
+  259|    174|                            g_free (new_path);
+  260|    174|                            continue;
+  261|    174|                        }
+  262|    670|			g_free (cookie->path);
+  263|    670|			cookie->path = g_steal_pointer (&new_path);
+  ------------------
+  |  |  247|    670|#define g_steal_pointer(pp) ((glib_typeof (*pp)) (g_steal_pointer) (pp))
+  ------------------
+  264|    670|			if (*cookie->path != '/') {
+  ------------------
+  |  Branch (264:8): [True: 309, False: 361]
+  ------------------
+  265|    309|				g_free (cookie->path);
+  266|    309|				cookie->path = NULL;
+  267|    309|			}
+  268|  20.5k|		} else if (MATCH_NAME ("secure")) {
+  ------------------
+  |  |  220|  20.5k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  |  |  ------------------
+  |  |  |  Branch (220:27): [True: 1.19k, False: 19.3k]
+  |  |  |  Branch (220:61): [True: 720, False: 473]
+  |  |  ------------------
+  ------------------
+  269|    720|			cookie->secure = TRUE;
+  ------------------
+  |  |  933|    720|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    720|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  270|    720|			if (has_value)
+  ------------------
+  |  Branch (270:8): [True: 256, False: 464]
+  ------------------
+  271|    256|				parse_value (&p, FALSE);
+  ------------------
+  |  |  929|    256|#define	FALSE	(0)
+  ------------------
+  272|  19.8k|		} else if (MATCH_NAME ("samesite")) {
+  ------------------
+  |  |  220|  19.8k|#define MATCH_NAME(name) ((end - start == strlen (name)) && !g_ascii_strncasecmp (start, name, end - start))
+  |  |  ------------------
+  |  |  |  Branch (220:27): [True: 1.64k, False: 18.1k]
+  |  |  |  Branch (220:61): [True: 728, False: 918]
+  |  |  ------------------
+  ------------------
+  273|    728|			if (has_value) {
+  ------------------
+  |  Branch (273:8): [True: 534, False: 194]
+  ------------------
+  274|    534|				char *policy = parse_value (&p, TRUE);
+  ------------------
+  |  |  933|    534|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    534|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  275|    534|				if (g_ascii_strcasecmp (policy, "None") == 0)
+  ------------------
+  |  Branch (275:9): [True: 224, False: 310]
+  ------------------
+  276|    224|					soup_cookie_set_same_site_policy (cookie, SOUP_SAME_SITE_POLICY_NONE);
+  277|    310|				else if (g_ascii_strcasecmp (policy, "Strict") == 0)
+  ------------------
+  |  Branch (277:14): [True: 0, False: 310]
+  ------------------
+  278|      0|					soup_cookie_set_same_site_policy (cookie, SOUP_SAME_SITE_POLICY_STRICT);
+  279|       |				/* There is an explicit "Lax" value which is the default */
+  280|    534|				g_free (policy);
+  281|    534|			}
+  282|       |			/* Note that earlier versions of the same-site RFC treated invalid values as strict but
+  283|       |			   the latest revision assigns invalid SameSite values to Lax. */
+  284|  19.0k|		} else {
+  285|       |			/* Ignore unknown attributes, but we still have
+  286|       |			 * to skip over the value.
+  287|       |			 */
+  288|  19.0k|			if (has_value)
+  ------------------
+  |  Branch (288:8): [True: 3.94k, False: 15.1k]
+  ------------------
+  289|  3.94k|				parse_value (&p, FALSE);
+  ------------------
+  |  |  929|  3.94k|#define	FALSE	(0)
+  ------------------
+  290|  19.0k|		}
+  291|  49.1k|	}
+  292|       |
+  293|  3.21k|	if (cookie->domain) {
+  ------------------
+  |  Branch (293:6): [True: 94, False: 3.11k]
+  ------------------
+  294|       |		/* Domain must have at least one '.' (not counting an
+  295|       |		 * initial one. (We check this now, rather than
+  296|       |		 * bailing out sooner, because we don't want to force
+  297|       |		 * any cookies after this one in the Set-Cookie header
+  298|       |		 * to be discarded.)
+  299|       |		 */
+  300|     94|		if (!strchr (cookie->domain + 1, '.')) {
+  ------------------
+  |  Branch (300:7): [True: 72, False: 22]
+  ------------------
+  301|     72|			soup_cookie_free (cookie);
+  302|     72|			return NULL;
+  303|     72|		}
+  304|       |
+  305|       |		/* If the domain string isn't an IP addr, and doesn't
+  306|       |		 * start with a '.', prepend one.
+  307|       |		 */
+  308|     22|		if (!g_hostname_is_ip_address (cookie->domain) &&
+  ------------------
+  |  Branch (308:7): [True: 21, False: 1]
+  ------------------
+  309|     21|		    cookie->domain[0] != '.') {
+  ------------------
+  |  Branch (309:7): [True: 19, False: 2]
+  ------------------
+  310|     19|			char *tmp = g_strdup_printf (".%s", cookie->domain);
+  311|     19|			g_free (cookie->domain);
+  312|     19|			cookie->domain = tmp;
+  313|     19|		}
+  314|     22|	}
+  315|       |
+  316|  3.13k|	if (origin) {
+  ------------------
+  |  Branch (316:6): [True: 0, False: 3.13k]
+  ------------------
+  317|       |		/* Sanity-check domain */
+  318|      0|		if (cookie->domain) {
+  ------------------
+  |  Branch (318:7): [True: 0, False: 0]
+  ------------------
+  319|      0|			if (!soup_cookie_domain_matches (cookie, g_uri_get_host (origin))) {
+  ------------------
+  |  Branch (319:8): [True: 0, False: 0]
+  ------------------
+  320|      0|				soup_cookie_free (cookie);
+  321|      0|				return NULL;
+  322|      0|			}
+  323|      0|		} else
+  324|      0|			cookie->domain = g_strdup (g_uri_get_host (origin));
+  ------------------
+  |  |  324|      0|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  325|       |
+  326|       |		/* The original cookie spec didn't say that pages
+  327|       |		 * could only set cookies for paths they were under.
+  328|       |		 * RFC 2109 adds that requirement, but some sites
+  329|       |		 * depend on the old behavior
+  330|       |		 * (https://bugzilla.mozilla.org/show_bug.cgi?id=156725#c20).
+  331|       |		 * So we don't check the path.
+  332|       |		 */
+  333|       |
+  334|      0|		if (!cookie->path) {
+  ------------------
+  |  Branch (334:7): [True: 0, False: 0]
+  ------------------
+  335|      0|                        GUri *normalized_origin = soup_uri_copy_with_normalized_flags (origin);
+  336|      0|			char *slash;
+  337|      0|                        const char *origin_path = g_uri_get_path (normalized_origin);
+  338|       |
+  339|      0|			slash = strrchr (origin_path, '/');
+  340|      0|			if (!slash || slash == origin_path)
+  ------------------
+  |  Branch (340:8): [True: 0, False: 0]
+  |  Branch (340:18): [True: 0, False: 0]
+  ------------------
+  341|      0|				cookie->path = g_strdup ("/");
+  ------------------
+  |  |  324|      0|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  342|      0|			else {
+  343|      0|				cookie->path = g_strndup (origin_path,
+  344|      0|							  slash - origin_path);
+  345|      0|			}
+  346|       |
+  347|      0|                        g_uri_unref (normalized_origin);
+  348|      0|		}
+  349|       |
+  350|  3.13k|	} else if (!cookie->path) {
+  ------------------
+  |  Branch (350:13): [True: 3.12k, False: 12]
+  ------------------
+  351|  3.12k|		cookie->path = g_strdup ("/");
+  ------------------
+  |  |  324|  3.12k|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  352|  3.12k|	}
+  353|       |
+  354|  3.13k|	return cookie;
+  355|  3.13k|}
+soup-cookie.c:skip_lws:
+  119|  88.8k|{
+  120|  95.7k|	while (is_white_space (*s))
+  ------------------
+  |  Branch (120:9): [True: 6.90k, False: 88.8k]
+  ------------------
+  121|  6.90k|		s++;
+  122|  88.8k|	return s;
+  123|  88.8k|}
+soup-cookie.c:is_white_space:
+  113|   176k|{
+  114|   176k|	return (c == ' ' || c == '\t');
+  ------------------
+  |  Branch (114:10): [True: 10.1k, False: 166k]
+  |  Branch (114:22): [True: 6.74k, False: 160k]
+  ------------------
+  115|   176k|}
+soup-cookie.c:unskip_lws:
+  127|  85.6k|{
+  128|  95.5k|	while (s > start && is_white_space (*(s - 1)))
+  ------------------
+  |  Branch (128:9): [True: 81.2k, False: 14.3k]
+  |  Branch (128:22): [True: 9.95k, False: 71.2k]
+  ------------------
+  129|  9.95k|		s--;
+  130|  85.6k|	return s;
+  131|  85.6k|}
+soup-cookie.c:parse_value:
+  138|  36.3k|{
+  139|  36.3k|	const char *start, *end, *p;
+  140|  36.3k|	char *value;
+  141|       |
+  142|  36.3k|	p = *val_p;
+  143|  36.3k|	if (*p == '=')
+  ------------------
+  |  Branch (143:6): [True: 33.1k, False: 3.19k]
+  ------------------
+  144|  33.1k|		p++;
+  145|  36.3k|	start = skip_lws (p);
+  146|  4.31M|	for (p = start; !is_value_ender (*p); p++)
+  ------------------
+  |  |  134|  4.31M|#define is_value_ender(ch) ((ch) == '\0' || (ch) == ';')
+  |  |  ------------------
+  |  |  |  Branch (134:29): [True: 2.90k, False: 4.31M]
+  |  |  |  Branch (134:45): [True: 33.4k, False: 4.28M]
+  |  |  ------------------
+  ------------------
+  147|  4.28M|		;
+  148|  36.3k|	end = unskip_lws (p, start);
+  149|       |
+  150|  36.3k|	if (copy)
+  ------------------
+  |  Branch (150:6): [True: 31.7k, False: 4.58k]
+  ------------------
+  151|  31.7k|		value = g_strndup (start, end - start);
+  152|  4.58k|	else
+  153|  4.58k|		value = NULL;
+  154|       |
+  155|  36.3k|	*val_p = p;
+  156|  36.3k|	return value;
+  157|  36.3k|}
+soup-cookie.c:parse_date:
+  161|  24.0k|{
+  162|  24.0k|	char *value;
+  163|  24.0k|	GDateTime *date;
+  164|       |
+  165|  24.0k|	value = parse_value (val_p, TRUE);
+  ------------------
+  |  |  933|  24.0k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  24.0k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  166|  24.0k|	date = soup_date_time_new_from_http_string (value);
+  167|  24.0k|	g_free (value);
+  168|  24.0k|	return date;
+  169|  24.0k|}
+
+soup_date_time_new_from_http_string:
+  322|  24.0k|{
+  323|  24.0k|        g_return_val_if_fail (date_string != NULL, NULL);
+  ------------------
+  |  |  663|  24.0k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  24.0k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|  24.0k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  24.0k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  24.0k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  24.0k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  24.0k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  24.0k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  24.0k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 24.0k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  24.0k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  24.0k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  24.0k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  24.0k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  24.0k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  24.0k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  24.0k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  24.0k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  24.0k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 24.0k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|  24.0k|      { } \
+  |  |  666|  24.0k|    else \
+  |  |  667|  24.0k|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|  24.0k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  24.0k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 24.0k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  324|       |
+  325|  24.2k|	while (g_ascii_isspace (*date_string))
+  ------------------
+  |  |   86|  24.2k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 233, False: 24.0k]
+  |  |  ------------------
+  ------------------
+  326|    233|		date_string++;
+  327|       |
+  328|       |        /* If it starts with a digit, it's either an ISO 8601 date, or
+  329|       |         * an RFC2822 date without the optional weekday; in the later
+  330|       |         * case, there will be a month name later on, so look for one
+  331|       |         * of the month-start letters.
+  332|       |         * Previous versions of this library supported parsing iso8601 strings
+  333|       |         * however g_date_time_new_from_iso8601() should be used now. Just
+  334|       |         * catch those in case for testing.
+  335|       |         */
+  336|  24.0k|	if (G_UNLIKELY (g_ascii_isdigit (*date_string) && !strpbrk (date_string, "JFMASOND"))) {
+  ------------------
+  |  | 1249|  24.0k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1247|  24.0k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1239|  24.0k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  24.0k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1240|  24.0k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  | 1241|  63.4k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 15.3k, False: 8.67k]
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 354, False: 15.0k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1242|  24.0k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    354|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    354|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1243|  24.0k|   else                                         \
+  |  |  |  |  |  | 1244|  24.0k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|  23.7k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|  23.7k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1245|  24.0k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|  24.0k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|  24.0k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1246|  24.0k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1249:26): [True: 354, False: 23.7k]
+  |  |  ------------------
+  ------------------
+  337|    354|                g_debug ("Unsupported format passed to soup_date_time_new_from_http_string(): %s", date_string);
+  ------------------
+  |  |  368|    354|#define g_debug(...)    g_log (G_LOG_DOMAIN,         \
+  |  |  369|    354|                               G_LOG_LEVEL_DEBUG,    \
+  |  |  370|    354|                               __VA_ARGS__)
+  ------------------
+  338|    354|                return NULL;
+  339|    354|        }
+  340|       |
+  341|  23.7k|	return parse_textual_date (date_string);
+  342|  24.0k|}
+soup-date-utils.c:parse_textual_date:
+  254|  23.7k|{
+  255|  23.7k|        int month, day, year, hour, minute, second;
+  256|  23.7k|        GTimeZone *tz = NULL;
+  257|  23.7k|        GDateTime *date;
+  258|       |
+  259|       |	/* If it starts with a word, it must be a weekday, which we skip */
+  260|  23.7k|	if (g_ascii_isalpha (*date_string)) {
+  ------------------
+  |  |   65|  23.7k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_ALPHA) != 0)
+  |  |  ------------------
+  |  |  |  Branch (65:3): [True: 7.91k, False: 15.7k]
+  |  |  ------------------
+  ------------------
+  261|  17.6k|		while (g_ascii_isalpha (*date_string))
+  ------------------
+  |  |   65|  17.6k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_ALPHA) != 0)
+  |  |  ------------------
+  |  |  |  Branch (65:3): [True: 9.77k, False: 7.91k]
+  |  |  ------------------
+  ------------------
+  262|  9.77k|			date_string++;
+  263|  7.91k|		if (*date_string == ',')
+  ------------------
+  |  Branch (263:7): [True: 1.05k, False: 6.86k]
+  ------------------
+  264|  1.05k|			date_string++;
+  265|  15.2k|		while (g_ascii_isspace (*date_string))
+  ------------------
+  |  |   86|  15.2k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 7.36k, False: 7.91k]
+  |  |  ------------------
+  ------------------
+  266|  7.36k|			date_string++;
+  267|  7.91k|	}
+  268|       |
+  269|       |	/* If there's now another word, this must be an asctime-date */
+  270|  23.7k|	if (g_ascii_isalpha (*date_string)) {
+  ------------------
+  |  |   65|  23.7k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_ALPHA) != 0)
+  |  |  ------------------
+  |  |  |  Branch (65:3): [True: 6.93k, False: 16.7k]
+  |  |  ------------------
+  ------------------
+  271|       |		/* (Sun) Nov  6 08:49:37 1994 */
+  272|  6.93k|		if (!parse_month (&month, &date_string) ||
+  ------------------
+  |  Branch (272:7): [True: 1.05k, False: 5.87k]
+  ------------------
+  273|  5.87k|		    !parse_day (&day, &date_string) ||
+  ------------------
+  |  Branch (273:7): [True: 1.19k, False: 4.67k]
+  ------------------
+  274|  4.67k|		    !parse_time (&hour, &minute, &second, &date_string) ||
+  ------------------
+  |  Branch (274:7): [True: 2.71k, False: 1.96k]
+  ------------------
+  275|  1.96k|		    !parse_year (&year, &date_string) ||
+  ------------------
+  |  Branch (275:7): [True: 672, False: 1.29k]
+  ------------------
+  276|  1.29k|		    !g_date_valid_dmy (day, month, year))
+  ------------------
+  |  Branch (276:7): [True: 242, False: 1.04k]
+  ------------------
+  277|  5.88k|			return NULL;
+  278|       |
+  279|       |		/* There shouldn't be a timezone, but check anyway */
+  280|  1.04k|		parse_timezone (&tz, &date_string);
+  281|  16.7k|	} else {
+  282|       |		/* Non-asctime date, so some variation of
+  283|       |		 * (Sun,) 06 Nov 1994 08:49:37 GMT
+  284|       |		 */
+  285|  16.7k|		if (!parse_day (&day, &date_string) ||
+  ------------------
+  |  Branch (285:7): [True: 1.77k, False: 14.9k]
+  ------------------
+  286|  14.9k|		    !parse_month (&month, &date_string) ||
+  ------------------
+  |  Branch (286:7): [True: 625, False: 14.3k]
+  ------------------
+  287|  14.3k|		    !parse_year (&year, &date_string) ||
+  ------------------
+  |  Branch (287:7): [True: 569, False: 13.8k]
+  ------------------
+  288|  13.8k|		    !parse_time (&hour, &minute, &second, &date_string) ||
+  ------------------
+  |  Branch (288:7): [True: 7.52k, False: 6.28k]
+  ------------------
+  289|  6.28k|		    !g_date_valid_dmy (day, month, year))
+  ------------------
+  |  Branch (289:7): [True: 197, False: 6.08k]
+  ------------------
+  290|  10.6k|			return NULL;
+  291|       |
+  292|       |		/* This time there *should* be a timezone, but we
+  293|       |		 * survive if there isn't.
+  294|       |		 */
+  295|  6.08k|		parse_timezone (&tz, &date_string);
+  296|  6.08k|	}
+  297|       |
+  298|  7.13k|        if (!tz)
+  ------------------
+  |  Branch (298:13): [True: 1.72k, False: 5.41k]
+  ------------------
+  299|  1.72k|                tz = g_time_zone_new_utc ();
+  300|       |
+  301|  7.13k|        date = g_date_time_new (tz, year, month, day, hour, minute, second);
+  302|  7.13k|        g_time_zone_unref (tz);
+  303|       |
+  304|  7.13k|        return date;
+  305|  23.7k|}
+soup-date-utils.c:parse_month:
+  140|  21.9k|{
+  141|  21.9k|	int i;
+  142|       |
+  143|   105k|	for (i = 0; i < G_N_ELEMENTS (months); i++) {
+  ------------------
+  |  |  955|   105k|#define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
+  ------------------
+  |  Branch (143:14): [True: 104k, False: 1.68k]
+  ------------------
+  144|   104k|		if (!g_ascii_strncasecmp (*date_string, months[i], 3)) {
+  ------------------
+  |  Branch (144:7): [True: 20.2k, False: 83.8k]
+  ------------------
+  145|  20.2k|			*month = i + 1;
+  146|  20.2k|			*date_string += 3;
+  147|  22.4k|			while (**date_string == ' ' || **date_string == '-')
+  ------------------
+  |  Branch (147:11): [True: 968, False: 21.5k]
+  |  Branch (147:35): [True: 1.27k, False: 20.2k]
+  ------------------
+  148|  2.24k|				(*date_string)++;
+  149|  20.2k|			return TRUE;
+  ------------------
+  |  |  933|  20.2k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  20.2k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  150|  20.2k|		}
+  151|   104k|	}
+  152|  1.68k|	return FALSE;
+  ------------------
+  |  |  929|  1.68k|#define	FALSE	(0)
+  ------------------
+  153|  21.9k|}
+soup-date-utils.c:parse_day:
+  125|  22.6k|{
+  126|  22.6k|	char *end;
+  127|       |
+  128|  22.6k|	*day = strtoul (*date_string, &end, 10);
+  129|  22.6k|	if (end == (char *)*date_string)
+  ------------------
+  |  Branch (129:6): [True: 2.29k, False: 20.3k]
+  ------------------
+  130|  2.29k|		return FALSE;
+  ------------------
+  |  |  929|  2.29k|#define	FALSE	(0)
+  ------------------
+  131|       |
+  132|  24.5k|	while (*end == ' ' || *end == '-')
+  ------------------
+  |  Branch (132:9): [True: 1.91k, False: 22.5k]
+  |  Branch (132:24): [True: 2.25k, False: 20.3k]
+  ------------------
+  133|  4.16k|		end++;
+  134|  20.3k|	*date_string = end;
+  135|  20.3k|	return *day >= 1 && *day <= 31;
+  ------------------
+  |  Branch (135:9): [True: 19.7k, False: 606]
+  |  Branch (135:22): [True: 19.6k, False: 71]
+  ------------------
+  136|  22.6k|}
+soup-date-utils.c:parse_time:
+  180|  18.4k|{
+  181|  18.4k|	char *p, *end;
+  182|       |
+  183|  18.4k|	*hour = strtoul (*date_string, &end, 10);
+  184|  18.4k|	if (end == (char *)*date_string || *end++ != ':')
+  ------------------
+  |  Branch (184:6): [True: 1.20k, False: 17.2k]
+  |  Branch (184:37): [True: 562, False: 16.7k]
+  ------------------
+  185|  1.76k|		return FALSE;
+  ------------------
+  |  |  929|  1.76k|#define	FALSE	(0)
+  ------------------
+  186|  16.7k|	p = end;
+  187|  16.7k|	*minute = strtoul (p, &end, 10);
+  188|  16.7k|	if (end == p || *end++ != ':')
+  ------------------
+  |  Branch (188:6): [True: 568, False: 16.1k]
+  |  Branch (188:18): [True: 547, False: 15.5k]
+  ------------------
+  189|  1.11k|		return FALSE;
+  ------------------
+  |  |  929|  1.11k|#define	FALSE	(0)
+  ------------------
+  190|  15.5k|	p = end;
+  191|  15.5k|	*second = strtoul (p, &end, 10);
+  192|  15.5k|	if (end == p)
+  ------------------
+  |  Branch (192:6): [True: 457, False: 15.1k]
+  ------------------
+  193|    457|		return FALSE;
+  ------------------
+  |  |  929|    457|#define	FALSE	(0)
+  ------------------
+  194|  15.1k|	p = end;
+  195|       |
+  196|  16.7k|	while (*p == ' ')
+  ------------------
+  |  Branch (196:9): [True: 1.57k, False: 15.1k]
+  ------------------
+  197|  1.57k|		p++;
+  198|  15.1k|	*date_string = p;
+  199|  15.1k|	return *hour >= 0 && *hour < 24 && *minute >= 0 && *minute < 60 && *second >= 0 && *second < 60;
+  ------------------
+  |  Branch (199:9): [True: 14.5k, False: 606]
+  |  Branch (199:23): [True: 14.0k, False: 511]
+  |  Branch (199:37): [True: 13.5k, False: 483]
+  |  Branch (199:53): [True: 12.9k, False: 626]
+  |  Branch (199:69): [True: 8.31k, False: 4.59k]
+  |  Branch (199:85): [True: 8.24k, False: 71]
+  ------------------
+  200|  15.5k|}
+soup-date-utils.c:parse_year:
+  157|  16.3k|{
+  158|  16.3k|	char *end;
+  159|       |
+  160|  16.3k|	*year = strtoul (*date_string, &end, 10);
+  161|  16.3k|	if (end == (char *)*date_string)
+  ------------------
+  |  Branch (161:6): [True: 563, False: 15.7k]
+  ------------------
+  162|    563|		return FALSE;
+  ------------------
+  |  |  929|    563|#define	FALSE	(0)
+  ------------------
+  163|       |
+  164|  15.7k|	if (end == (char *)*date_string + 2) {
+  ------------------
+  |  Branch (164:6): [True: 1.38k, False: 14.3k]
+  ------------------
+  165|  1.38k|		if (*year < 70)
+  ------------------
+  |  Branch (165:7): [True: 837, False: 548]
+  ------------------
+  166|    837|			*year += 2000;
+  167|    548|		else
+  168|    548|			*year += 1900;
+  169|  14.3k|	} else if (end == (char *)*date_string + 3)
+  ------------------
+  |  Branch (169:13): [True: 434, False: 13.9k]
+  ------------------
+  170|    434|		*year += 1900;
+  171|       |
+  172|  20.7k|	while (*end == ' ' || *end == '-')
+  ------------------
+  |  Branch (172:9): [True: 1.34k, False: 19.4k]
+  |  Branch (172:24): [True: 3.67k, False: 15.7k]
+  ------------------
+  173|  5.02k|		end++;
+  174|  15.7k|	*date_string = end;
+  175|  15.7k|	return *year > 0 && *year < 9999;
+  ------------------
+  |  Branch (175:9): [True: 15.1k, False: 633]
+  |  Branch (175:22): [True: 15.0k, False: 45]
+  ------------------
+  176|  16.3k|}
+soup-date-utils.c:parse_timezone:
+  204|  7.13k|{
+  205|  7.13k|        gint32 offset_minutes;
+  206|  7.13k|        gboolean utc;
+  207|       |
+  208|  7.13k|	if (!**date_string) {
+  ------------------
+  |  Branch (208:6): [True: 1.00k, False: 6.13k]
+  ------------------
+  209|  1.00k|                utc = FALSE;
+  ------------------
+  |  |  929|  1.00k|#define	FALSE	(0)
+  ------------------
+  210|  1.00k|		offset_minutes = 0;
+  211|  6.13k|	} else if (**date_string == '+' || **date_string == '-') {
+  ------------------
+  |  Branch (211:13): [True: 244, False: 5.88k]
+  |  Branch (211:37): [True: 3.58k, False: 2.30k]
+  ------------------
+  212|  3.82k|		gulong val;
+  213|  3.82k|		int sign = (**date_string == '+') ? 1 : -1;
+  ------------------
+  |  Branch (213:14): [True: 244, False: 3.58k]
+  ------------------
+  214|  3.82k|		val = strtoul (*date_string + 1, (char **)date_string, 10);
+  215|  3.82k|		if (val > 9999)
+  ------------------
+  |  Branch (215:7): [True: 297, False: 3.52k]
+  ------------------
+  216|    297|			return FALSE;
+  ------------------
+  |  |  929|    297|#define	FALSE	(0)
+  ------------------
+  217|  3.52k|		if (**date_string == ':') {
+  ------------------
+  |  Branch (217:7): [True: 1.92k, False: 1.60k]
+  ------------------
+  218|  1.92k|			gulong val2 = strtoul (*date_string + 1, (char **)date_string, 10);
+  219|  1.92k|			if (val > 99 || val2 > 99)
+  ------------------
+  |  Branch (219:8): [True: 215, False: 1.70k]
+  |  Branch (219:20): [True: 307, False: 1.40k]
+  ------------------
+  220|    522|				return FALSE;
+  ------------------
+  |  |  929|    522|#define	FALSE	(0)
+  ------------------
+  221|  1.40k|			val = 60 * val + val2;
+  222|  1.40k|		} else
+  223|  1.60k|			val =  60 * (val / 100) + (val % 100);
+  224|  3.00k|		offset_minutes = sign * val;
+  225|  3.00k|		utc = (sign == -1) && !val;
+  ------------------
+  |  Branch (225:9): [True: 2.78k, False: 223]
+  |  Branch (225:25): [True: 488, False: 2.29k]
+  ------------------
+  226|  3.00k|	} else if (**date_string == 'Z') {
+  ------------------
+  |  Branch (226:13): [True: 194, False: 2.11k]
+  ------------------
+  227|    194|		offset_minutes = 0;
+  228|    194|		utc = TRUE;
+  ------------------
+  |  |  933|    194|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    194|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  229|    194|		(*date_string)++;
+  230|  2.11k|	} else if (!strcmp (*date_string, "GMT") ||
+  ------------------
+  |  Branch (230:13): [True: 246, False: 1.86k]
+  ------------------
+  231|  1.86k|		   !strcmp (*date_string, "UTC")) {
+  ------------------
+  |  Branch (231:6): [True: 194, False: 1.67k]
+  ------------------
+  232|    440|		offset_minutes = 0;
+  233|    440|		utc = TRUE;
+  ------------------
+  |  |  933|    440|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    440|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  234|    440|		(*date_string) += 3;
+  235|  1.67k|	} else if (strchr ("ECMP", **date_string) &&
+  ------------------
+  |  Branch (235:13): [True: 1.29k, False: 374]
+  ------------------
+  236|  1.29k|		   ((*date_string)[1] == 'D' || (*date_string)[1] == 'S') &&
+  ------------------
+  |  Branch (236:7): [True: 358, False: 940]
+  |  Branch (236:35): [True: 754, False: 186]
+  ------------------
+  237|  1.11k|		   (*date_string)[2] == 'T') {
+  ------------------
+  |  Branch (237:6): [True: 769, False: 343]
+  ------------------
+  238|    769|		offset_minutes = -60 * (5 * strcspn ("ECMP", *date_string));
+  239|    769|		if ((*date_string)[1] == 'D')
+  ------------------
+  |  Branch (239:7): [True: 309, False: 460]
+  ------------------
+  240|    309|			offset_minutes += 60;
+  241|    769|                utc = FALSE;
+  ------------------
+  |  |  929|    769|#define	FALSE	(0)
+  ------------------
+  242|    769|	} else
+  243|    903|		return FALSE;
+  ------------------
+  |  |  929|    903|#define	FALSE	(0)
+  ------------------
+  244|       |
+  245|  5.41k|        if (utc)
+  ------------------
+  |  Branch (245:13): [True: 1.12k, False: 4.28k]
+  ------------------
+  246|  1.12k|                *timezone = g_time_zone_new_utc ();
+  247|  4.28k|        else
+  248|  4.28k|                *timezone = g_time_zone_new_offset (offset_minutes * 60);
+  249|  5.41k|	return TRUE;
+  ------------------
+  |  |  933|  5.41k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  5.41k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  250|  7.13k|}
+
+soup-cookie.c:g_steal_pointer:
+  235|  1.48k|{
+  236|  1.48k|  gpointer *ptr = (gpointer *) pp;
+  237|  1.48k|  gpointer ref;
+  238|       |
+  239|  1.48k|  ref = *ptr;
+  240|  1.48k|  *ptr = NULL;
+  241|       |
+  242|  1.48k|  return ref;
+  243|  1.48k|}
+
+soup-cookie.c:g_strdup_inline:
+  310|  6.31k|{
+  311|  6.31k|  if (__builtin_constant_p (!str) && !str)
+  ------------------
+  |  Branch (311:7): [True: 6.31k, False: 0]
+  |  Branch (311:38): [True: 0, False: 6.31k]
+  ------------------
+  312|      0|    return NULL;
+  313|       |
+  314|  6.31k|  if (__builtin_constant_p (!!str) && !!str && __builtin_constant_p (strlen (str)))
+  ------------------
+  |  Branch (314:7): [True: 6.31k, False: 0]
+  |  Branch (314:39): [True: 6.31k, False: 0]
+  |  Branch (314:48): [True: 6.31k, False: 0]
+  ------------------
+  315|  6.31k|    {
+  316|  6.31k|      const size_t len = strlen (str) + 1;
+  317|  6.31k|      char *dup_str = (char *) g_malloc (len);
+  318|  6.31k|      return (char *) memcpy (dup_str, str, len);
+  319|  6.31k|    }
+  320|       |
+  321|      0|  return g_strdup (str);
+  322|  6.31k|}
+

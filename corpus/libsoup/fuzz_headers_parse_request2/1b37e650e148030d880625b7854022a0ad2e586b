@@ -1,0 +1,15 @@
+GET /index.html HTTP/1.1
+Host: localhost
+Connection: k:
+:header-with-no-name
+Content-Length: 42
+Contenlive
+X-Custom-Header-Fuzz: uÿÿÿÿmon_value
+A: 1
+B: 2
+Content-Type: text/htmfilename=HttpOnly
+Link: </sso-8859-1
+Set-Cookie: id=a3fWa; Exp¨res=Wed, 21-VŸšue:
+:header-with-no-name
+Content-Length: 42
+Content-Length: 42

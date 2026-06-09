@@ -1,0 +1,3997 @@
+fuzz_headers_parse_request2.c:fuzz_set_logging_func:
+   18|     13|{
+   19|     13|#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+   20|     13|        if (!set_logger)
+  ------------------
+  |  Branch (20:13): [True: 1, False: 12]
+  ------------------
+   21|      1|        {
+   22|      1|                set_logger = 1;
+   23|      1|                g_log_set_writer_func (empty_logging_func, NULL, NULL);
+   24|      1|        }
+   25|     13|#endif
+   26|     13|}
+fuzz_headers_parse_request2.c:empty_logging_func:
+   10|      1|{
+   11|      1|        return G_LOG_WRITER_HANDLED;
+   12|      1|}
+
+LLVMFuzzerTestOneInput:
+    5|     13|{
+    6|     13|        if (size < 1)
+  ------------------
+  |  Branch (6:13): [True: 0, False: 13]
+  ------------------
+    7|      0|                return 0;
+    8|     13|        fuzz_set_logging_func ();
+    9|       |
+   10|     13|        SoupMessageHeaders *headers = soup_message_headers_new (SOUP_MESSAGE_HEADERS_REQUEST);
+   11|     13|        char *method = NULL;
+   12|     13|        char *path = NULL;
+   13|     13|        SoupHTTPVersion ver;
+   14|       |
+   15|     13|        guint status;
+   16|     13|        status = soup_headers_parse_request ((const char *)data, size, headers, &method, &path, &ver);
+   17|       |
+   18|     13|        if (status == SOUP_STATUS_OK) {
+  ------------------
+  |  Branch (18:13): [True: 11, False: 2]
+  ------------------
+   19|       |
+   20|     11|                GHashTable *ct_params = NULL;
+   21|     11|                soup_message_headers_get_content_type (headers, &ct_params);
+   22|     11|                if (ct_params)
+  ------------------
+  |  Branch (22:21): [True: 0, False: 11]
+  ------------------
+   23|      0|                        g_hash_table_destroy (ct_params);
+   24|       |
+   25|     11|                char *disposition = NULL;
+   26|     11|                GHashTable *cd_params = NULL;
+   27|     11|                if (soup_message_headers_get_content_disposition (headers, &disposition, &cd_params)) {
+  ------------------
+  |  Branch (27:21): [True: 0, False: 11]
+  ------------------
+   28|      0|                        g_free (disposition);
+   29|      0|                        if (cd_params)
+  ------------------
+  |  Branch (29:29): [True: 0, False: 0]
+  ------------------
+   30|      0|                                g_hash_table_destroy (cd_params);
+   31|      0|                }
+   32|       |
+   33|     11|                soup_message_headers_get_content_length (headers);
+   34|     11|                soup_message_headers_get_encoding (headers);
+   35|     11|                soup_message_headers_get_expectations (headers);
+   36|       |
+   37|     11|                SoupRange *ranges = NULL;
+   38|     11|                int n_ranges;
+   39|     11|                if (soup_message_headers_get_ranges (headers, 100, &ranges, &n_ranges)) {
+  ------------------
+  |  Branch (39:21): [True: 1, False: 10]
+  ------------------
+   40|      1|                        soup_message_headers_free_ranges (headers, ranges);
+   41|      1|                }
+   42|     11|        }
+   43|       |
+   44|     13|        soup_message_headers_unref (headers);
+   45|     13|        g_free (method);
+   46|     13|        g_free (path);
+   47|       |
+   48|     13|        return 0;
+   49|     13|}
+
+soup_header_name_from_string:
+  685|  4.62k|{
+  686|  4.62k|        const struct SoupHeaderHashEntry *entry;
+  687|       |
+  688|  4.62k|        entry = soup_header_name_find (str, strlen (str));
+  689|  4.62k|        return entry ? entry->header_name : SOUP_HEADER_UNKNOWN;
+  ------------------
+  |  Branch (689:16): [True: 3.77k, False: 850]
+  ------------------
+  690|  4.62k|}
+soup-header-names.c:soup_header_name_find:
+  663|  4.62k|{
+  664|  4.62k|  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+  ------------------
+  |  |  132|  9.24k|#define MAX_WORD_LENGTH 35
+  ------------------
+                if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
+  ------------------
+  |  |  131|  4.60k|#define MIN_WORD_LENGTH 2
+  ------------------
+  |  Branch (664:7): [True: 4.60k, False: 14]
+  |  Branch (664:33): [True: 4.46k, False: 144]
+  ------------------
+  665|  4.46k|    {
+  666|  4.46k|      register unsigned int key = soup_header_name_hash_function (str, len);
+  667|       |
+  668|  4.46k|      if (key <= MAX_HASH_VALUE)
+  ------------------
+  |  |  134|  4.46k|#define MAX_HASH_VALUE 690
+  ------------------
+  |  Branch (668:11): [True: 4.07k, False: 388]
+  ------------------
+  669|  4.07k|        {
+  670|  4.07k|          register int index = lookup[key];
+  671|       |
+  672|  4.07k|          if (index >= 0)
+  ------------------
+  |  Branch (672:15): [True: 3.99k, False: 77]
+  ------------------
+  673|  3.99k|            {
+  674|  3.99k|              register const char *s = wordlist[index].name + stringpool;
+  ------------------
+  |  |  514|  3.99k|#define stringpool ((const char *) &stringpool_contents)
+  ------------------
+  675|       |
+  676|  3.99k|              if ((((unsigned char)*str ^ (unsigned char)*s) & ~32) == 0 && !gperf_case_strncmp (str, s, len) && s[len] == '\0')
+  ------------------
+  |  Branch (676:19): [True: 3.79k, False: 209]
+  |  Branch (676:77): [True: 3.77k, False: 18]
+  |  Branch (676:114): [True: 3.77k, False: 0]
+  ------------------
+  677|  3.77k|                return &wordlist[index];
+  678|  3.99k|            }
+  679|  4.07k|        }
+  680|  4.46k|    }
+  681|    850|  return 0;
+  682|  4.62k|}
+soup-header-names.c:soup_header_name_hash_function:
+  191|  4.46k|{
+  192|  4.46k|  static const unsigned short asso_values[] =
+  193|  4.46k|    {
+  194|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  195|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  196|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  197|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  198|  4.46k|      691, 691, 691, 691, 691,   5, 691, 691, 691, 691,
+  199|  4.46k|       40, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  200|  4.46k|      691, 691, 691, 691, 691,   0,   5,   0,  45,   0,
+  201|  4.46k|       95,  10,  65,   5, 691, 210,  20,  75,   5,   0,
+  202|  4.46k|       60, 130,   5,  10,   5,  75,   4, 155, 165,  75,
+  203|  4.46k|       35, 691, 691, 691, 691, 691, 691,   0,   5,   0,
+  204|  4.46k|       45,   0,  95,  10,  65,   5, 691, 210,  20,  75,
+  205|  4.46k|        5,   0,  60, 130,   5,  10,   5,  75,   4, 155,
+  206|  4.46k|      165,  75,  35, 691, 691, 691, 691, 691, 691, 691,
+  207|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  208|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  209|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  210|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  211|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  212|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  213|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  214|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  215|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  216|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  217|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  218|  4.46k|      691, 691, 691, 691, 691, 691, 691, 691, 691, 691,
+  219|  4.46k|      691, 691, 691, 691, 691, 691
+  220|  4.46k|    };
+  221|  4.46k|  register unsigned int hval = 0;
+  222|       |
+  223|  4.46k|  switch (len)
+  224|  4.46k|    {
+  225|      0|      default:
+  ------------------
+  |  Branch (225:7): [True: 0, False: 4.46k]
+  ------------------
+  226|      0|        hval += asso_values[(unsigned char)str[34]];
+  227|       |      /*FALLTHROUGH*/
+  228|      0|      case 34:
+  ------------------
+  |  Branch (228:7): [True: 0, False: 4.46k]
+  ------------------
+  229|      0|        hval += asso_values[(unsigned char)str[33]];
+  230|       |      /*FALLTHROUGH*/
+  231|      0|      case 33:
+  ------------------
+  |  Branch (231:7): [True: 0, False: 4.46k]
+  ------------------
+  232|      0|        hval += asso_values[(unsigned char)str[32]];
+  233|       |      /*FALLTHROUGH*/
+  234|      0|      case 32:
+  ------------------
+  |  Branch (234:7): [True: 0, False: 4.46k]
+  ------------------
+  235|      0|        hval += asso_values[(unsigned char)str[31]];
+  236|       |      /*FALLTHROUGH*/
+  237|    128|      case 31:
+  ------------------
+  |  Branch (237:7): [True: 128, False: 4.33k]
+  ------------------
+  238|    128|        hval += asso_values[(unsigned char)str[30]];
+  239|       |      /*FALLTHROUGH*/
+  240|    128|      case 30:
+  ------------------
+  |  Branch (240:7): [True: 0, False: 4.46k]
+  ------------------
+  241|    128|        hval += asso_values[(unsigned char)str[29]];
+  242|       |      /*FALLTHROUGH*/
+  243|    128|      case 29:
+  ------------------
+  |  Branch (243:7): [True: 0, False: 4.46k]
+  ------------------
+  244|    128|        hval += asso_values[(unsigned char)str[28]];
+  245|       |      /*FALLTHROUGH*/
+  246|    128|      case 28:
+  ------------------
+  |  Branch (246:7): [True: 0, False: 4.46k]
+  ------------------
+  247|    128|        hval += asso_values[(unsigned char)str[27]];
+  248|       |      /*FALLTHROUGH*/
+  249|    128|      case 27:
+  ------------------
+  |  Branch (249:7): [True: 0, False: 4.46k]
+  ------------------
+  250|    128|        hval += asso_values[(unsigned char)str[26]];
+  251|       |      /*FALLTHROUGH*/
+  252|    128|      case 26:
+  ------------------
+  |  Branch (252:7): [True: 0, False: 4.46k]
+  ------------------
+  253|    128|        hval += asso_values[(unsigned char)str[25]];
+  254|       |      /*FALLTHROUGH*/
+  255|    128|      case 25:
+  ------------------
+  |  Branch (255:7): [True: 0, False: 4.46k]
+  ------------------
+  256|    128|        hval += asso_values[(unsigned char)str[24]];
+  257|       |      /*FALLTHROUGH*/
+  258|    132|      case 24:
+  ------------------
+  |  Branch (258:7): [True: 4, False: 4.46k]
+  ------------------
+  259|    132|        hval += asso_values[(unsigned char)str[23]];
+  260|       |      /*FALLTHROUGH*/
+  261|    132|      case 23:
+  ------------------
+  |  Branch (261:7): [True: 0, False: 4.46k]
+  ------------------
+  262|    132|        hval += asso_values[(unsigned char)str[22]];
+  263|       |      /*FALLTHROUGH*/
+  264|    132|      case 22:
+  ------------------
+  |  Branch (264:7): [True: 0, False: 4.46k]
+  ------------------
+  265|    132|        hval += asso_values[(unsigned char)str[21]];
+  266|       |      /*FALLTHROUGH*/
+  267|    132|      case 21:
+  ------------------
+  |  Branch (267:7): [True: 0, False: 4.46k]
+  ------------------
+  268|    132|        hval += asso_values[(unsigned char)str[20]];
+  269|       |      /*FALLTHROUGH*/
+  270|    135|      case 20:
+  ------------------
+  |  Branch (270:7): [True: 3, False: 4.46k]
+  ------------------
+  271|    135|        hval += asso_values[(unsigned char)str[19]];
+  272|       |      /*FALLTHROUGH*/
+  273|    139|      case 19:
+  ------------------
+  |  Branch (273:7): [True: 4, False: 4.46k]
+  ------------------
+  274|    139|        hval += asso_values[(unsigned char)str[18]];
+  275|       |      /*FALLTHROUGH*/
+  276|    139|      case 18:
+  ------------------
+  |  Branch (276:7): [True: 0, False: 4.46k]
+  ------------------
+  277|    139|        hval += asso_values[(unsigned char)str[17]];
+  278|       |      /*FALLTHROUGH*/
+  279|    162|      case 17:
+  ------------------
+  |  Branch (279:7): [True: 23, False: 4.44k]
+  ------------------
+  280|    162|        hval += asso_values[(unsigned char)str[16]];
+  281|       |      /*FALLTHROUGH*/
+  282|    168|      case 16:
+  ------------------
+  |  Branch (282:7): [True: 6, False: 4.45k]
+  ------------------
+  283|    168|        hval += asso_values[(unsigned char)str[15]];
+  284|       |      /*FALLTHROUGH*/
+  285|    170|      case 15:
+  ------------------
+  |  Branch (285:7): [True: 2, False: 4.46k]
+  ------------------
+  286|    170|        hval += asso_values[(unsigned char)str[14]];
+  287|       |      /*FALLTHROUGH*/
+  288|    320|      case 14:
+  ------------------
+  |  Branch (288:7): [True: 150, False: 4.31k]
+  ------------------
+  289|    320|        hval += asso_values[(unsigned char)str[13]];
+  290|       |      /*FALLTHROUGH*/
+  291|    384|      case 13:
+  ------------------
+  |  Branch (291:7): [True: 64, False: 4.40k]
+  ------------------
+  292|    384|        hval += asso_values[(unsigned char)str[12]];
+  293|       |      /*FALLTHROUGH*/
+  294|    825|      case 12:
+  ------------------
+  |  Branch (294:7): [True: 441, False: 4.02k]
+  ------------------
+  295|    825|        hval += asso_values[(unsigned char)str[11]];
+  296|       |      /*FALLTHROUGH*/
+  297|    839|      case 11:
+  ------------------
+  |  Branch (297:7): [True: 14, False: 4.45k]
+  ------------------
+  298|    839|        hval += asso_values[(unsigned char)str[10]];
+  299|       |      /*FALLTHROUGH*/
+  300|  1.04k|      case 10:
+  ------------------
+  |  Branch (300:7): [True: 204, False: 4.26k]
+  ------------------
+  301|  1.04k|        hval += asso_values[(unsigned char)str[9]];
+  302|       |      /*FALLTHROUGH*/
+  303|  1.06k|      case 9:
+  ------------------
+  |  Branch (303:7): [True: 20, False: 4.44k]
+  ------------------
+  304|  1.06k|        hval += asso_values[(unsigned char)str[8]];
+  305|       |      /*FALLTHROUGH*/
+  306|  1.09k|      case 8:
+  ------------------
+  |  Branch (306:7): [True: 33, False: 4.43k]
+  ------------------
+  307|  1.09k|        hval += asso_values[(unsigned char)str[7]];
+  308|       |      /*FALLTHROUGH*/
+  309|  1.11k|      case 7:
+  ------------------
+  |  Branch (309:7): [True: 22, False: 4.44k]
+  ------------------
+  310|  1.11k|        hval += asso_values[(unsigned char)str[6]];
+  311|       |      /*FALLTHROUGH*/
+  312|  1.20k|      case 6:
+  ------------------
+  |  Branch (312:7): [True: 83, False: 4.38k]
+  ------------------
+  313|  1.20k|        hval += asso_values[(unsigned char)str[5]];
+  314|       |      /*FALLTHROUGH*/
+  315|  1.22k|      case 5:
+  ------------------
+  |  Branch (315:7): [True: 21, False: 4.44k]
+  ------------------
+  316|  1.22k|        hval += asso_values[(unsigned char)str[4]];
+  317|       |      /*FALLTHROUGH*/
+  318|  1.30k|      case 4:
+  ------------------
+  |  Branch (318:7): [True: 81, False: 4.38k]
+  ------------------
+  319|  1.30k|        hval += asso_values[(unsigned char)str[3]];
+  320|       |      /*FALLTHROUGH*/
+  321|  1.34k|      case 3:
+  ------------------
+  |  Branch (321:7): [True: 40, False: 4.42k]
+  ------------------
+  322|  1.34k|        hval += asso_values[(unsigned char)str[2]];
+  323|       |      /*FALLTHROUGH*/
+  324|  4.46k|      case 2:
+  ------------------
+  |  Branch (324:7): [True: 3.12k, False: 1.34k]
+  ------------------
+  325|  4.46k|        hval += asso_values[(unsigned char)str[1]];
+  326|       |      /*FALLTHROUGH*/
+  327|  4.46k|      case 1:
+  ------------------
+  |  Branch (327:7): [True: 0, False: 4.46k]
+  ------------------
+  328|  4.46k|        hval += asso_values[(unsigned char)str[0]];
+  329|  4.46k|        break;
+  330|  4.46k|    }
+  331|  4.46k|  return hval;
+  332|  4.46k|}
+soup-header-names.c:gperf_case_strncmp:
+  166|  3.79k|{
+  167|  18.6k|  for (; n > 0;)
+  ------------------
+  |  Branch (167:10): [True: 14.8k, False: 3.77k]
+  ------------------
+  168|  14.8k|    {
+  169|  14.8k|      unsigned char c1 = gperf_downcase[(unsigned char)*s1++];
+  170|  14.8k|      unsigned char c2 = gperf_downcase[(unsigned char)*s2++];
+  171|  14.8k|      if (c1 != 0 && c1 == c2)
+  ------------------
+  |  Branch (171:11): [True: 14.8k, False: 0]
+  |  Branch (171:22): [True: 14.8k, False: 18]
+  ------------------
+  172|  14.8k|        {
+  173|  14.8k|          n--;
+  174|  14.8k|          continue;
+  175|  14.8k|        }
+  176|     18|      return (int)c1 - (int)c2;
+  177|  14.8k|    }
+  178|  3.77k|  return 0;
+  179|  3.79k|}
+
+soup_headers_parse:
+   39|     13|{
+   40|     13|	const char *headers_start;
+   41|     13|	char *headers_copy, *name, *name_end, *value, *value_end;
+   42|     13|	char *eol, *sol, *p;
+   43|     13|	gsize copy_len;
+   44|     13|	gboolean success = FALSE;
+  ------------------
+  |  |  929|     13|#define	FALSE	(0)
+  ------------------
+   45|       |
+   46|     13|	g_return_val_if_fail (str != NULL, FALSE);
+  ------------------
+  |  |  663|     13|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     13|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     13|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     13|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     13|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     13| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     13|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     13|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     13|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 13, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     13|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     13|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     13|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     13|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     13|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 13, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     13|      { } \
+  |  |  666|     13|    else \
+  |  |  667|     13|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     13|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     13|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 13]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+   47|     13|	g_return_val_if_fail (dest != NULL, FALSE);
+  ------------------
+  |  |  663|     13|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     13|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     13|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     13|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     13|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     13| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     13|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     13|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     13|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 13, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     13|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     13|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     13|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     13|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     13|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 13, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     13|      { } \
+  |  |  666|     13|    else \
+  |  |  667|     13|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     13|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     13|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 13]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+   48|       |
+   49|       |	/* As per RFC 2616 section 19.3, we treat '\n' as the
+   50|       |	 * line terminator, and '\r', if it appears, merely as
+   51|       |	 * ignorable trailing whitespace.
+   52|       |	 */
+   53|       |
+   54|       |	/* No '\0's are allowed */
+   55|     13|	if (memchr (str, '\0', len))
+  ------------------
+  |  Branch (55:6): [True: 0, False: 13]
+  ------------------
+   56|      0|		return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+   57|       |
+   58|       |	/* Skip over the Request-Line / Status-Line */
+   59|     13|	headers_start = memchr (str, '\n', len);
+   60|     13|	if (!headers_start)
+  ------------------
+  |  Branch (60:6): [True: 0, False: 13]
+  ------------------
+   61|      0|		return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+   62|       |
+   63|       |	/* We work on a copy of the headers, which we can write '\0's
+   64|       |	 * into, so that we don't have to individually g_strndup and
+   65|       |	 * then g_free each header name and value.
+   66|       |	 */
+   67|     13|	copy_len = len - (headers_start - str);
+   68|     13|	headers_copy = g_malloc (copy_len + 1);
+   69|     13|	memcpy (headers_copy, headers_start, copy_len);
+   70|     13|	headers_copy[copy_len] = '\0';
+   71|     13|	value_end = headers_copy;
+   72|       |
+   73|  6.27k|	while (*(value_end + 1)) {
+  ------------------
+  |  Branch (73:9): [True: 6.26k, False: 11]
+  ------------------
+   74|  6.26k|		name = value_end + 1;
+   75|  6.26k|		name_end = strchr (name, ':');
+   76|       |
+   77|       |		/* Reject if there is no ':', or the header name is
+   78|       |		 * empty, or it contains whitespace.
+   79|       |		 */
+   80|  6.26k|		if (!name_end ||
+  ------------------
+  |  Branch (80:7): [True: 1, False: 6.26k]
+  ------------------
+   81|  6.26k|		    name_end == name ||
+  ------------------
+  |  Branch (81:7): [True: 25, False: 6.23k]
+  ------------------
+   82|  6.23k|		    name + strcspn (name, " \t\r\n") < name_end) {
+  ------------------
+  |  Branch (82:7): [True: 1.76k, False: 4.47k]
+  ------------------
+   83|       |			/* Ignore this line. Note that if it has
+   84|       |			 * continuation lines, we'll end up ignoring
+   85|       |			 * them too since they'll start with spaces.
+   86|       |			 */
+   87|  1.78k|			value_end = strchr (name, '\n');
+   88|  1.78k|			if (!value_end)
+  ------------------
+  |  Branch (88:8): [True: 0, False: 1.78k]
+  ------------------
+   89|      0|				goto done;
+   90|  1.78k|			continue;
+   91|  1.78k|		}
+   92|       |
+   93|       |		/* Find the end of the value; ie, an end-of-line that
+   94|       |		 * isn't followed by a continuation line.
+   95|       |		 */
+   96|  4.47k|		value = name_end + 1;
+   97|  4.47k|		value_end = strchr (name, '\n');
+   98|  4.47k|		if (!value_end)
+  ------------------
+  |  Branch (98:7): [True: 1, False: 4.47k]
+  ------------------
+   99|      1|			goto done;
+  100|  4.58k|		while (*(value_end + 1) == ' ' || *(value_end + 1) == '\t') {
+  ------------------
+  |  Branch (100:10): [True: 19, False: 4.56k]
+  |  Branch (100:37): [True: 94, False: 4.47k]
+  ------------------
+  101|    113|			value_end = strchr (value_end + 1, '\n');
+  102|    113|			if (!value_end)
+  ------------------
+  |  Branch (102:8): [True: 0, False: 113]
+  ------------------
+  103|      0|				goto done;
+  104|    113|		}
+  105|       |
+  106|  4.47k|		*name_end = '\0';
+  107|  4.47k|		*value_end = '\0';
+  108|       |
+  109|       |		/* Skip leading whitespace */
+  110|  5.15k|		while (value < value_end &&
+  ------------------
+  |  Branch (110:10): [True: 4.38k, False: 767]
+  ------------------
+  111|  4.38k|		       (*value == ' ' || *value == '\t' ||
+  ------------------
+  |  Branch (111:11): [True: 334, False: 4.05k]
+  |  Branch (111:28): [True: 184, False: 3.86k]
+  ------------------
+  112|  3.86k|			*value == '\r' || *value == '\n'))
+  ------------------
+  |  Branch (112:4): [True: 46, False: 3.82k]
+  |  Branch (112:22): [True: 112, False: 3.70k]
+  ------------------
+  113|    676|			value++;
+  114|       |
+  115|       |		/* Collapse continuation lines */
+  116|  4.47k|		while ((eol = strchr (value, '\n'))) {
+  ------------------
+  |  Branch (116:10): [True: 1, False: 4.47k]
+  ------------------
+  117|       |			/* find start of next line */
+  118|      1|			sol = eol + 1;
+  119|      2|			while (*sol == ' ' || *sol == '\t')
+  ------------------
+  |  Branch (119:11): [True: 0, False: 2]
+  |  Branch (119:26): [True: 1, False: 1]
+  ------------------
+  120|      1|				sol++;
+  121|       |
+  122|       |			/* back up over trailing whitespace on current line */
+  123|      2|			while (eol[-1] == ' ' || eol[-1] == '\t' || eol[-1] == '\r')
+  ------------------
+  |  Branch (123:11): [True: 1, False: 1]
+  |  Branch (123:29): [True: 0, False: 1]
+  |  Branch (123:48): [True: 0, False: 1]
+  ------------------
+  124|      1|				eol--;
+  125|       |
+  126|       |			/* Delete all but one SP */
+  127|      1|			*eol = ' ';
+  128|      1|			memmove (eol + 1, sol, strlen (sol) + 1);
+  129|      1|		}
+  130|       |
+  131|       |		/* clip trailing whitespace */
+  132|  4.47k|		eol = strchr (value, '\0');
+  133|  4.61k|		while (eol > value &&
+  ------------------
+  |  Branch (133:10): [True: 3.84k, False: 767]
+  ------------------
+  134|  3.84k|		       (eol[-1] == ' ' || eol[-1] == '\t' || eol[-1] == '\r'))
+  ------------------
+  |  Branch (134:11): [True: 52, False: 3.79k]
+  |  Branch (134:29): [True: 27, False: 3.76k]
+  |  Branch (134:48): [True: 57, False: 3.70k]
+  ------------------
+  135|    136|			eol--;
+  136|  4.47k|		*eol = '\0';
+  137|       |
+  138|       |		/* convert (illegal) '\r's to spaces */
+  139|  4.53k|		for (p = strchr (value, '\r'); p; p = strchr (p, '\r'))
+  ------------------
+  |  Branch (139:34): [True: 64, False: 4.47k]
+  ------------------
+  140|     64|			*p = ' ';
+  141|       |
+  142|  4.47k|		if (!soup_message_headers_append_untrusted_data (dest, name, value))
+  ------------------
+  |  Branch (142:7): [True: 1, False: 4.47k]
+  ------------------
+  143|      1|                        goto done;
+  144|  4.47k|        }
+  145|     11|	success = TRUE;
+  ------------------
+  |  |  933|     11|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|     11|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  146|       |
+  147|     13|done:
+  148|     13|	g_free (headers_copy);
+  149|     13|	return success;
+  150|     11|}
+soup_headers_parse_request:
+  179|     13|{
+  180|     13|	const char *method, *method_end, *path, *path_end;
+  181|     13|	const char *version, *version_end, *headers;
+  182|     13|	unsigned long major_version, minor_version;
+  183|     13|	char *p;
+  184|       |
+  185|     13|	g_return_val_if_fail (str != NULL, SOUP_STATUS_BAD_REQUEST);
+  ------------------
+  |  |  663|     13|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     13|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     13|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     13|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     13|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     13| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     13|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     13|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     13|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 13, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     13|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     13|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     13|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     13|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     13|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 13, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     13|      { } \
+  |  |  666|     13|    else \
+  |  |  667|     13|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     13|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     13|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 13]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  186|       |
+  187|       |	/* RFC 2616 4.1 "servers SHOULD ignore any empty line(s)
+  188|       |	 * received where a Request-Line is expected."
+  189|       |	 */
+  190|     13|	while (len > 0 && (*str == '\r' || *str == '\n')) {
+  ------------------
+  |  Branch (190:9): [True: 13, False: 0]
+  |  Branch (190:21): [True: 0, False: 13]
+  |  Branch (190:37): [True: 0, False: 13]
+  ------------------
+  191|      0|		str++;
+  192|      0|		len--;
+  193|      0|	}
+  194|     13|	if (!len)
+  ------------------
+  |  Branch (194:6): [True: 0, False: 13]
+  ------------------
+  195|      0|		return SOUP_STATUS_BAD_REQUEST;
+  196|       |
+  197|       |	/* RFC 2616 19.3 "[servers] SHOULD accept any amount of SP or
+  198|       |	 * HT characters between [Request-Line] fields"
+  199|       |	 */
+  200|       |
+  201|     13|	method = method_end = str;
+  202|     44|	while (method_end < str + len && *method_end != ' ' && *method_end != '\t')
+  ------------------
+  |  Branch (202:9): [True: 44, False: 0]
+  |  Branch (202:35): [True: 31, False: 13]
+  |  Branch (202:57): [True: 31, False: 0]
+  ------------------
+  203|     31|		method_end++;
+  204|     13|	if (method_end >= str + len)
+  ------------------
+  |  Branch (204:6): [True: 0, False: 13]
+  ------------------
+  205|      0|		return SOUP_STATUS_BAD_REQUEST;
+  206|       |
+  207|     13|	path = method_end;
+  208|     26|	while (path < str + len && (*path == ' ' || *path == '\t'))
+  ------------------
+  |  Branch (208:9): [True: 26, False: 0]
+  |  Branch (208:30): [True: 13, False: 13]
+  |  Branch (208:46): [True: 0, False: 13]
+  ------------------
+  209|     13|		path++;
+  210|     13|	if (path >= str + len)
+  ------------------
+  |  Branch (210:6): [True: 0, False: 13]
+  ------------------
+  211|      0|		return SOUP_STATUS_BAD_REQUEST;
+  212|       |
+  213|     13|	path_end = path;
+  214|     58|	while (path_end < str + len && *path_end != ' ' && *path_end != '\t')
+  ------------------
+  |  Branch (214:9): [True: 58, False: 0]
+  |  Branch (214:33): [True: 45, False: 13]
+  |  Branch (214:53): [True: 45, False: 0]
+  ------------------
+  215|     45|		path_end++;
+  216|     13|	if (path_end >= str + len)
+  ------------------
+  |  Branch (216:6): [True: 0, False: 13]
+  ------------------
+  217|      0|		return SOUP_STATUS_BAD_REQUEST;
+  218|       |
+  219|     13|	version = path_end;
+  220|     26|	while (version < str + len && (*version == ' ' || *version == '\t'))
+  ------------------
+  |  Branch (220:9): [True: 26, False: 0]
+  |  Branch (220:33): [True: 13, False: 13]
+  |  Branch (220:52): [True: 0, False: 13]
+  ------------------
+  221|     13|		version++;
+  222|     13|	if (version + 8 >= str + len)
+  ------------------
+  |  Branch (222:6): [True: 0, False: 13]
+  ------------------
+  223|      0|		return SOUP_STATUS_BAD_REQUEST;
+  224|       |
+  225|     13|	if (strncmp (version, "HTTP/", 5) != 0 ||
+  ------------------
+  |  Branch (225:6): [True: 0, False: 13]
+  ------------------
+  226|     13|	    !g_ascii_isdigit (version[5]))
+  ------------------
+  |  |   71|     13|  ((g_ascii_table[(guchar) (c)] & G_ASCII_DIGIT) != 0)
+  ------------------
+  |  Branch (226:6): [True: 0, False: 13]
+  ------------------
+  227|      0|		return SOUP_STATUS_BAD_REQUEST;
+  228|     13|	major_version = strtoul (version + 5, &p, 10);
+  229|     13|	if (p + 1 >= str + len || *p != '.' || !g_ascii_isdigit (p[1]))
+  ------------------
+  |  |   71|     13|  ((g_ascii_table[(guchar) (c)] & G_ASCII_DIGIT) != 0)
+  ------------------
+  |  Branch (229:6): [True: 0, False: 13]
+  |  Branch (229:28): [True: 0, False: 13]
+  |  Branch (229:41): [True: 0, False: 13]
+  ------------------
+  230|      0|		return SOUP_STATUS_BAD_REQUEST;
+  231|     13|	minor_version = strtoul (p + 1, &p, 10);
+  232|     13|	version_end = p;
+  233|     13|	if (major_version != 1)
+  ------------------
+  |  Branch (233:6): [True: 0, False: 13]
+  ------------------
+  234|      0|		return SOUP_STATUS_HTTP_VERSION_NOT_SUPPORTED;
+  235|     13|	if (minor_version > 1)
+  ------------------
+  |  Branch (235:6): [True: 0, False: 13]
+  ------------------
+  236|      0|		return SOUP_STATUS_HTTP_VERSION_NOT_SUPPORTED;
+  237|       |
+  238|     13|	headers = version_end;
+  239|     17|	while (headers < str + len && (*headers == '\r' || *headers == ' '))
+  ------------------
+  |  Branch (239:9): [True: 17, False: 0]
+  |  Branch (239:33): [True: 4, False: 13]
+  |  Branch (239:53): [True: 0, False: 13]
+  ------------------
+  240|      4|		headers++;
+  241|     13|	if (headers >= str + len || *headers != '\n')
+  ------------------
+  |  Branch (241:6): [True: 0, False: 13]
+  |  Branch (241:30): [True: 0, False: 13]
+  ------------------
+  242|      0|		return SOUP_STATUS_BAD_REQUEST;
+  243|       |
+  244|       |	// Ensure pointer location for Request-Line end matches location of 'headers'
+  245|     13|	p = strchr(str, '\n');
+  246|     13|	if (p != headers)
+  ------------------
+  |  Branch (246:6): [True: 0, False: 13]
+  ------------------
+  247|      0|		return SOUP_STATUS_BAD_REQUEST;
+  248|       |
+  249|     13|	if (!soup_headers_parse (str, len, req_headers))
+  ------------------
+  |  Branch (249:6): [True: 2, False: 11]
+  ------------------
+  250|      2|		return SOUP_STATUS_BAD_REQUEST;
+  251|       |
+  252|     11|	if (soup_message_headers_get_expectations (req_headers) &
+  ------------------
+  |  Branch (252:6): [True: 0, False: 11]
+  ------------------
+  253|     11|	    SOUP_EXPECTATION_UNRECOGNIZED)
+  254|      0|		return SOUP_STATUS_EXPECTATION_FAILED;
+  255|       |	/* RFC 2616 14.10 */
+  256|     11|	if (minor_version == 0)
+  ------------------
+  |  Branch (256:6): [True: 8, False: 3]
+  ------------------
+  257|      8|		soup_message_headers_clean_connection_headers (req_headers);
+  258|       |
+  259|     11|	if (req_method)
+  ------------------
+  |  Branch (259:6): [True: 11, False: 0]
+  ------------------
+  260|     11|		*req_method = g_strndup (method, method_end - method);
+  261|     11|	if (req_path)
+  ------------------
+  |  Branch (261:6): [True: 11, False: 0]
+  ------------------
+  262|     11|		*req_path = g_strndup (path, path_end - path);
+  263|     11|	if (ver)
+  ------------------
+  |  Branch (263:6): [True: 11, False: 0]
+  ------------------
+  264|     11|		*ver = (minor_version == 0) ? SOUP_HTTP_1_0 : SOUP_HTTP_1_1;
+  ------------------
+  |  Branch (264:10): [True: 8, False: 3]
+  ------------------
+  265|       |
+  266|     11|	return SOUP_STATUS_OK;
+  267|     11|}
+soup_header_parse_list:
+  491|      3|{
+  492|      3|	g_return_val_if_fail (header != NULL, NULL);
+  ------------------
+  |  |  663|      3|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      3|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|      3|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|      3|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|      3|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|      3| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      3|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|      3|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|      3|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 3, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|      3|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      3|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      3|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|      3|   else                                         \
+  |  |  |  |  |  |  |  | 1244|      3|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|      3|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      3|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      3|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|      3|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 3, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|      3|      { } \
+  |  |  666|      3|    else \
+  |  |  667|      3|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|      3|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      3|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  493|       |
+  494|      3|	return parse_list (header, ',');
+  495|      3|}
+soup_header_free_list:
+  613|      3|{
+  614|      3|	g_slist_free_full (list, g_free);
+  615|      3|}
+soup-headers.c:parse_list:
+  464|      3|{
+  465|      3|	GSList *list = NULL;
+  466|      3|	const char *end;
+  467|       |
+  468|      3|	header = skip_delims (header, delim);
+  469|  1.26k|	while (*header) {
+  ------------------
+  |  Branch (469:9): [True: 1.26k, False: 3]
+  ------------------
+  470|  1.26k|		end = skip_item (header, delim);
+  471|  1.26k|		list = g_slist_prepend (list, g_strndup (header, end - header));
+  472|  1.26k|		header = skip_delims (end, delim);
+  473|  1.26k|	}
+  474|       |
+  475|      3|	return g_slist_reverse (list);
+  476|      3|}
+soup-headers.c:skip_delims:
+  428|  1.26k|{
+  429|       |	/* The grammar allows for multiple delimiters */
+  430|  4.21k|	while (g_ascii_isspace (*s) || *s == delim)
+  ------------------
+  |  |   86|  8.43k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 548, False: 3.67k]
+  |  |  ------------------
+  ------------------
+  |  Branch (430:33): [True: 2.40k, False: 1.26k]
+  ------------------
+  431|  2.95k|		s++;
+  432|  1.26k|	return s;
+  433|  1.26k|}
+soup-headers.c:skip_item:
+  437|  1.26k|{
+  438|  1.26k|	gboolean quoted = FALSE;
+  ------------------
+  |  |  929|  1.26k|#define	FALSE	(0)
+  ------------------
+  439|  1.26k|	const char *start = s;
+  440|       |
+  441|       |	/* A list item ends at the last non-whitespace character
+  442|       |	 * before a delimiter which is not inside a quoted-string. Or
+  443|       |	 * at the end of the string.
+  444|       |	 */
+  445|       |
+  446|  4.04k|	while (*s) {
+  ------------------
+  |  Branch (446:9): [True: 4.04k, False: 3]
+  ------------------
+  447|  4.04k|		if (*s == '"')
+  ------------------
+  |  Branch (447:7): [True: 0, False: 4.04k]
+  ------------------
+  448|      0|			quoted = !quoted;
+  449|  4.04k|		else if (quoted) {
+  ------------------
+  |  Branch (449:12): [True: 0, False: 4.04k]
+  ------------------
+  450|      0|			if (*s == '\\' && *(s + 1))
+  ------------------
+  |  Branch (450:8): [True: 0, False: 0]
+  |  Branch (450:22): [True: 0, False: 0]
+  ------------------
+  451|      0|				s++;
+  452|  4.04k|		} else {
+  453|  4.04k|			if (*s == delim)
+  ------------------
+  |  Branch (453:8): [True: 1.26k, False: 2.78k]
+  ------------------
+  454|  1.26k|				break;
+  455|  4.04k|		}
+  456|  2.78k|		s++;
+  457|  2.78k|	}
+  458|       |
+  459|  1.26k|	return unskip_lws (s, start);
+  460|  1.26k|}
+soup-headers.c:unskip_lws:
+  420|  1.26k|{
+  421|  1.45k|	while (s > start && g_ascii_isspace (*(s - 1)))
+  ------------------
+  |  |   86|  1.45k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 196, False: 1.26k]
+  |  |  ------------------
+  ------------------
+  |  Branch (421:9): [True: 1.45k, False: 0]
+  ------------------
+  422|    196|		s--;
+  423|  1.26k|	return s;
+  424|  1.26k|}
+
+soup_message_headers_new:
+   75|     13|{
+   76|     13|	SoupMessageHeaders *hdrs;
+   77|       |
+   78|     13|	hdrs = g_atomic_rc_box_new0 (SoupMessageHeaders);
+  ------------------
+  |  |   75|     13|  ((type *) g_atomic_rc_box_alloc0 (sizeof (type)))
+  ------------------
+   79|     13|	hdrs->type = type;
+   80|     13|	hdrs->encoding = -1;
+   81|       |
+   82|     13|	return hdrs;
+   83|     13|}
+soup_message_headers_unref:
+  124|     13|{
+  125|     13|        g_atomic_rc_box_release_full (hdrs, (GDestroyNotify)soup_message_headers_destroy);
+  126|     13|}
+soup_message_headers_clear:
+  193|     13|{
+  194|     13|	guint i;
+  195|       |
+  196|     13|	g_return_if_fail (hdrs);
+  ------------------
+  |  |  650|     13|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     13|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  651|     13|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     13|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     13|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     13| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     13|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     13|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     13|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 13, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     13|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     13|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     13|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     13|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     13|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     13|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     13|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 13, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  652|     13|      { } \
+  |  |  653|     13|    else \
+  |  |  654|     13|      { \
+  |  |  655|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  656|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  657|      0|                                  #expr); \
+  |  |  658|      0|        return; \
+  |  |  659|      0|      } \
+  |  |  660|     13|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     13|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 13]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  197|       |
+  198|     13|        if (hdrs->common_headers) {
+  ------------------
+  |  Branch (198:13): [True: 12, False: 1]
+  ------------------
+  199|     12|                SoupCommonHeader *hdr_array_common = (SoupCommonHeader *)hdrs->common_headers->data;
+  200|       |
+  201|  3.69k|                for (i = 0; i < hdrs->common_headers->len; i++) {
+  ------------------
+  |  Branch (201:29): [True: 3.68k, False: 12]
+  ------------------
+  202|  3.68k|                        g_free (hdr_array_common[i].value);
+  203|  3.68k|                        soup_message_headers_set (hdrs, hdr_array_common[i].name, NULL);
+  204|  3.68k|                }
+  205|     12|                g_array_set_size (hdrs->common_headers, 0);
+  206|     12|        }
+  207|       |
+  208|     13|        if (hdrs->common_concat)
+  ------------------
+  |  Branch (208:13): [True: 2, False: 11]
+  ------------------
+  209|      2|                g_hash_table_remove_all (hdrs->common_concat);
+  210|       |
+  211|     13|        if (hdrs->uncommon_headers) {
+  ------------------
+  |  Branch (211:13): [True: 12, False: 1]
+  ------------------
+  212|     12|                SoupUncommonHeader *hdr_array = (SoupUncommonHeader *)hdrs->uncommon_headers->data;
+  213|       |
+  214|    718|                for (i = 0; i < hdrs->uncommon_headers->len; i++) {
+  ------------------
+  |  Branch (214:29): [True: 706, False: 12]
+  ------------------
+  215|    706|                        g_free (hdr_array[i].name);
+  216|    706|                        g_free (hdr_array[i].value);
+  217|    706|                }
+  218|     12|                g_array_set_size (hdrs->uncommon_headers, 0);
+  219|     12|        }
+  220|       |
+  221|     13|	if (hdrs->uncommon_concat)
+  ------------------
+  |  Branch (221:6): [True: 0, False: 13]
+  ------------------
+  222|      0|		g_hash_table_remove_all (hdrs->uncommon_concat);
+  223|       |
+  224|     13|        hdrs->encoding = -1;
+  225|     13|        hdrs->content_length = 0;
+  226|     13|        hdrs->expectations = 0;
+  227|       |        g_clear_pointer (&hdrs->content_type, g_free);
+  ------------------
+  |  |  136|     13|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|     13|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|     13|  {                                                      \
+  |  |  138|     13|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|     13|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|     13|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|     13|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|     13|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|     13|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|     13|    *_pp = NULL;                                         \
+  |  |  142|     13|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 0, False: 13]
+  |  |  ------------------
+  |  |  143|     13|      (destroy) (_ptr);                                  \
+  |  |  144|     13|  }                                                      \
+  |  |  145|     13|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|     13|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 13]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|     13|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+  228|     13|}
+soup_message_headers_clean_connection_headers:
+  238|      8|{
+  239|       |	/* RFC 2616 14.10 */
+  240|      8|	const char *connection;
+  241|      8|	GSList *tokens, *t;
+  242|       |
+  243|      8|	g_return_if_fail (hdrs);
+  ------------------
+  |  |  650|      8|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      8|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  651|      8|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|      8|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|      8|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|      8| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      8|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|      8|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|      8|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 8, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|      8|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      8|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      8|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|      8|   else                                         \
+  |  |  |  |  |  |  |  | 1244|      8|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|      8|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      8|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      8|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|      8|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 8, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  652|      8|      { } \
+  |  |  653|      8|    else \
+  |  |  654|      8|      { \
+  |  |  655|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  656|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  657|      0|                                  #expr); \
+  |  |  658|      0|        return; \
+  |  |  659|      0|      } \
+  |  |  660|      8|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      8|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 8]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  244|       |
+  245|      8|	connection = soup_message_headers_get_list_common (hdrs, SOUP_HEADER_CONNECTION);
+  246|      8|	if (!connection)
+  ------------------
+  |  Branch (246:6): [True: 6, False: 2]
+  ------------------
+  247|      6|		return;
+  248|       |
+  249|      2|	tokens = soup_header_parse_list (connection);
+  250|    146|	for (t = tokens; t; t = t->next)
+  ------------------
+  |  Branch (250:19): [True: 144, False: 2]
+  ------------------
+  251|    144|		soup_message_headers_remove (hdrs, t->data);
+  252|      2|	soup_header_free_list (tokens);
+  253|      2|}
+soup_message_headers_append_common:
+  270|  3.76k|{
+  271|  3.76k|        SoupCommonHeader header;
+  272|  3.76k|        if (name == SOUP_HEADER_HOST && soup_message_headers_get_one (hdrs, "Host")) {
+  ------------------
+  |  Branch (272:13): [True: 3, False: 3.76k]
+  |  Branch (272:41): [True: 1, False: 2]
+  ------------------
+  273|      1|                g_warning ("soup_message_headers_append_common: Rejecting duplicate Host header");
+  ------------------
+  |  |  362|      1|#define g_warning(...)  g_log (G_LOG_DOMAIN,         \
+  |  |  363|      1|                               G_LOG_LEVEL_WARNING,  \
+  |  |  364|      1|                               __VA_ARGS__)
+  ------------------
+  274|      1|                return FALSE;
+  ------------------
+  |  |  929|      1|#define	FALSE	(0)
+  ------------------
+  275|      1|        }
+  276|       |
+  277|  3.76k|        if (name == SOUP_HEADER_CONTENT_LENGTH) {
+  ------------------
+  |  Branch (277:13): [True: 87, False: 3.68k]
+  ------------------
+  278|       |                /* RFC 9110 - 7.7. Content-Length
+  279|       |                 * If a message is received that has a Content-Length header field value consisting of
+  280|       |                 * the same decimal value as a comma-separated list (Section 5.7.1) — for example,
+  281|       |                 * "Content-Length: 42, 42" — indicating that duplicate Content-Length header fields have
+  282|       |                 * been generated or combined by an upstream message processor, then the recipient must either
+  283|       |                 * reject the message as invalid or replace the duplicated field values with a single valid
+  284|       |                 * Content-Length field containing that decimal value prior to determining the message body
+  285|       |                 * length or forwarding the message.
+  286|       |                 */
+  287|     87|                const char *content_length = soup_message_headers_get_one_common (hdrs, SOUP_HEADER_CONTENT_LENGTH);
+  288|     87|                if (content_length) {
+  ------------------
+  |  Branch (288:21): [True: 83, False: 4]
+  ------------------
+  289|     83|                        guint64 decimal_value1, decimal_value2;
+  290|     83|                        char *end;
+  291|       |
+  292|     83|                        decimal_value1 = g_ascii_strtoull (content_length, &end, 10);
+  293|     83|                        if (*end)
+  ------------------
+  |  Branch (293:29): [True: 0, False: 83]
+  ------------------
+  294|      0|                                return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+  295|       |
+  296|     83|                        decimal_value2 = g_ascii_strtoull (value, &end, 10);
+  297|     83|                        if (*end)
+  ------------------
+  |  Branch (297:29): [True: 0, False: 83]
+  ------------------
+  298|      0|                                return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+  299|       |
+  300|     83|                        return decimal_value1 == decimal_value2;
+  301|     83|                }
+  302|     87|        }
+  303|       |
+  304|  3.68k|        if (trusted_value == SOUP_HEADER_VALUE_UNTRUSTED && !is_valid_header_value (value)) {
+  ------------------
+  |  Branch (304:13): [True: 3.68k, False: 0]
+  |  Branch (304:61): [True: 0, False: 3.68k]
+  ------------------
+  305|      0|                g_warning ("soup_message_headers_append: Rejecting bad value '%s'", value);
+  ------------------
+  |  |  362|      0|#define g_warning(...)  g_log (G_LOG_DOMAIN,         \
+  |  |  363|      0|                               G_LOG_LEVEL_WARNING,  \
+  |  |  364|      0|                               __VA_ARGS__)
+  ------------------
+  306|      0|                return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+  307|      0|        }
+  308|       |
+  309|  3.68k|        if (!hdrs->common_headers)
+  ------------------
+  |  Branch (309:13): [True: 12, False: 3.67k]
+  ------------------
+  310|     12|                hdrs->common_headers = g_array_sized_new (FALSE, FALSE, sizeof (SoupCommonHeader), 6);
+  ------------------
+  |  |  929|     12|#define	FALSE	(0)
+  ------------------
+                              hdrs->common_headers = g_array_sized_new (FALSE, FALSE, sizeof (SoupCommonHeader), 6);
+  ------------------
+  |  |  929|     12|#define	FALSE	(0)
+  ------------------
+  311|       |
+  312|  3.68k|        header.name = name;
+  313|  3.68k|        header.value = g_strdup (value);
+  ------------------
+  |  |  324|  3.68k|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  314|  3.68k|        g_array_append_val (hdrs->common_headers, header);
+  ------------------
+  |  |   66|  3.68k|#define g_array_append_val(a,v)	  g_array_append_vals (a, &(v), 1)
+  ------------------
+  315|  3.68k|        if (hdrs->common_concat)
+  ------------------
+  |  Branch (315:13): [True: 0, False: 3.68k]
+  ------------------
+  316|      0|                g_hash_table_remove (hdrs->common_concat, GUINT_TO_POINTER (header.name));
+  317|       |
+  318|  3.68k|        soup_message_headers_set (hdrs, name, value);
+  319|  3.68k|        return TRUE;
+  ------------------
+  |  |  933|  3.68k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  3.68k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  320|  3.68k|}
+soup_message_headers_append_untrusted_data:
+  389|  4.47k|{
+  390|  4.47k|        char *safe_value = g_utf8_make_valid (value, -1);
+  391|  4.47k|        char *safe_name = g_utf8_make_valid (name, -1);
+  392|  4.47k|        gboolean result = soup_message_headers_append_internal (hdrs, safe_name, safe_value);
+  393|       |
+  394|  4.47k|        g_free (safe_value);
+  395|  4.47k|        g_free (safe_name);
+  396|  4.47k|        return result;
+  397|  4.47k|}
+soup_message_headers_remove:
+  536|    144|{
+  537|    144|	int index;
+  538|    144|        SoupHeaderName header_name;
+  539|       |
+  540|    144|	g_return_if_fail (hdrs);
+  ------------------
+  |  |  650|    144|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|    144|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  651|    144|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|    144|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|    144|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|    144| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    144|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|    144|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|    144|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 144, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|    144|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    144|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    144|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|    144|   else                                         \
+  |  |  |  |  |  |  |  | 1244|    144|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|    144|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    144|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    144|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|    144|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 144, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  652|    144|      { } \
+  |  |  653|    144|    else \
+  |  |  654|    144|      { \
+  |  |  655|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  656|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  657|      0|                                  #expr); \
+  |  |  658|      0|        return; \
+  |  |  659|      0|      } \
+  |  |  660|    144|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|    144|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 144]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  541|    144|	g_return_if_fail (name != NULL);
+  ------------------
+  |  |  650|    144|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|    144|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  651|    144|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|    144|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|    144|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|    144| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    144|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|    144|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|    144|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 144, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|    144|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    144|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    144|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|    144|   else                                         \
+  |  |  |  |  |  |  |  | 1244|    144|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|    144|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    144|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    144|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|    144|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 144, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  652|    144|      { } \
+  |  |  653|    144|    else \
+  |  |  654|    144|      { \
+  |  |  655|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  656|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  657|      0|                                  #expr); \
+  |  |  658|      0|        return; \
+  |  |  659|      0|      } \
+  |  |  660|    144|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|    144|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 144]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  542|       |
+  543|    144|        header_name = soup_header_name_from_string (name);
+  544|    144|        if (header_name != SOUP_HEADER_UNKNOWN) {
+  ------------------
+  |  Branch (544:13): [True: 0, False: 144]
+  ------------------
+  545|      0|                soup_message_headers_remove_common (hdrs, header_name);
+  546|      0|                return;
+  547|      0|        }
+  548|       |
+  549|    144|        if (hdrs->uncommon_headers) {
+  ------------------
+  |  Branch (549:13): [True: 144, False: 0]
+  ------------------
+  550|    144|                while ((index = find_uncommon_header (hdrs->uncommon_headers, name, 0)) != -1) {
+  ------------------
+  |  Branch (550:24): [True: 0, False: 144]
+  ------------------
+  551|      0|#ifndef __clang_analyzer__ /* False positive for double-free */
+  552|      0|                        SoupUncommonHeader *hdr_array = (SoupUncommonHeader *)hdrs->uncommon_headers->data;
+  553|       |
+  554|      0|                        g_free (hdr_array[index].name);
+  555|      0|                        g_free (hdr_array[index].value);
+  556|      0|#endif
+  557|      0|                        g_array_remove_index (hdrs->uncommon_headers, index);
+  558|      0|                }
+  559|    144|        }
+  560|       |
+  561|    144|	if (hdrs->uncommon_concat)
+  ------------------
+  |  Branch (561:6): [True: 0, False: 144]
+  ------------------
+  562|      0|		g_hash_table_remove (hdrs->uncommon_concat, name);
+  563|    144|}
+soup_message_headers_get_one_common:
+  568|    548|{
+  569|    548|        SoupCommonHeader *hdr_array;
+  570|    548|        int index;
+  571|       |
+  572|    548|        if (!hdrs->common_headers)
+  ------------------
+  |  Branch (572:13): [True: 5, False: 543]
+  ------------------
+  573|      5|                return NULL;
+  574|       |
+  575|    543|        hdr_array = (SoupCommonHeader *)hdrs->common_headers->data;
+  576|    543|        index = find_last_common_header (hdrs->common_headers, name, 0);
+  577|       |
+  578|    543|        return index == -1 ? NULL : hdr_array[index].value;
+  ------------------
+  |  Branch (578:16): [True: 33, False: 510]
+  ------------------
+  579|    548|}
+soup_message_headers_get_one:
+  601|      3|{
+  602|      3|        SoupUncommonHeader *hdr_array;
+  603|      3|	int index;
+  604|      3|        SoupHeaderName header_name;
+  605|       |
+  606|      3|	g_return_val_if_fail (hdrs, NULL);
+  ------------------
+  |  |  663|      3|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      3|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|      3|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|      3|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|      3|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|      3| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      3|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|      3|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|      3|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 3, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|      3|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      3|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      3|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|      3|   else                                         \
+  |  |  |  |  |  |  |  | 1244|      3|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|      3|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      3|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      3|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|      3|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 3, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|      3|      { } \
+  |  |  666|      3|    else \
+  |  |  667|      3|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|      3|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      3|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  607|      3|	g_return_val_if_fail (name != NULL, NULL);
+  ------------------
+  |  |  663|      3|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      3|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|      3|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|      3|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|      3|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|      3| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      3|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|      3|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|      3|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 3, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|      3|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      3|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      3|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|      3|   else                                         \
+  |  |  |  |  |  |  |  | 1244|      3|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|      3|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      3|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      3|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|      3|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 3, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|      3|      { } \
+  |  |  666|      3|    else \
+  |  |  667|      3|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|      3|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      3|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 3]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  608|       |
+  609|      3|        header_name = soup_header_name_from_string (name);
+  610|      3|        if (header_name != SOUP_HEADER_UNKNOWN)
+  ------------------
+  |  Branch (610:13): [True: 3, False: 0]
+  ------------------
+  611|      3|                return soup_message_headers_get_one_common (hdrs, header_name);
+  612|       |
+  613|      0|        if (!hdrs->uncommon_headers)
+  ------------------
+  |  Branch (613:13): [True: 0, False: 0]
+  ------------------
+  614|      0|                return NULL;
+  615|       |
+  616|      0|        hdr_array = (SoupUncommonHeader *)hdrs->uncommon_headers->data;
+  617|      0|	index = find_last_uncommon_header (hdrs->uncommon_headers, name, 0);
+  618|       |
+  619|      0|	return (index == -1) ? NULL : hdr_array[index].value;
+  ------------------
+  |  Branch (619:9): [True: 0, False: 0]
+  ------------------
+  620|      0|}
+soup_message_headers_get_list_common:
+  700|      8|{
+  701|      8|        SoupCommonHeader *hdr_array;
+  702|      8|        GString *concat;
+  703|      8|        char *value;
+  704|      8|        int index, i;
+  705|       |
+  706|      8|	g_return_val_if_fail (hdrs, NULL);
+  ------------------
+  |  |  663|      8|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      8|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|      8|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|      8|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|      8|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|      8| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      8|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|      8|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|      8|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 8, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|      8|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      8|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      8|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|      8|   else                                         \
+  |  |  |  |  |  |  |  | 1244|      8|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|      8|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      8|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      8|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|      8|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 8, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|      8|      { } \
+  |  |  666|      8|    else \
+  |  |  667|      8|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|      8|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      8|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 8]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  707|       |
+  708|      8|        if (!hdrs->common_headers)
+  ------------------
+  |  Branch (708:13): [True: 1, False: 7]
+  ------------------
+  709|      1|                return NULL;
+  710|       |
+  711|      7|        if (hdrs->common_concat) {
+  ------------------
+  |  Branch (711:13): [True: 0, False: 7]
+  ------------------
+  712|      0|                value = g_hash_table_lookup (hdrs->common_concat, GUINT_TO_POINTER (name));
+  713|      0|                if (value)
+  ------------------
+  |  Branch (713:21): [True: 0, False: 0]
+  ------------------
+  714|      0|                        return value;
+  715|      0|        }
+  716|       |
+  717|      7|        hdr_array = (SoupCommonHeader *)hdrs->common_headers->data;
+  718|      7|        index = find_common_header (hdrs->common_headers, name, 0);
+  719|      7|        if (index == -1)
+  ------------------
+  |  Branch (719:13): [True: 5, False: 2]
+  ------------------
+  720|      5|                return NULL;
+  721|       |
+  722|      2|        if (find_common_header (hdrs->common_headers, name, 1) == -1)
+  ------------------
+  |  Branch (722:13): [True: 0, False: 2]
+  ------------------
+  723|      0|                return hdr_array[index].value;
+  724|       |
+  725|      2|        concat = g_string_new (NULL);
+  726|    194|        for (i = 0; (index = find_common_header (hdrs->common_headers, name, i)) != -1; i++) {
+  ------------------
+  |  Branch (726:21): [True: 192, False: 2]
+  ------------------
+  727|    192|                if (i != 0)
+  ------------------
+  |  Branch (727:21): [True: 190, False: 2]
+  ------------------
+  728|    190|                        g_string_append (concat, ", ");
+  ------------------
+  |  |  269|    190|  (__builtin_constant_p (val) ?                     \
+  |  |  ------------------
+  |  |  |  Branch (269:4): [True: 190, Folded]
+  |  |  ------------------
+  |  |  270|    190|    G_GNUC_EXTENSION ({                             \
+  |  |  ------------------
+  |  |  |  |   62|    190|#define G_GNUC_EXTENSION __extension__
+  |  |  ------------------
+  |  |  271|    190|      const char * const __val = (val);             \
+  |  |  272|    190|      g_string_append_len (gstr, __val,             \
+  |  |  ------------------
+  |  |  |  |  251|    760|  g_string_append_len_inline (gstr, val, len)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (251:42): [True: 190, Folded]
+  |  |  |  |  |  Branch (251:42): [True: 190, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  273|    190|        G_LIKELY (__val != NULL) ?                  \
+  |  |  274|    190|          (gssize) strlen (_G_STR_NONNULL (__val))  \
+  |  |  275|    190|        : (gssize) -1);                             \
+  |  |  276|    190|    })                                              \
+  |  |  277|    190|    :                                               \
+  |  |  278|    190|    g_string_append_len (gstr, val, (gssize) -1))
+  |  |  ------------------
+  |  |  |  |  251|      0|  g_string_append_len_inline (gstr, val, len)
+  |  |  ------------------
+  ------------------
+  729|    192|                g_string_append (concat, hdr_array[index].value);
+  ------------------
+  |  |  269|    192|  (__builtin_constant_p (val) ?                     \
+  |  |  ------------------
+  |  |  |  Branch (269:4): [True: 0, False: 192]
+  |  |  ------------------
+  |  |  270|    192|    G_GNUC_EXTENSION ({                             \
+  |  |  ------------------
+  |  |  |  |   62|      0|#define G_GNUC_EXTENSION __extension__
+  |  |  ------------------
+  |  |  271|      0|      const char * const __val = (val);             \
+  |  |  272|      0|      g_string_append_len (gstr, __val,             \
+  |  |  ------------------
+  |  |  |  |  251|      0|  g_string_append_len_inline (gstr, val, len)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (251:42): [True: 0, False: 0]
+  |  |  |  |  |  Branch (251:42): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  273|      0|        G_LIKELY (__val != NULL) ?                  \
+  |  |  274|      0|          (gssize) strlen (_G_STR_NONNULL (__val))  \
+  |  |  275|      0|        : (gssize) -1);                             \
+  |  |  276|      0|    })                                              \
+  |  |  277|    192|    :                                               \
+  |  |  278|    192|    g_string_append_len (gstr, val, (gssize) -1))
+  |  |  ------------------
+  |  |  |  |  251|    192|  g_string_append_len_inline (gstr, val, len)
+  |  |  ------------------
+  ------------------
+  730|    192|        }
+  731|      2|        value = g_string_free (concat, FALSE);
+  ------------------
+  |  |  929|      2|#define	FALSE	(0)
+  ------------------
+  732|       |
+  733|      2|        if (!hdrs->common_concat)
+  ------------------
+  |  Branch (733:13): [True: 2, False: 0]
+  ------------------
+  734|      2|                hdrs->common_concat = g_hash_table_new_full (NULL, NULL, NULL, g_free);
+  735|      2|        g_hash_table_insert (hdrs->common_concat, GUINT_TO_POINTER (name), value);
+  736|      2|        return value;
+  737|      2|}
+soup_message_headers_get_encoding:
+  997|     22|{
+  998|     22|        const char *transfer_encoding;
+  999|       |
+ 1000|     22|	g_return_val_if_fail (hdrs, SOUP_ENCODING_UNRECOGNIZED);
+  ------------------
+  |  |  663|     22|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     22|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     22|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     22|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     22|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     22| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     22|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     22|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     22|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 22, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     22|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     22|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     22|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     22|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     22|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     22|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     22|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     22|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     22|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 22, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     22|      { } \
+  |  |  666|     22|    else \
+  |  |  667|     22|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     22|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     22|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 22]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1001|       |
+ 1002|     22|	if (hdrs->encoding != -1)
+  ------------------
+  |  Branch (1002:6): [True: 11, False: 11]
+  ------------------
+ 1003|     11|		return hdrs->encoding;
+ 1004|       |
+ 1005|       |        /* Transfer-Encoding is checked first because it overrides the Content-Length */
+ 1006|     11|        transfer_encoding = soup_message_headers_get_one_common (hdrs, SOUP_HEADER_TRANSFER_ENCODING);
+ 1007|     11|        if (transfer_encoding) {
+  ------------------
+  |  Branch (1007:13): [True: 3, False: 8]
+  ------------------
+ 1008|       |                /* "identity" is a wrong value according to RFC errata 408,
+ 1009|       |                 * and RFC 7230 does not list it as valid transfer-coding.
+ 1010|       |                 * Nevertheless, the obsolete RFC 2616 stated "identity"
+ 1011|       |                 * as valid, so we can't handle it as unrecognized here
+ 1012|       |                 * for compatibility reasons.
+ 1013|       |                 */
+ 1014|      3|                if (g_ascii_strcasecmp (transfer_encoding, "chunked") == 0)
+  ------------------
+  |  Branch (1014:21): [True: 0, False: 3]
+  ------------------
+ 1015|      0|                        hdrs->encoding = SOUP_ENCODING_CHUNKED;
+ 1016|      3|                else if (g_ascii_strcasecmp (transfer_encoding, "identity") != 0)
+  ------------------
+  |  Branch (1016:26): [True: 3, False: 0]
+  ------------------
+ 1017|      3|                        hdrs->encoding = SOUP_ENCODING_UNRECOGNIZED;
+ 1018|      8|        } else {
+ 1019|      8|                soup_message_headers_update_content_length_encoding (hdrs);
+ 1020|      8|        }
+ 1021|       |
+ 1022|     11|        if (hdrs->encoding == -1) {
+  ------------------
+  |  Branch (1022:13): [True: 5, False: 6]
+  ------------------
+ 1023|       |                /* Per RFC 2616 4.4, a response body that doesn't indicate its
+ 1024|       |                 * encoding otherwise is terminated by connection close, and a
+ 1025|       |                 * request that doesn't indicate otherwise has no body. Note
+ 1026|       |                 * that SoupMessage calls soup_message_headers_set_encoding()
+ 1027|       |                 * to override the response body default for our own
+ 1028|       |                 * server-side messages.
+ 1029|       |                 */
+ 1030|      5|                hdrs->encoding = (hdrs->type == SOUP_MESSAGE_HEADERS_RESPONSE) ?
+  ------------------
+  |  Branch (1030:34): [True: 0, False: 5]
+  ------------------
+ 1031|      5|                        SOUP_ENCODING_EOF : SOUP_ENCODING_NONE;
+ 1032|      5|        }
+ 1033|       |
+ 1034|     11|	return hdrs->encoding;
+ 1035|     22|}
+soup_message_headers_get_content_length:
+ 1094|     11|{
+ 1095|     11|	SoupEncoding encoding;
+ 1096|       |
+ 1097|     11|	g_return_val_if_fail (hdrs, 0);
+  ------------------
+  |  |  663|     11|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     11|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     11|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     11|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     11|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     11| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     11|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     11|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     11|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 11, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     11|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     11|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     11|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     11|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     11|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 11, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     11|      { } \
+  |  |  666|     11|    else \
+  |  |  667|     11|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     11|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     11|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 11]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1098|       |
+ 1099|     11|	encoding = soup_message_headers_get_encoding (hdrs);
+ 1100|     11|	if (encoding == SOUP_ENCODING_CONTENT_LENGTH)
+  ------------------
+  |  Branch (1100:6): [True: 3, False: 8]
+  ------------------
+ 1101|      3|		return hdrs->content_length;
+ 1102|      8|	else
+ 1103|      8|		return 0;
+ 1104|     11|}
+soup_message_headers_get_expectations:
+ 1158|     22|{
+ 1159|     22|	g_return_val_if_fail (hdrs, SOUP_EXPECTATION_UNRECOGNIZED);
+  ------------------
+  |  |  663|     22|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     22|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     22|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     22|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     22|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     22| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     22|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     22|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     22|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 22, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     22|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     22|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     22|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     22|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     22|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     22|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     22|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     22|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     22|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 22, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     22|      { } \
+  |  |  666|     22|    else \
+  |  |  667|     22|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     22|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     22|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 22]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1160|       |
+ 1161|     22|	return hdrs->expectations;
+ 1162|     22|}
+soup_message_headers_get_ranges_internal:
+ 1240|     11|{
+ 1241|     11|	const char *range = soup_message_headers_get_one_common (hdrs, SOUP_HEADER_RANGE);
+ 1242|     11|	GSList *range_list, *r;
+ 1243|     11|	GArray *array;
+ 1244|     11|	char *spec, *end;
+ 1245|     11|	guint status = SOUP_STATUS_OK;
+ 1246|     11|	gboolean is_all_valid = TRUE;
+  ------------------
+  |  |  933|     11|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|     11|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1247|       |
+ 1248|     11|	if (!range || strncmp (range, "bytes", 5) != 0)
+  ------------------
+  |  Branch (1248:6): [True: 8, False: 3]
+  |  Branch (1248:16): [True: 2, False: 1]
+  ------------------
+ 1249|     10|		return SOUP_STATUS_OK;  /* invalid header or unknown range unit */
+ 1250|       |
+ 1251|      1|	range += 5;
+ 1252|      1|	while (g_ascii_isspace (*range))
+  ------------------
+  |  |   86|      1|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 0, False: 1]
+  |  |  ------------------
+  ------------------
+ 1253|      0|		range++;
+ 1254|      1|	if (*range++ != '=')
+  ------------------
+  |  Branch (1254:6): [True: 0, False: 1]
+  ------------------
+ 1255|      0|		return SOUP_STATUS_OK;  /* invalid header */
+ 1256|      1|	while (g_ascii_isspace (*range))
+  ------------------
+  |  |   86|      1|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 0, False: 1]
+  |  |  ------------------
+  ------------------
+ 1257|      0|		range++;
+ 1258|       |
+ 1259|      1|	range_list = soup_header_parse_list (range);
+ 1260|      1|	if (!range_list)
+  ------------------
+  |  Branch (1260:6): [True: 0, False: 1]
+  ------------------
+ 1261|      0|		return SOUP_STATUS_OK;  /* invalid list */
+ 1262|       |
+ 1263|       |	/* Loop through the ranges and modify the status accordingly. Default to
+ 1264|       |	 * status 200 (OK, ignoring the ranges). Switch to status 206 (Partial
+ 1265|       |	 * Content) if there is at least one partially valid range. Switch to
+ 1266|       |	 * status 416 (Range Not Satisfiable) if there are no partially valid
+ 1267|       |	 * ranges at all. */
+ 1268|      1|	array = g_array_new (FALSE, FALSE, sizeof (SoupRange));
+  ------------------
+  |  |  929|      1|#define	FALSE	(0)
+  ------------------
+              	array = g_array_new (FALSE, FALSE, sizeof (SoupRange));
+  ------------------
+  |  |  929|      1|#define	FALSE	(0)
+  ------------------
+ 1269|  1.12k|	for (r = range_list; r; r = r->next) {
+  ------------------
+  |  Branch (1269:23): [True: 1.11k, False: 1]
+  ------------------
+ 1270|  1.11k|		SoupRange cur;
+ 1271|       |
+ 1272|  1.11k|		spec = r->data;
+ 1273|  1.11k|		if (*spec == '-') {
+  ------------------
+  |  Branch (1273:7): [True: 42, False: 1.07k]
+  ------------------
+ 1274|     42|			cur.start = g_ascii_strtoll (spec, &end, 10) + total_length;
+ 1275|     42|			cur.end = total_length - 1;
+ 1276|  1.07k|		} else {
+ 1277|  1.07k|			cur.start = g_ascii_strtoull (spec, &end, 10);
+ 1278|  1.07k|			if (*end == '-')
+  ------------------
+  |  Branch (1278:8): [True: 56, False: 1.02k]
+  ------------------
+ 1279|     56|				end++;
+ 1280|  1.07k|			if (*end)
+  ------------------
+  |  Branch (1280:8): [True: 64, False: 1.01k]
+  ------------------
+ 1281|     64|				cur.end = g_ascii_strtoull (end, &end, 10);
+ 1282|  1.01k|			else
+ 1283|  1.01k|				cur.end = total_length - 1;
+ 1284|  1.07k|		}
+ 1285|       |
+ 1286|  1.11k|		if (*end) {
+  ------------------
+  |  Branch (1286:7): [True: 58, False: 1.06k]
+  ------------------
+ 1287|       |			/* Junk after the range */
+ 1288|     58|			is_all_valid = FALSE;
+  ------------------
+  |  |  929|     58|#define	FALSE	(0)
+  ------------------
+ 1289|     58|			continue;
+ 1290|     58|		}
+ 1291|       |
+ 1292|  1.06k|		if (cur.end < cur.start) {
+  ------------------
+  |  Branch (1292:7): [True: 35, False: 1.02k]
+  ------------------
+ 1293|     35|			is_all_valid = FALSE;
+  ------------------
+  |  |  929|     35|#define	FALSE	(0)
+  ------------------
+ 1294|     35|			continue;
+ 1295|     35|		}
+ 1296|       |
+ 1297|  1.06k|		g_assert (cur.start >= 0);
+  ------------------
+  |  |  275|  1.02k|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  1.02k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|  1.02k|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1248|  1.02k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  1.02k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  1.02k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  1.02k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  1.02k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  1.02k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 1.02k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  1.02k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  1.02k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  1.02k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  1.02k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  1.02k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  1.02k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  1.02k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  1.02k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  1.02k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:25): [True: 1.02k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|  1.02k|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|  1.06k|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  1.06k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 1.02k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1298|  1.02k|		if (cur.end >= total_length)
+  ------------------
+  |  Branch (1298:7): [True: 4, False: 1.02k]
+  ------------------
+ 1299|      4|			cur.end = total_length - 1;
+ 1300|       |
+ 1301|  1.02k|		if (cur.start >= total_length) {
+  ------------------
+  |  Branch (1301:7): [True: 0, False: 1.02k]
+  ------------------
+ 1302|       |			/* Range is valid, but unsatisfiable */
+ 1303|      0|			continue;
+ 1304|      0|		}
+ 1305|       |
+ 1306|       |		/* We have at least one (at least partially) satisfiable range */
+ 1307|  1.02k|		g_array_append_val (array, cur);
+  ------------------
+  |  |   66|  1.02k|#define g_array_append_val(a,v)	  g_array_append_vals (a, &(v), 1)
+  ------------------
+ 1308|  1.02k|		status = SOUP_STATUS_PARTIAL_CONTENT;
+ 1309|  1.02k|	}
+ 1310|      1|	soup_header_free_list (range_list);
+ 1311|       |
+ 1312|      1|	if (status != SOUP_STATUS_PARTIAL_CONTENT) {
+  ------------------
+  |  Branch (1312:6): [True: 0, False: 1]
+  ------------------
+ 1313|      0|		g_assert (status == SOUP_STATUS_OK);
+  ------------------
+  |  |  275|      0|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|      0|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1248|      0|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|      0|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|      0| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      0|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|      0|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|      0|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 0, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|      0|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|      0|   else                                         \
+  |  |  |  |  |  |  |  | 1244|      0|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|      0|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|      0|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:25): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|      0|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|      0|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1314|       |
+ 1315|      0|		if (is_all_valid && check_satisfiable)
+  ------------------
+  |  Branch (1315:7): [True: 0, False: 0]
+  |  Branch (1315:23): [True: 0, False: 0]
+  ------------------
+ 1316|      0|			status = SOUP_STATUS_REQUESTED_RANGE_NOT_SATISFIABLE;
+ 1317|       |
+ 1318|      0|		g_array_free (array, TRUE);
+  ------------------
+  |  |  933|      0|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      0|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1319|      0|		return status;
+ 1320|      0|	}
+ 1321|       |
+ 1322|      1|	if (total_length) {
+  ------------------
+  |  Branch (1322:6): [True: 1, False: 0]
+  ------------------
+ 1323|      1|		guint i;
+ 1324|       |
+ 1325|      1|		g_array_sort (array, sort_ranges);
+ 1326|  1.02k|		for (i = 1; i < array->len; i++) {
+  ------------------
+  |  Branch (1326:15): [True: 1.02k, False: 1]
+  ------------------
+ 1327|  1.02k|			SoupRange *cur = &((SoupRange *)array->data)[i];
+ 1328|  1.02k|			SoupRange *prev = &((SoupRange *)array->data)[i - 1];
+ 1329|       |
+ 1330|  1.02k|			if (cur->start <= prev->end) {
+  ------------------
+  |  Branch (1330:8): [True: 1.02k, False: 0]
+  ------------------
+ 1331|  1.02k|				prev->end = MAX (prev->end, cur->end);
+  ------------------
+  |  |  937|  1.02k|#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
+  |  |  ------------------
+  |  |  |  Branch (937:21): [True: 4, False: 1.02k]
+  |  |  ------------------
+  ------------------
+ 1332|  1.02k|				g_array_remove_index (array, i);
+ 1333|  1.02k|				i--;
+ 1334|  1.02k|			}
+ 1335|  1.02k|		}
+ 1336|      1|	}
+ 1337|       |
+ 1338|      1|	*ranges = (SoupRange *)array->data;
+ 1339|      1|	*length = array->len;
+ 1340|       |
+ 1341|      1|	g_array_free (array, FALSE);
+  ------------------
+  |  |  929|      1|#define	FALSE	(0)
+  ------------------
+ 1342|      1|	return SOUP_STATUS_PARTIAL_CONTENT;
+ 1343|      1|}
+soup_message_headers_get_ranges:
+ 1391|     11|{
+ 1392|     11|	guint status;
+ 1393|       |
+ 1394|     11|	g_return_val_if_fail (hdrs, FALSE);
+  ------------------
+  |  |  663|     11|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     11|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     11|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     11|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     11|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     11| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     11|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     11|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     11|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 11, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     11|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     11|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     11|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     11|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     11|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 11, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     11|      { } \
+  |  |  666|     11|    else \
+  |  |  667|     11|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     11|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     11|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 11]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1395|       |
+ 1396|     11|	status = soup_message_headers_get_ranges_internal (hdrs, total_length, FALSE, ranges, length);
+  ------------------
+  |  |  929|     11|#define	FALSE	(0)
+  ------------------
+ 1397|     11|	return status == SOUP_STATUS_PARTIAL_CONTENT;
+ 1398|     11|}
+soup_message_headers_free_ranges:
+ 1410|      1|{
+ 1411|      1|	g_free (ranges);
+ 1412|      1|}
+soup_message_headers_get_content_type:
+ 1716|     11|{
+ 1717|     11|	g_return_val_if_fail (hdrs, NULL);
+  ------------------
+  |  |  663|     11|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     11|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     11|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     11|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     11|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     11| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     11|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     11|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     11|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 11, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     11|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     11|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     11|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     11|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     11|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 11, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     11|      { } \
+  |  |  666|     11|    else \
+  |  |  667|     11|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     11|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     11|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 11]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1718|       |
+ 1719|     11|	if (!hdrs->content_type)
+  ------------------
+  |  Branch (1719:6): [True: 11, False: 0]
+  ------------------
+ 1720|     11|		return NULL;
+ 1721|       |
+ 1722|      0|	if (params)
+  ------------------
+  |  Branch (1722:6): [True: 0, False: 0]
+  ------------------
+ 1723|      0|		parse_content_foo (hdrs, SOUP_HEADER_CONTENT_TYPE, NULL, params);
+ 1724|      0|	return hdrs->content_type;
+ 1725|     11|}
+soup_message_headers_get_content_disposition:
+ 1781|     11|{
+ 1782|     11|	gpointer orig_key, orig_value;
+ 1783|       |
+ 1784|     11|	g_return_val_if_fail (hdrs, FALSE);
+  ------------------
+  |  |  663|     11|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|     11|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|     11|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|     11|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|     11|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|     11| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|     11|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|     11|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|     11|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 11, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|     11|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|     11|   else                                         \
+  |  |  |  |  |  |  |  | 1244|     11|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|     11|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|     11|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 11, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|     11|      { } \
+  |  |  666|     11|    else \
+  |  |  667|     11|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|     11|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|     11|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 11]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1785|       |
+ 1786|     11|	if (!parse_content_foo (hdrs, SOUP_HEADER_CONTENT_DISPOSITION,
+  ------------------
+  |  Branch (1786:6): [True: 11, False: 0]
+  ------------------
+ 1787|     11|				disposition, params))
+ 1788|     11|		return FALSE;
+  ------------------
+  |  |  929|     11|#define	FALSE	(0)
+  ------------------
+ 1789|       |
+ 1790|       |	/* If there is a filename parameter, make sure it contains only valid characters */
+ 1791|      0|	if (params && g_hash_table_lookup_extended (*params, "filename",
+  ------------------
+  |  Branch (1791:6): [True: 0, False: 0]
+  |  Branch (1791:16): [True: 0, False: 0]
+  ------------------
+ 1792|      0|						    &orig_key, &orig_value)) {
+ 1793|      0|                if (orig_value) {
+  ------------------
+  |  Branch (1793:21): [True: 0, False: 0]
+  ------------------
+ 1794|      0|                        char *filename = sanitize_filename (orig_value);
+ 1795|       |
+ 1796|      0|                        if (filename)
+  ------------------
+  |  Branch (1796:29): [True: 0, False: 0]
+  ------------------
+ 1797|      0|                                g_hash_table_insert (*params, g_strdup (orig_key), g_steal_pointer (&filename));
+  ------------------
+  |  |  324|      0|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+                                              g_hash_table_insert (*params, g_strdup (orig_key), g_steal_pointer (&filename));
+  ------------------
+  |  |  247|      0|#define g_steal_pointer(pp) ((glib_typeof (*pp)) (g_steal_pointer) (pp))
+  ------------------
+ 1798|      0|                } else {
+ 1799|       |                        /* filename with no value isn't valid. */
+ 1800|      0|                        g_hash_table_remove (*params, "filename");
+ 1801|      0|                }
+ 1802|      0|	}
+ 1803|      0|	return TRUE;
+  ------------------
+  |  |  933|      0|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      0|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1804|     11|}
+soup-message-headers.c:soup_message_headers_destroy:
+  103|     13|{
+  104|     13|        soup_message_headers_clear (hdrs);
+  105|     13|        if (hdrs->common_headers)
+  ------------------
+  |  Branch (105:13): [True: 12, False: 1]
+  ------------------
+  106|     12|                g_array_free (hdrs->common_headers, TRUE);
+  ------------------
+  |  |  933|     12|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|     12|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  107|     13|        g_clear_pointer (&hdrs->common_concat, g_hash_table_destroy);
+  ------------------
+  |  |  136|     13|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|     13|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|     13|  {                                                      \
+  |  |  138|     13|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|     13|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|     13|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|     13|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|     13|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|     13|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|     13|    *_pp = NULL;                                         \
+  |  |  142|     13|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 2, False: 11]
+  |  |  ------------------
+  |  |  143|     13|      (destroy) (_ptr);                                  \
+  |  |  144|     13|  }                                                      \
+  |  |  145|     13|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|     13|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 13]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|     13|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+  108|     13|        if (hdrs->uncommon_headers)
+  ------------------
+  |  Branch (108:13): [True: 12, False: 1]
+  ------------------
+  109|     12|                g_array_free (hdrs->uncommon_headers, TRUE);
+  ------------------
+  |  |  933|     12|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|     12|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  110|       |        g_clear_pointer (&hdrs->uncommon_concat, g_hash_table_destroy);
+  ------------------
+  |  |  136|     13|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|     13|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|     13|  {                                                      \
+  |  |  138|     13|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|     13|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|     13|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|     13|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|     13|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|     13|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|     13|    *_pp = NULL;                                         \
+  |  |  142|     13|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 0, False: 13]
+  |  |  ------------------
+  |  |  143|     13|      (destroy) (_ptr);                                  \
+  |  |  144|     13|  }                                                      \
+  |  |  145|     13|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|     13|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 13]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|     13|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+  111|     13|}
+soup-message-headers.c:soup_message_headers_set:
+  150|  7.37k|{
+  151|  7.37k|        switch (name) {
+  152|      8|        case SOUP_HEADER_CONTENT_LENGTH:
+  ------------------
+  |  Branch (152:9): [True: 8, False: 7.36k]
+  ------------------
+  153|     54|        case SOUP_HEADER_TRANSFER_ENCODING:
+  ------------------
+  |  Branch (153:9): [True: 46, False: 7.32k]
+  ------------------
+  154|     54|                hdrs->encoding = -1;
+  155|     54|                break;
+  156|    834|        case SOUP_HEADER_CONTENT_TYPE:
+  ------------------
+  |  Branch (156:9): [True: 834, False: 6.53k]
+  ------------------
+  157|    834|                g_clear_pointer (&hdrs->content_type, g_free);
+  ------------------
+  |  |  136|    834|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|    834|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|    834|  {                                                      \
+  |  |  138|    834|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|    834|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|    834|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|    834|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|    834|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|    834|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|    834|    *_pp = NULL;                                         \
+  |  |  142|    834|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 4, False: 830]
+  |  |  ------------------
+  |  |  143|    834|      (destroy) (_ptr);                                  \
+  |  |  144|    834|  }                                                      \
+  |  |  145|    834|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|    834|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 834]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|    834|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+  158|    834|                if (value) {
+  ------------------
+  |  Branch (158:21): [True: 417, False: 417]
+  ------------------
+  159|    417|                        char *content_type = NULL, *p;
+  160|       |
+  161|    417|                        parse_content_foo (hdrs, SOUP_HEADER_CONTENT_TYPE, &content_type, NULL);
+  162|    417|                        g_assert (content_type != NULL);
+  ------------------
+  |  |  275|    417|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|    417|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|    417|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1248|    417|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|    417|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|    417| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    417|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|    417|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|    417|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 417, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|    417|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    417|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    417|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|    417|   else                                         \
+  |  |  |  |  |  |  |  | 1244|    417|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|    417|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|    417|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|    417|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|    417|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:25): [True: 417, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|    417|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|    417|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|    417|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 417]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  163|       |
+  164|    417|                        p = strpbrk (content_type, " /");
+  165|    417|                        if (!p || *p != '/' || strpbrk (p + 1, " /"))
+  ------------------
+  |  Branch (165:29): [True: 402, False: 15]
+  |  Branch (165:35): [True: 11, False: 4]
+  |  Branch (165:48): [True: 0, False: 4]
+  ------------------
+  166|    413|                                g_free (content_type);
+  167|      4|                        else
+  168|      4|                                hdrs->content_type = content_type;
+  169|    417|                }
+  170|    834|                break;
+  171|    834|        case SOUP_HEADER_EXPECT:
+  ------------------
+  |  Branch (171:9): [True: 0, False: 7.37k]
+  ------------------
+  172|      0|                if (value) {
+  ------------------
+  |  Branch (172:21): [True: 0, False: 0]
+  ------------------
+  173|      0|                        if (!g_ascii_strcasecmp (value, "100-continue"))
+  ------------------
+  |  Branch (173:29): [True: 0, False: 0]
+  ------------------
+  174|      0|                                hdrs->expectations = SOUP_EXPECTATION_CONTINUE;
+  175|      0|                        else
+  176|      0|                                hdrs->expectations = SOUP_EXPECTATION_UNRECOGNIZED;
+  177|      0|                } else
+  178|      0|                        hdrs->expectations = 0;
+  179|      0|                break;
+  180|  6.48k|        default:
+  ------------------
+  |  Branch (180:9): [True: 6.48k, False: 888]
+  ------------------
+  181|  6.48k|                break;
+  182|  7.37k|        }
+  183|  7.37k|}
+soup-message-headers.c:is_valid_header_value:
+  261|  4.39k|{
+  262|  4.39k|        return value && strpbrk (value, "\r\n") == NULL;
+  ------------------
+  |  Branch (262:16): [True: 4.39k, False: 0]
+  |  Branch (262:25): [True: 4.39k, False: 0]
+  ------------------
+  263|  4.39k|}
+soup-message-headers.c:soup_message_headers_append_internal:
+  325|  4.47k|{
+  326|  4.47k|	SoupUncommonHeader header;
+  327|  4.47k|        SoupHeaderName header_name;
+  328|       |
+  329|  4.47k|	g_return_val_if_fail (hdrs, FALSE);
+  ------------------
+  |  |  663|  4.47k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  4.47k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|  4.47k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  4.47k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  4.47k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  4.47k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  4.47k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  4.47k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  4.47k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 4.47k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  4.47k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  4.47k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  4.47k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  4.47k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  4.47k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  4.47k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  4.47k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  4.47k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  4.47k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 4.47k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|  4.47k|      { } \
+  |  |  666|  4.47k|    else \
+  |  |  667|  4.47k|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|  4.47k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  4.47k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 4.47k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  330|  4.47k|	g_return_val_if_fail (name != NULL, FALSE);
+  ------------------
+  |  |  663|  4.47k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  4.47k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|  4.47k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  4.47k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  4.47k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  4.47k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  4.47k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  4.47k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  4.47k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 4.47k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  4.47k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  4.47k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  4.47k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  4.47k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  4.47k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  4.47k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  4.47k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  4.47k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  4.47k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 4.47k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|  4.47k|      { } \
+  |  |  666|  4.47k|    else \
+  |  |  667|  4.47k|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|  4.47k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  4.47k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 4.47k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  331|  4.47k|	g_return_val_if_fail (value != NULL, FALSE);
+  ------------------
+  |  |  663|  4.47k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  4.47k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|  4.47k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  4.47k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  4.47k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  4.47k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  4.47k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  4.47k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  4.47k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 4.47k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  4.47k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  4.47k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  4.47k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  4.47k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  4.47k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  4.47k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  4.47k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  4.47k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  4.47k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 4.47k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|  4.47k|      { } \
+  |  |  666|  4.47k|    else \
+  |  |  667|  4.47k|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|  4.47k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  4.47k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 4.47k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  332|       |
+  333|  4.47k|	if (!is_valid_header_name (name)) {
+  ------------------
+  |  Branch (333:6): [True: 0, False: 4.47k]
+  ------------------
+  334|      0|		g_warning ("soup_message_headers_append: Rejecting bad name '%s'", name);
+  ------------------
+  |  |  362|      0|#define g_warning(...)  g_log (G_LOG_DOMAIN,         \
+  |  |  363|      0|                               G_LOG_LEVEL_WARNING,  \
+  |  |  364|      0|                               __VA_ARGS__)
+  ------------------
+  335|      0|		return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+  336|      0|	}
+  337|       |
+  338|  4.47k|        header_name = soup_header_name_from_string (name);
+  339|  4.47k|        if (header_name != SOUP_HEADER_UNKNOWN)
+  ------------------
+  |  Branch (339:13): [True: 3.76k, False: 706]
+  ------------------
+  340|  3.76k|                return soup_message_headers_append_common (hdrs, header_name, value, SOUP_HEADER_VALUE_UNTRUSTED);
+  341|       |
+  342|    706|        if (!is_valid_header_value (value)) {
+  ------------------
+  |  Branch (342:13): [True: 0, False: 706]
+  ------------------
+  343|      0|                g_warning ("soup_message_headers_append: Rejecting bad value '%s'", value);
+  ------------------
+  |  |  362|      0|#define g_warning(...)  g_log (G_LOG_DOMAIN,         \
+  |  |  363|      0|                               G_LOG_LEVEL_WARNING,  \
+  |  |  364|      0|                               __VA_ARGS__)
+  ------------------
+  344|      0|                return FALSE;
+  ------------------
+  |  |  929|      0|#define	FALSE	(0)
+  ------------------
+  345|      0|        }
+  346|       |
+  347|    706|        if (!hdrs->uncommon_headers)
+  ------------------
+  |  Branch (347:13): [True: 12, False: 694]
+  ------------------
+  348|     12|                hdrs->uncommon_headers = g_array_sized_new (FALSE, FALSE, sizeof (SoupUncommonHeader), 6);
+  ------------------
+  |  |  929|     12|#define	FALSE	(0)
+  ------------------
+                              hdrs->uncommon_headers = g_array_sized_new (FALSE, FALSE, sizeof (SoupUncommonHeader), 6);
+  ------------------
+  |  |  929|     12|#define	FALSE	(0)
+  ------------------
+  349|       |
+  350|    706|	header.name = g_strdup (name);
+  ------------------
+  |  |  324|    706|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  351|    706|	header.value = g_strdup (value);
+  ------------------
+  |  |  324|    706|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+  352|    706|	g_array_append_val (hdrs->uncommon_headers, header);
+  ------------------
+  |  |   66|    706|#define g_array_append_val(a,v)	  g_array_append_vals (a, &(v), 1)
+  ------------------
+  353|    706|	if (hdrs->uncommon_concat)
+  ------------------
+  |  Branch (353:6): [True: 0, False: 706]
+  ------------------
+  354|      0|		g_hash_table_remove (hdrs->uncommon_concat, header.name);
+  355|    706|        return TRUE;
+  ------------------
+  |  |  933|    706|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    706|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  356|    706|}
+soup-message-headers.c:is_valid_header_name:
+  256|  4.47k|{
+  257|  4.47k|        return name && *name && strpbrk (name, " \t\r\n:") == NULL;
+  ------------------
+  |  Branch (257:16): [True: 4.47k, False: 0]
+  |  Branch (257:24): [True: 4.47k, False: 0]
+  |  Branch (257:33): [True: 4.47k, False: 0]
+  ------------------
+  258|  4.47k|}
+soup-message-headers.c:find_common_header:
+  436|    203|{
+  437|    203|        SoupCommonHeader *hdr_array = (SoupCommonHeader *)array->data;
+  438|    203|        int i;
+  439|       |
+  440|  22.5k|        for (i = 0; i < array->len; i++) {
+  ------------------
+  |  Branch (440:21): [True: 22.5k, False: 7]
+  ------------------
+  441|  22.5k|                if (hdr_array[i].name == name) {
+  ------------------
+  |  Branch (441:21): [True: 18.1k, False: 4.35k]
+  ------------------
+  442|  18.1k|                        if (nth-- == 0)
+  ------------------
+  |  Branch (442:29): [True: 196, False: 17.9k]
+  ------------------
+  443|    196|                                return i;
+  444|  18.1k|                }
+  445|  22.5k|        }
+  446|      7|        return -1;
+  447|    203|}
+soup-message-headers.c:find_uncommon_header:
+  453|    144|{
+  454|    144|        SoupUncommonHeader *hdr_array = (SoupUncommonHeader *)array->data;
+  455|    144|	int i;
+  456|       |
+  457|  5.12k|	for (i = 0; i < array->len; i++) {
+  ------------------
+  |  Branch (457:14): [True: 4.98k, False: 144]
+  ------------------
+  458|  4.98k|                if (g_ascii_strcasecmp (hdr_array[i].name, name) == 0) {
+  ------------------
+  |  Branch (458:21): [True: 0, False: 4.98k]
+  ------------------
+  459|      0|			if (nth-- == 0)
+  ------------------
+  |  Branch (459:8): [True: 0, False: 0]
+  ------------------
+  460|      0|				return i;
+  461|      0|		}
+  462|  4.98k|	}
+  463|    144|	return -1;
+  464|    144|}
+soup-message-headers.c:find_last_common_header:
+  470|    543|{
+  471|    543|        SoupCommonHeader *hdr_array = (SoupCommonHeader *)array->data;
+  472|    543|        int i;
+  473|       |
+  474|  11.6k|        for (i = array->len - 1; i >= 0; i--) {
+  ------------------
+  |  Branch (474:34): [True: 11.5k, False: 33]
+  ------------------
+  475|  11.5k|                if (hdr_array[i].name == name) {
+  ------------------
+  |  Branch (475:21): [True: 510, False: 11.0k]
+  ------------------
+  476|    510|                        if (nth-- == 0)
+  ------------------
+  |  Branch (476:29): [True: 510, False: 0]
+  ------------------
+  477|    510|                                return i;
+  478|    510|                }
+  479|  11.5k|        }
+  480|     33|        return -1;
+  481|    543|}
+soup-message-headers.c:soup_message_headers_update_content_length_encoding:
+  949|      8|{
+  950|      8|        const char *content_length;
+  951|       |
+  952|      8|        content_length = soup_message_headers_get_one_common (hdrs, SOUP_HEADER_CONTENT_LENGTH);
+  953|      8|        if (content_length) {
+  ------------------
+  |  Branch (953:13): [True: 3, False: 5]
+  ------------------
+  954|      3|                char *end;
+  955|       |
+  956|      3|                hdrs->content_length = g_ascii_strtoull (content_length, &end, 10);
+  957|      3|                if (*end)
+  ------------------
+  |  Branch (957:21): [True: 0, False: 3]
+  ------------------
+  958|      0|                        hdrs->encoding = SOUP_ENCODING_UNRECOGNIZED;
+  959|      3|                else
+  960|      3|                        hdrs->encoding = SOUP_ENCODING_CONTENT_LENGTH;
+  961|       |
+  962|      3|                return TRUE;
+  ------------------
+  |  |  933|      3|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      3|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  963|      3|        }
+  964|       |
+  965|      5|        return FALSE;
+  ------------------
+  |  |  929|      5|#define	FALSE	(0)
+  ------------------
+  966|      8|}
+soup-message-headers.c:sort_ranges:
+ 1215|  8.93k|{
+ 1216|  8.93k|	SoupRange *ra = (SoupRange *)a;
+ 1217|  8.93k|	SoupRange *rb = (SoupRange *)b;
+ 1218|       |
+ 1219|  8.93k|	return ra->start - rb->start;
+ 1220|  8.93k|}
+soup-message-headers.c:parse_content_foo:
+ 1581|    428|{
+ 1582|    428|	const char *header;
+ 1583|    428|	char *semi;
+ 1584|    428|        char *equal;
+ 1585|       |
+ 1586|    428|	header = soup_message_headers_get_one_common (hdrs, header_name);
+ 1587|    428|	if (!header)
+  ------------------
+  |  Branch (1587:6): [True: 11, False: 417]
+  ------------------
+ 1588|     11|		return FALSE;
+  ------------------
+  |  |  929|     11|#define	FALSE	(0)
+  ------------------
+ 1589|       |
+ 1590|       |        /* Some websites send an invalid disposition that only contains parameters;
+ 1591|       |         * We can be flexible about handling these by detecting if the first word
+ 1592|       |         * is a parameter (foo=bar). */
+ 1593|    417|        equal = strchr (header, '=');
+ 1594|    417|        semi = strchr (header, ';');
+ 1595|    417|        if (header_name == SOUP_HEADER_CONTENT_DISPOSITION &&
+  ------------------
+  |  Branch (1595:13): [True: 0, False: 417]
+  ------------------
+ 1596|      0|            (equal && (!semi || (equal < semi)))) {
+  ------------------
+  |  Branch (1596:14): [True: 0, False: 0]
+  |  Branch (1596:24): [True: 0, False: 0]
+  |  Branch (1596:33): [True: 0, False: 0]
+  ------------------
+ 1597|      0|                semi = (char *)header;
+ 1598|      0|                if (foo)
+  ------------------
+  |  Branch (1598:21): [True: 0, False: 0]
+  ------------------
+ 1599|      0|                        *foo = NULL;
+ 1600|    417|        } else if (foo) {
+  ------------------
+  |  Branch (1600:20): [True: 417, False: 0]
+  ------------------
+ 1601|    417|                *foo = g_strdup (header);
+  ------------------
+  |  |  324|    417|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+ 1602|    417|                semi = strchr (*foo, ';');
+ 1603|    417|                if (semi) {
+  ------------------
+  |  Branch (1603:21): [True: 270, False: 147]
+  ------------------
+ 1604|    270|                        char *p = semi;
+ 1605|       |
+ 1606|    270|                        *semi++ = '\0';
+ 1607|    270|                        while (p - 1 > *foo && g_ascii_isspace(p[-1]))
+  ------------------
+  |  |   86|     15|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 0, False: 15]
+  |  |  ------------------
+  ------------------
+  |  Branch (1607:32): [True: 15, False: 255]
+  ------------------
+ 1608|      0|                                *(--p) = '\0';
+ 1609|    270|                }
+ 1610|    417|        } else {
+ 1611|       |                /* Skip type, we don't store it */
+ 1612|      0|                if (semi)
+  ------------------
+  |  Branch (1612:21): [True: 0, False: 0]
+  ------------------
+ 1613|      0|                        semi++;
+ 1614|      0|        }
+ 1615|       |
+ 1616|    417|	if (!params)
+  ------------------
+  |  Branch (1616:6): [True: 417, False: 0]
+  ------------------
+ 1617|    417|		return TRUE;
+  ------------------
+  |  |  933|    417|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    417|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1618|       |
+ 1619|      0|	if (!semi) {
+  ------------------
+  |  Branch (1619:6): [True: 0, False: 0]
+  ------------------
+ 1620|      0|		*params = soup_header_parse_semi_param_list ("");
+ 1621|      0|		return TRUE;
+  ------------------
+  |  |  933|      0|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      0|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1622|      0|	}
+ 1623|       |
+ 1624|      0|	*params = soup_header_parse_semi_param_list (semi);
+ 1625|      0|	return TRUE;
+  ------------------
+  |  |  933|      0|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      0|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1626|      0|}
+
+soup-message-headers.c:g_strdup_inline:
+  310|  5.51k|{
+  311|  5.51k|  if (__builtin_constant_p (!str) && !str)
+  ------------------
+  |  Branch (311:7): [True: 1.82k, False: 3.68k]
+  |  Branch (311:38): [True: 0, False: 1.82k]
+  ------------------
+  312|      0|    return NULL;
+  313|       |
+  314|  5.51k|  if (__builtin_constant_p (!!str) && !!str && __builtin_constant_p (strlen (str)))
+  ------------------
+  |  Branch (314:7): [True: 1.82k, False: 3.68k]
+  |  Branch (314:39): [True: 1.82k, False: 0]
+  |  Branch (314:48): [True: 0, False: 1.82k]
+  ------------------
+  315|      0|    {
+  316|      0|      const size_t len = strlen (str) + 1;
+  317|      0|      char *dup_str = (char *) g_malloc (len);
+  318|      0|      return (char *) memcpy (dup_str, str, len);
+  319|      0|    }
+  320|       |
+  321|  5.51k|  return g_strdup (str);
+  322|  5.51k|}
+
+soup-message-headers.c:g_string_append_len_inline:
+  221|    382|{
+  222|    382|  gsize len_unsigned;
+  223|       |
+  224|    382|  if G_UNLIKELY (gstring == NULL)
+  ------------------
+  |  | 1249|    382|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1247|    382|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1239|    382| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    382|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1240|    382|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  | 1241|    382|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 0, False: 382]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1242|    382|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1243|    382|   else                                         \
+  |  |  |  |  |  | 1244|    382|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    382|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    382|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1245|    382|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    382|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    382|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1246|    382|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1249:27): [True: 0, False: 382]
+  |  |  ------------------
+  ------------------
+  225|      0|    return g_string_append_len (gstring, val, len);
+  226|       |
+  227|    382|  if G_UNLIKELY (val == NULL)
+  ------------------
+  |  | 1249|    382|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1247|    382|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1239|    382| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    382|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1240|    382|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  | 1241|    382|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 0, False: 382]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1242|    382|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1243|    382|   else                                         \
+  |  |  |  |  |  | 1244|    382|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    382|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    382|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1245|    382|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    382|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    382|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1246|    382|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1249:27): [True: 0, False: 382]
+  |  |  ------------------
+  ------------------
+  228|      0|    return (len != 0) ? g_string_append_len (gstring, val, len) : gstring;
+  ------------------
+  |  Branch (228:12): [True: 0, False: 0]
+  ------------------
+  229|       |
+  230|    382|  if (len < 0)
+  ------------------
+  |  Branch (230:7): [True: 192, False: 190]
+  ------------------
+  231|    192|    len_unsigned = strlen (val);
+  232|    190|  else
+  233|    190|    len_unsigned = (gsize) len;
+  234|       |
+  235|    382|  if (G_LIKELY (gstring->len + len_unsigned < gstring->allocated_len))
+  ------------------
+  |  | 1248|    382|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1247|    382|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1239|    382| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    382|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1240|    382|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  | 1241|    382|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 378, False: 4]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1242|    382|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    378|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    378|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1243|    382|   else                                         \
+  |  |  |  |  |  | 1244|    382|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1245|    382|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    382|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    382|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1246|    382|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1248:24): [True: 378, False: 4]
+  |  |  ------------------
+  ------------------
+  236|    378|    {
+  237|    378|      char *end = gstring->str + gstring->len;
+  238|    378|      if (G_LIKELY (val + len_unsigned <= end || val > end + len_unsigned))
+  ------------------
+  |  | 1248|    378|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1247|    378|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1239|    378| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    378|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1240|    378|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  | 1241|    866|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 268, False: 110]
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 110, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1242|    378|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    378|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    378|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1243|    378|   else                                         \
+  |  |  |  |  |  | 1244|    378|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1245|    378|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|    378|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|    378|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1246|    378|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1248:24): [True: 378, False: 0]
+  |  |  ------------------
+  ------------------
+  239|    378|        memcpy (end, val, len_unsigned);
+  240|      0|      else
+  241|      0|        memmove (end, val, len_unsigned);
+  242|    378|      gstring->len += len_unsigned;
+  243|    378|      gstring->str[gstring->len] = 0;
+  244|    378|      return gstring;
+  245|    378|    }
+  246|      4|  else
+  247|      4|    return g_string_insert_len (gstring, -1, val, len);
+  248|    382|}
+

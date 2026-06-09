@@ -1,0 +1,6 @@
+POST /upload HTTP/1.1
+Host:  lot
+User-Agent: MoziH8TP6.0
+C: 45
+Expect: 100-contin5
+Expect: 1rydat

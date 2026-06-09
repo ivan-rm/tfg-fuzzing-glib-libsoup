@@ -1,0 +1,6 @@
+POST ?upload HTTP/1.1
+Content-Type: multipart/ft‰PNG
+
+Expect: daryABC745--atat-Lengt‰PNG
+
+Expect: daryABC242--

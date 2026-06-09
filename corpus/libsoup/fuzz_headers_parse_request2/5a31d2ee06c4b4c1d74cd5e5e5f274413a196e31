@@ -1,0 +1,24 @@
+PPOST /upload HTTP/1.1
+Host~: nt-Typrset=utf-8
+Content-Length: 45
+Expect: OPTprset=utf-8
+Content-Length: 45
+Expect: OPTIONS 100-c%ntinue
+Cookie: sest: ”œlhost
+User-Agent: Moc%ntinue
+Cookie: sest: ”œlhost
+User-Agent: Mozilla/6.0
+Content
+Content-Length: 45
+Expect: OPTIONS 100ent
+Content-Length: 45
+Expect: OPTIONS 100-c%ntinue
+Cookie: sest: ”œlhost
+User-Agent: Moc%ntinue
+Cookie: sest: ”œlhost
+User-Agent: Mozilla/6.0
+Content
+Content-Length: 45
+Expect: OPTIONS 100ent
+Content-Length: 45
+Expect: OPTIONS 100-c%

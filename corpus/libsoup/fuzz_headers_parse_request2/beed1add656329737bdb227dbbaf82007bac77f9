@@ -1,0 +1,26 @@
+GET /index.h|ml HTTP/1.1
+Expect: calhost
+Usvr-Agen.0
+A/index.h|ml HTTP/1.1
+Expect: calhost
+Usvr-Agen.0
+Ac:petc */*
+A-ccepExpect: 
+
+coding:!gzi, deflate
+ /index.h|ml HTTP/1.1
+Expect: calhosET /index.h|ml HTTP/1.1
+Expect: calhost
+Usvr-Agen.0
+Ar-Agen.0
+Ac:petc */*
+A-ccepExpect: 
+
+coding:!gzi, deflateô
+ /index.x|ml HTt
+Usvr-Agen.0
+Ac:petc */*
+A-ccebpExpect: =
+
+coding:!gzi, deflate
+Co fuzzing

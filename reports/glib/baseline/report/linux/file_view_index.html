@@ -1,0 +1,5340 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <meta charset='UTF-8'>
+    <link rel='stylesheet' type='text/css' href='../style.css'>
+    <!-- Custom style overrides -->
+    <style>
+      /* Copyright 2018 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+th, td {
+  padding: 5px 16px;
+}
+
+tbody td, tfoot td {
+  font-size: 14px;
+}
+
+thead th {
+  font-size: 16px;
+}
+
+thead th, tfoot td {
+  background-color: #f5f5f5;
+  border-left: 1px solid #e4e4e4;
+  border-right: 1px solid #e4e4e4;
+  color: #484848;
+  text-transform: uppercase;
+}
+
+tbody tr:hover td, tfoot tr:hover td {
+  background-color: #f5f5f5;
+  border-color: #e4e4e4 !important;
+}
+    </style>
+  </head>
+  <body>
+    <h2>Coverage Report</h2>
+    <p>
+      View results by:
+            <a href='directory_view_index.html'>Directories</a>
+              | <a href='file_view_index.html'>Files</a>
+          </p>
+    <div class='centered'><table>
+  <thead>
+    <tr>
+      <th class="column-entry-bold">Path</th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.LINE)" title=
+          "Line coverage is the percentage of code lines which have been executed at least once. Only executable lines within function bodies are considered to be code lines.">
+        Line Coverage
+      </th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.FUNCTION)" title=
+          "Function coverage is the percentage of functions which have been executed at least once. A function is considered to be executed if any of its instantiations are executed.">
+        Function Coverage
+      </th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.REGION)" title=
+          "Region coverage is the percentage of code regions which have been executed at least once. A code region may span multiple lines (e.g in a large function body with no control flow). However, it's also possible for a single line to contain multiple code regions (e.g in 'return x || y &amp;&amp; z').">
+        Region Coverage
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz.h.html'>src/glib/fuzzing/fuzz.h</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (13/13)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (9/9)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_bookmark.c.html'>src/glib/fuzzing/fuzz_bookmark.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (8/8)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (3/3)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_canonicalize_filename.c.html'>src/glib/fuzzing/fuzz_canonicalize_filename.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (10/10)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (3/3)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_data_input_stream_read_line.c.html'>src/glib/fuzzing/fuzz_data_input_stream_read_line.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (16/16)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 86.36% (76/88)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_data_input_stream_read_line_utf8.c.html'>src/glib/fuzzing/fuzz_data_input_stream_read_line_utf8.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (16/16)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 86.36% (76/88)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_data_input_stream_read_upto.c.html'>src/glib/fuzzing/fuzz_data_input_stream_read_upto.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (41/41)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 88.24% (90/102)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_date_parse.c.html'>src/glib/fuzzing/fuzz_date_parse.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (10/10)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_date_time_new_from_iso8601.c.html'>src/glib/fuzzing/fuzz_date_time_new_from_iso8601.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (15/15)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (19/19)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_dbus_message.c.html'>src/glib/fuzzing/fuzz_dbus_message.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (17/17)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (13/13)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_filename_from_uri.c.html'>src/glib/fuzzing/fuzz_filename_from_uri.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (12/12)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (5/5)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_filename_to_uri.c.html'>src/glib/fuzzing/fuzz_filename_to_uri.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (12/12)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (5/5)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_get_locale_variants.c.html'>src/glib/fuzzing/fuzz_get_locale_variants.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (12/12)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 80.00% (40/50)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_inet_address_mask_new_from_string.c.html'>src/glib/fuzzing/fuzz_inet_address_mask_new_from_string.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (15/15)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (20/20)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_inet_address_new_from_string.c.html'>src/glib/fuzzing/fuzz_inet_address_new_from_string.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (15/15)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (19/19)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_inet_socket_address_new_from_string.c.html'>src/glib/fuzzing/fuzz_inet_socket_address_new_from_string.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (15/15)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (22/22)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_key.c.html'>src/glib/fuzzing/fuzz_key.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (14/14)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (4/4)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_network_address_parse.c.html'>src/glib/fuzzing/fuzz_network_address_parse.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (15/15)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (20/20)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_network_address_parse_uri.c.html'>src/glib/fuzzing/fuzz_network_address_parse_uri.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (15/15)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (20/20)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_paths.c.html'>src/glib/fuzzing/fuzz_paths.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (19/19)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 79.49% (93/117)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_resolver.c.html'>src/glib/fuzzing/fuzz_resolver.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 96.67% (29/30)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 92.31% (12/13)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_special_dirs.c.html'>src/glib/fuzzing/fuzz_special_dirs.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (15/15)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 83.87% (26/31)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_string.c.html'>src/glib/fuzzing/fuzz_string.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (28/28)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 92.59% (25/27)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_uri_escape.c.html'>src/glib/fuzzing/fuzz_uri_escape.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 92.31% (36/39)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (3/3)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 86.67% (52/60)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_uri_parse.c.html'>src/glib/fuzzing/fuzz_uri_parse.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (27/27)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (14/14)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_uri_parse_params.c.html'>src/glib/fuzzing/fuzz_uri_parse_params.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 94.44% (17/18)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 74.51% (38/51)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_utf8_normalize.c.html'>src/glib/fuzzing/fuzz_utf8_normalize.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (19/19)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 80.00% (48/60)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_utf8_validate.c.html'>src/glib/fuzzing/fuzz_utf8_validate.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (5/5)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_uuid_string_is_valid.c.html'>src/glib/fuzzing/fuzz_uuid_string_is_valid.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (8/8)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_variant_binary.c.html'>src/glib/fuzzing/fuzz_variant_binary.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 92.31% (12/13)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 90.91% (10/11)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_variant_binary_byteswap.c.html'>src/glib/fuzzing/fuzz_variant_binary_byteswap.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 92.31% (12/13)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 90.91% (10/11)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/fuzzing/fuzz_variant_text.c.html'>src/glib/fuzzing/fuzz_variant_text.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (13/13)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (12/12)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gaction.c.html'>src/glib/gio/gaction.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/151)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/531)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gactiongroup.c.html'>src/glib/gio/gactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/23)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/799)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gactiongroupexporter.c.html'>src/glib/gio/gactiongroupexporter.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/349)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/489)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gactionmap.c.html'>src/glib/gio/gactionmap.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/75)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/215)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gappinfo.c.html'>src/glib/gio/gappinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/619)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/70)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2395)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gapplication.c.html'>src/glib/gio/gapplication.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1217)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/86)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3407)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gapplicationcommandline.c.html'>src/glib/gio/gapplicationcommandline.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/239)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/725)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gapplicationimpl-dbus.c.html'>src/glib/gio/gapplicationimpl-dbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/566)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/678)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gasyncinitable.c.html'>src/glib/gio/gasyncinitable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/82)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/316)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gasyncresult.c.html'>src/glib/gio/gasyncresult.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/171)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gbufferedinputstream.c.html'>src/glib/gio/gbufferedinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 24.35% (150/616)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.11% (13/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 22.21% (229/1031)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gbytesicon.c.html'>src/glib/gio/gbytesicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/91)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/198)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gcancellable.c.html'>src/glib/gio/gcancellable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/269)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/23)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/687)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gcontenttype-fdo.c.html'>src/glib/gio/gcontenttype-fdo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/875)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/49)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1151)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gcontenttype.c.html'>src/glib/gio/gcontenttype.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/357)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gcontextspecificgroup.c.html'>src/glib/gio/gcontextspecificgroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/135)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/162)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gconverter.c.html'>src/glib/gio/gconverter.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/46)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/261)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gconverterinputstream.c.html'>src/glib/gio/gconverterinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/338)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/399)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gconverteroutputstream.c.html'>src/glib/gio/gconverteroutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/352)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/320)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gcredentials.c.html'>src/glib/gio/gcredentials.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/489)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdatagrambased.c.html'>src/glib/gio/gdatagrambased.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/94)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/918)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdatainputstream.c.html'>src/glib/gio/gdatainputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 33.33% (213/639)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.00% (9/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 18.34% (250/1363)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdataoutputstream.c.html'>src/glib/gio/gdataoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/255)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/694)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusactiongroup.c.html'>src/glib/gio/gdbusactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/279)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/425)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusaddress.c.html'>src/glib/gio/gdbusaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/933)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1117)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusauth.c.html'>src/glib/gio/gdbusauth.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1022)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1309)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusauthmechanism.c.html'>src/glib/gio/gdbusauthmechanism.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/152)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/719)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusauthmechanismanon.c.html'>src/glib/gio/gdbusauthmechanismanon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/124)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/913)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusauthmechanismexternal.c.html'>src/glib/gio/gdbusauthmechanismexternal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/203)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/931)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusauthmechanismsha1.c.html'>src/glib/gio/gdbusauthmechanismsha1.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/809)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1669)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusauthobserver.c.html'>src/glib/gio/gdbusauthobserver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/70)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/74)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusconnection.c.html'>src/glib/gio/gdbusconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3919)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/168)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8972)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusconnection.h.html'>src/glib/gio/gdbusconnection.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbuserror.c.html'>src/glib/gio/gdbuserror.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/389)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1151)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusinterface.c.html'>src/glib/gio/gdbusinterface.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/32)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/233)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusinterfaceskeleton.c.html'>src/glib/gio/gdbusinterfaceskeleton.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/463)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1226)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusintrospection.c.html'>src/glib/gio/gdbusintrospection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1265)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/75)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1855)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusmessage.c.html'>src/glib/gio/gdbusmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 68.64% (1620/2360)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 44.79% (43/96)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 40.21% (1734/4312)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusmethodinvocation.c.html'>src/glib/gio/gdbusmethodinvocation.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/276)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1064)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusnamewatching.c.html'>src/glib/gio/gdbusnamewatching.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/455)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/632)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusobject.c.html'>src/glib/gio/gdbusobject.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/99)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusobjectskeleton.c.html'>src/glib/gio/gdbusobjectskeleton.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/246)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/590)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusprivate.c.html'>src/glib/gio/gdbusprivate.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1243)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/67)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1980)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusproxy.c.html'>src/glib/gio/gdbusproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1543)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/71)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2611)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdbusutils.c.html'>src/glib/gio/gdbusutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 20.36% (90/442)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 40.00% (6/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.73% (203/789)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdebugcontroller.c.html'>src/glib/gio/gdebugcontroller.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/117)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdebugcontrollerdbus.c.html'>src/glib/gio/gdebugcontrollerdbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/247)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/496)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdelayedsettingsbackend.c.html'>src/glib/gio/gdelayedsettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/262)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/303)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdesktopappinfo.c.html'>src/glib/gio/gdesktopappinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2884)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/153)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3978)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdocumentportal.c.html'>src/glib/gio/gdocumentportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/179)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/280)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdrive.c.html'>src/glib/gio/gdrive.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/296)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/30)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1357)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdtlsclientconnection.c.html'>src/glib/gio/gdtlsclientconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/58)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/239)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdtlsconnection.c.html'>src/glib/gio/gdtlsconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/285)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1422)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdtlsserverconnection.c.html'>src/glib/gio/gdtlsserverconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdummyfile.c.html'>src/glib/gio/gdummyfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/463)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/32)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/553)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdummyproxyresolver.c.html'>src/glib/gio/gdummyproxyresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/44)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/108)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gdummytlsbackend.c.html'>src/glib/gio/gdummytlsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/147)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/257)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gemblem.c.html'>src/glib/gio/gemblem.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/178)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/440)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gemblemedicon.c.html'>src/glib/gio/gemblemedicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/219)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/522)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfdonotificationbackend.c.html'>src/glib/gio/gfdonotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/326)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/377)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfile.c.html'>src/glib/gio/gfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3674)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/254)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10182)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfileattribute.c.html'>src/glib/gio/gfileattribute.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/405)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/37)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1254)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfiledescriptorbased.c.html'>src/glib/gio/gfiledescriptorbased.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/77)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfileenumerator.c.html'>src/glib/gio/gfileenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/360)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1000)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfileicon.c.html'>src/glib/gio/gfileicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/153)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/319)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfileinfo.c.html'>src/glib/gio/gfileinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1285)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/112)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7779)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfileinputstream.c.html'>src/glib/gio/gfileinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/168)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/409)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfileiostream.c.html'>src/glib/gio/gfileiostream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/280)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/30)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/578)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfilemonitor.c.html'>src/glib/gio/gfilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/88)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/305)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfileoutputstream.c.html'>src/glib/gio/gfileoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/221)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/548)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfilterinputstream.c.html'>src/glib/gio/gfilterinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 55.56% (70/126)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 58.33% (7/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 49.49% (97/196)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gfilteroutputstream.c.html'>src/glib/gio/gfilteroutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/124)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/199)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/ggtknotificationbackend.c.html'>src/glib/gio/ggtknotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/46)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/ghttpproxy.c.html'>src/glib/gio/ghttpproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/208)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/306)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gicon.c.html'>src/glib/gio/gicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/378)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/655)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/ginetaddress.c.html'>src/glib/gio/ginetaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 50.51% (198/392)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 44.44% (12/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.04% (335/1014)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/ginetaddressmask.c.html'>src/glib/gio/ginetaddressmask.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 68.32% (138/202)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 62.50% (10/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.13% (155/429)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/ginetsocketaddress.c.html'>src/glib/gio/ginetsocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 58.30% (130/223)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 70.59% (12/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 41.02% (217/529)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/ginitable.c.html'>src/glib/gio/ginitable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 73.81% (31/42)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 83.33% (5/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 70.83% (102/144)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/ginputstream.c.html'>src/glib/gio/ginputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  9.50% (65/684)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.78% (8/45)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 12.65% (206/1628)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gioerror.c.html'>src/glib/gio/gioerror.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/190)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/118)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/giomodule-priv.c.html'>src/glib/gio/giomodule-priv.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/103)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/giomodule.c.html'>src/glib/gio/giomodule.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/719)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/891)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gioscheduler.c.html'>src/glib/gio/gioscheduler.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/129)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/237)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/giostream.c.html'>src/glib/gio/giostream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/380)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/722)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/giounix-private.c.html'>src/glib/gio/giounix-private.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/giptosmessage.c.html'>src/glib/gio/giptosmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gipv6tclassmessage.c.html'>src/glib/gio/gipv6tclassmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gkeyfilesettingsbackend.c.html'>src/glib/gio/gkeyfilesettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/558)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/839)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gloadableicon.c.html'>src/glib/gio/gloadableicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/67)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/250)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfile.c.html'>src/glib/gio/glocalfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1951)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/77)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1927)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfileenumerator.c.html'>src/glib/gio/glocalfileenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/215)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfileinfo.c.html'>src/glib/gio/glocalfileinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1791)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/51)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1947)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfileinfo.h.html'>src/glib/gio/glocalfileinfo.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/50)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/39)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfileinputstream.c.html'>src/glib/gio/glocalfileinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/126)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/146)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfileiostream.c.html'>src/glib/gio/glocalfileiostream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/43)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/73)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfilemonitor.c.html'>src/glib/gio/glocalfilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/491)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/39)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/949)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalfileoutputstream.c.html'>src/glib/gio/glocalfileoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/771)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/771)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/glocalvfs.c.html'>src/glib/gio/glocalvfs.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/99)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/152)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmarshal-internal.c.html'>src/glib/gio/gmarshal-internal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1843)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/56)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2134)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemoryinputstream.c.html'>src/glib/gio/gmemoryinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 47.62% (100/210)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 48.00% (12/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.20% (125/249)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemorymonitor.c.html'>src/glib/gio/gmemorymonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/56)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemorymonitorbase.c.html'>src/glib/gio/gmemorymonitorbase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/110)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemorymonitordbus.c.html'>src/glib/gio/gmemorymonitordbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/72)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemorymonitorpoll.c.html'>src/glib/gio/gmemorymonitorpoll.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/130)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemorymonitorportal.c.html'>src/glib/gio/gmemorymonitorportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/62)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/92)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemorymonitorpsi.c.html'>src/glib/gio/gmemorymonitorpsi.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/242)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/304)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemoryoutputstream.c.html'>src/glib/gio/gmemoryoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/327)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/487)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmemorysettingsbackend.c.html'>src/glib/gio/gmemorysettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/75)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/94)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gmount.c.html'>src/glib/gio/gmount.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/323)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1373)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnativesocketaddress.c.html'>src/glib/gio/gnativesocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/54)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/190)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnativevolumemonitor.c.html'>src/glib/gio/gnativevolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworkaddress.c.html'>src/glib/gio/gnetworkaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 32.64% (203/622)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 32.50% (13/40)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 27.03% (250/925)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworking.c.html'>src/glib/gio/gnetworking.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 87.50% (14/16)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.00% (9/18)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworkmonitor.c.html'>src/glib/gio/gnetworkmonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/85)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/169)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworkmonitorbase.c.html'>src/glib/gio/gnetworkmonitorbase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/321)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/311)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworkmonitornetlink.c.html'>src/glib/gio/gnetworkmonitornetlink.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/310)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/433)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworkmonitornm.c.html'>src/glib/gio/gnetworkmonitornm.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/206)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/186)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworkmonitorportal.c.html'>src/glib/gio/gnetworkmonitorportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/403)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/377)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnetworkservice.c.html'>src/glib/gio/gnetworkservice.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/390)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/481)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnotification.c.html'>src/glib/gio/gnotification.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/274)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/890)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnotificationbackend.c.html'>src/glib/gio/gnotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/214)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gnullsettingsbackend.c.html'>src/glib/gio/gnullsettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/54)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gopenuriportal.c.html'>src/glib/gio/gopenuriportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/261)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/279)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/goutputstream.c.html'>src/glib/gio/goutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1308)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/84)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3575)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpermission.c.html'>src/glib/gio/gpermission.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/411)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpollableinputstream.c.html'>src/glib/gio/gpollableinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  7.69% (4/52)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.00% (2/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.52% (41/234)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpollableoutputstream.c.html'>src/glib/gio/gpollableoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/123)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/494)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpollableutils.c.html'>src/glib/gio/gpollableutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/106)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/129)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpollfilemonitor.c.html'>src/glib/gio/gpollfilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/104)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/174)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gportalnotificationbackend.c.html'>src/glib/gio/gportalnotificationbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/45)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gportalsupport.c.html'>src/glib/gio/gportalsupport.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/85)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/94)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpowerprofilemonitor.c.html'>src/glib/gio/gpowerprofilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/51)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpowerprofilemonitordbus.c.html'>src/glib/gio/gpowerprofilemonitordbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/109)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/172)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gpowerprofilemonitorportal.c.html'>src/glib/gio/gpowerprofilemonitorportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/81)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/122)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gproxy.c.html'>src/glib/gio/gproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/45)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/186)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gproxyaddress.c.html'>src/glib/gio/gproxyaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/167)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/120)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gproxyaddressenumerator.c.html'>src/glib/gio/gproxyaddressenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/501)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/547)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gproxyresolver.c.html'>src/glib/gio/gproxyresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/65)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/335)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gproxyresolverportal.c.html'>src/glib/gio/gproxyresolverportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/100)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/170)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gremoteactiongroup.c.html'>src/glib/gio/gremoteactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/51)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gresolver.c.html'>src/glib/gio/gresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/508)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/40)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1372)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gresource.c.html'>src/glib/gio/gresource.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/635)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/675)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gresourcefile.c.html'>src/glib/gio/gresourcefile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/478)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/58)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/606)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsandbox.c.html'>src/glib/gio/gsandbox.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/59)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/72)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gseekable.c.html'>src/glib/gio/gseekable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  6.25% (2/32)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.57% (2/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 19.25% (41/213)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsettings-mapping.c.html'>src/glib/gio/gsettings-mapping.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/473)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1169)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsettings.c.html'>src/glib/gio/gsettings.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1267)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/96)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2592)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsettingsbackend.c.html'>src/glib/gio/gsettingsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/320)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/891)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsettingsschema.c.html'>src/glib/gio/gsettingsschema.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/831)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/57)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1405)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsimpleaction.c.html'>src/glib/gio/gsimpleaction.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/237)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/453)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsimpleactiongroup.c.html'>src/glib/gio/gsimpleactiongroup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/159)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/292)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsimpleasyncresult.c.html'>src/glib/gio/gsimpleasyncresult.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/323)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/37)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1262)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsimplepermission.c.html'>src/glib/gio/gsimplepermission.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocket.c.html'>src/glib/gio/gsocket.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2369)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/102)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4756)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketaddress.c.html'>src/glib/gio/gsocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  8.89% (16/180)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.00% (4/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 10.63% (37/348)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketaddressenumerator.c.html'>src/glib/gio/gsocketaddressenumerator.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/176)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketclient.c.html'>src/glib/gio/gsocketclient.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1058)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1457)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketconnectable.c.html'>src/glib/gio/gsocketconnectable.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 34.62% (9/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 60.00% (3/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 47.71% (73/153)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketconnection.c.html'>src/glib/gio/gsocketconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/260)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/547)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketcontrolmessage.c.html'>src/glib/gio/gsocketcontrolmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/89)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/230)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketinputstream.c.html'>src/glib/gio/gsocketinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/84)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/108)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocketoutputstream.c.html'>src/glib/gio/gsocketoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/107)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/162)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocks4aproxy.c.html'>src/glib/gio/gsocks4aproxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/246)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/179)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocks4proxy.c.html'>src/glib/gio/gsocks4proxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/39)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsocks5proxy.c.html'>src/glib/gio/gsocks5proxy.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/681)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/490)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsrvtarget.c.html'>src/glib/gio/gsrvtarget.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/91)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/112)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gsubprocess.c.html'>src/glib/gio/gsubprocess.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/727)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/50)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2064)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtask.c.html'>src/glib/gio/gtask.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/607)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1956)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtcpconnection.c.html'>src/glib/gio/gtcpconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/155)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/180)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtcpwrapperconnection.c.html'>src/glib/gio/gtcpwrapperconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/69)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/227)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gthemedicon.c.html'>src/glib/gio/gthemedicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/282)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/663)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gthreadedresolver.c.html'>src/glib/gio/gthreadedresolver.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 25.61% (219/855)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 16.28% (7/43)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.90% (222/1240)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlsbackend.c.html'>src/glib/gio/gtlsbackend.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/76)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/377)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlscertificate.c.html'>src/glib/gio/gtlscertificate.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/485)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1071)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlsclientconnection.c.html'>src/glib/gio/gtlsclientconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/83)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/404)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlsconnection.c.html'>src/glib/gio/gtlsconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/259)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1031)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlsdatabase.c.html'>src/glib/gio/gtlsdatabase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/355)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2414)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlsfiledatabase.c.html'>src/glib/gio/gtlsfiledatabase.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlsinteraction.c.html'>src/glib/gio/gtlsinteraction.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/320)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1359)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlspassword.c.html'>src/glib/gio/gtlspassword.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/158)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/440)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtlsserverconnection.c.html'>src/glib/gio/gtlsserverconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gtrashportal.c.html'>src/glib/gio/gtrashportal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/65)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/93)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunionvolumemonitor.c.html'>src/glib/gio/gunionvolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/317)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/287)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixconnection.c.html'>src/glib/gio/gunixconnection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/324)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/510)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixcredentialsmessage.c.html'>src/glib/gio/gunixcredentialsmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/128)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/241)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixfdlist.c.html'>src/glib/gio/gunixfdlist.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/126)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/440)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixfdmessage.c.html'>src/glib/gio/gunixfdmessage.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/107)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/231)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixinputstream.c.html'>src/glib/gio/gunixinputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/205)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/291)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixmount.c.html'>src/glib/gio/gunixmount.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/191)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/215)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixmounts.c.html'>src/glib/gio/gunixmounts.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1203)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/102)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2861)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixoutputstream.c.html'>src/glib/gio/gunixoutputstream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/310)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/441)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixsocketaddress.c.html'>src/glib/gio/gunixsocketaddress.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/230)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/257)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixvolume.c.html'>src/glib/gio/gunixvolume.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/229)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/406)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gunixvolumemonitor.c.html'>src/glib/gio/gunixvolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/224)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/176)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gvfs.c.html'>src/glib/gio/gvfs.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/193)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/628)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gvolume.c.html'>src/glib/gio/gvolume.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/196)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/923)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gvolumemonitor.c.html'>src/glib/gio/gvolumemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/125)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/386)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/gzlibdecompressor.c.html'>src/glib/gio/gzlibdecompressor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/196)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/273)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/inotify/ginotifyfilemonitor.c.html'>src/glib/gio/inotify/ginotifyfilemonitor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/40)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/113)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/inotify/inotify-helper.c.html'>src/glib/gio/inotify/inotify-helper.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/141)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/173)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/inotify/inotify-kernel.c.html'>src/glib/gio/inotify/inotify-kernel.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/249)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/459)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/inotify/inotify-missing.c.html'>src/glib/gio/inotify/inotify-missing.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/77)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/123)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/inotify/inotify-path.c.html'>src/glib/gio/inotify/inotify-path.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/309)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/727)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/inotify/inotify-sub.c.html'>src/glib/gio/inotify/inotify-sub.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/37)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/strinfo.c.html'>src/glib/gio/strinfo.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/167)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/119)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/thumbnail-verify.c.html'>src/glib/gio/thumbnail-verify.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/104)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/110)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmime.c.html'>src/glib/gio/xdgmime/xdgmime.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/620)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/34)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/798)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmimealias.c.html'>src/glib/gio/xdgmime/xdgmimealias.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/85)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/42)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmimecache.c.html'>src/glib/gio/xdgmime/xdgmimecache.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/810)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/32)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/927)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmimeglob.c.html'>src/glib/gio/xdgmime/xdgmimeglob.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/462)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/360)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmimeicon.c.html'>src/glib/gio/xdgmime/xdgmimeicon.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/85)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/42)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmimeint.c.html'>src/glib/gio/xdgmime/xdgmimeint.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/111)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/99)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmimemagic.c.html'>src/glib/gio/xdgmime/xdgmimemagic.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/557)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/483)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gio/xdgmime/xdgmimeparent.c.html'>src/glib/gio/xdgmime/xdgmimeparent.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/116)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/61)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/garcbox.c.html'>src/glib/glib/garcbox.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 38.46% (20/52)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.57% (2/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.12% (72/256)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/garray.c.html'>src/glib/glib/garray.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 21.07% (181/859)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 20.73% (17/82)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 15.45% (433/2802)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gasyncqueue.c.html'>src/glib/glib/gasyncqueue.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/232)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/31)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/968)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gbase64.c.html'>src/glib/glib/gbase64.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/186)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/572)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gbitlock.c.html'>src/glib/glib/gbitlock.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 48.15% (78/162)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 55.56% (10/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 43.07% (177/411)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gbookmarkfile.c.html'>src/glib/glib/gbookmarkfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 35.12% (721/2053)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.73% (28/83)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 22.40% (1033/4612)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gbsearcharray.h.html'>src/glib/glib/gbsearcharray.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 68.85% (84/122)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 66.67% (6/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 74.61% (191/256)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gbytes.c.html'>src/glib/glib/gbytes.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 38.06% (59/155)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.00% (8/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 22.41% (145/647)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gcharset.c.html'>src/glib/glib/gcharset.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 60.06% (203/338)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 61.11% (11/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 64.87% (277/427)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gchecksum.c.html'>src/glib/glib/gchecksum.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/936)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2659)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gconvert.c.html'>src/glib/glib/gconvert.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 41.94% (351/837)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 60.61% (20/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 41.65% (404/970)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gdataset.c.html'>src/glib/glib/gdataset.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 18.97% (132/696)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 32.43% (12/37)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 19.03% (303/1592)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gdate.c.html'>src/glib/glib/gdate.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 45.64% (382/837)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 32.76% (19/58)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 26.54% (770/2901)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gdatetime-private.c.html'>src/glib/glib/gdatetime-private.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/131)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/242)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gdatetime.c.html'>src/glib/glib/gdatetime.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 44.66% (653/1462)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 41.03% (32/78)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 42.53% (1189/2796)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gdir.c.html'>src/glib/glib/gdir.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/75)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/223)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/genviron.c.html'>src/glib/glib/genviron.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  3.23% (4/124)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  9.09% (1/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  5.43% (20/368)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gerror.c.html'>src/glib/glib/gerror.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 52.69% (137/260)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 71.43% (15/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 34.02% (230/676)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gfileutils.c.html'>src/glib/glib/gfileutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 19.91% (225/1130)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 20.00% (8/40)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 23.98% (405/1689)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/ggettext.c.html'>src/glib/glib/ggettext.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 41.28% (45/109)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.00% (5/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 58.76% (104/177)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/ghash.c.html'>src/glib/glib/ghash.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 62.62% (536/856)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 56.16% (41/73)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 40.49% (700/1729)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/ghmac.c.html'>src/glib/glib/ghmac.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/142)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/528)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/ghook.c.html'>src/glib/glib/ghook.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/398)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1516)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/ghostutils.c.html'>src/glib/glib/ghostutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 68.79% (335/487)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 72.22% (13/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 60.25% (435/722)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/giochannel.c.html'>src/glib/glib/giochannel.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1290)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3610)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/giounix.c.html'>src/glib/glib/giounix.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/354)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/388)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gjournal-private.c.html'>src/glib/glib/gjournal-private.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gkeyfile.c.html'>src/glib/glib/gkeyfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 22.45% (478/2129)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 25.26% (24/95)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.29% (850/4917)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glib-autocleanups.h.html'>src/glib/glib/glib-autocleanups.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glib-init.c.html'>src/glib/glib/glib-init.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 42.42% (42/99)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 71.43% (5/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 17.05% (15/88)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glib-private.c.html'>src/glib/glib/glib-private.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 84.62% (22/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.33% (1/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.33% (1/3)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glib-private.h.html'>src/glib/glib/glib-private.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  8.33% (4/48)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 20.00% (1/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.40% (23/81)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glib-unix.c.html'>src/glib/glib/glib-unix.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/248)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/380)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glib-unix.h.html'>src/glib/glib/glib-unix.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glib-unixprivate.h.html'>src/glib/glib/glib-unixprivate.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/52)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/56)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/glist.c.html'>src/glib/glib/glist.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 18.12% (83/458)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 27.03% (10/37)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 20.57% (115/559)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmacros.h.html'>src/glib/glib/gmacros.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmain.c.html'>src/glib/glib/gmain.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.24% (6/2550)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.62% (1/161)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.03% (2/5903)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmain.h.html'>src/glib/glib/gmain.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmappedfile.c.html'>src/glib/glib/gmappedfile.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  8.51% (12/141)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 10.00% (1/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 16.94% (52/307)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmarkup.c.html'>src/glib/glib/gmarkup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 65.99% (1075/1629)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 66.04% (35/53)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 53.27% (1164/2185)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmem.c.html'>src/glib/glib/gmem.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 37.30% (69/185)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 45.45% (10/22)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 31.27% (91/291)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmem.h.html'>src/glib/glib/gmem.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 77.78% (7/9)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gmessages.c.html'>src/glib/glib/gmessages.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 11.69% (161/1377)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 16.42% (11/67)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  8.07% (133/1649)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/goption.c.html'>src/glib/glib/goption.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1318)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/51)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2427)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gpattern.c.html'>src/glib/glib/gpattern.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/255)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/497)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gpoll.c.html'>src/glib/glib/gpoll.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gprint.c.html'>src/glib/glib/gprint.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/56)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/62)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gprintf.c.html'>src/glib/glib/gprintf.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 33.80% (24/71)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.33% (3/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 35.20% (69/196)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gqsort.c.html'>src/glib/glib/gqsort.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/194)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/96)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gquark.c.html'>src/glib/glib/gquark.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 72.55% (74/102)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 91.67% (11/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 62.84% (115/183)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gquark.h.html'>src/glib/glib/gquark.h</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (9/9)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (16/16)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gqueue.c.html'>src/glib/glib/gqueue.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/382)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/43)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1608)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/grand.c.html'>src/glib/glib/grand.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/251)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/477)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/grcbox.c.html'>src/glib/glib/grcbox.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 32.00% (32/100)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 12.50% (1/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 20.70% (71/343)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/grefcount.c.html'>src/glib/glib/grefcount.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 37.70% (23/61)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.00% (4/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 43.92% (159/362)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gregex.c.html'>src/glib/glib/gregex.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1805)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/65)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3480)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gscanner.c.html'>src/glib/glib/gscanner.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1277)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1671)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gsequence.c.html'>src/glib/glib/gsequence.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/732)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/69)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1733)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gshell.c.html'>src/glib/glib/gshell.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/337)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/636)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gslice.c.html'>src/glib/glib/gslice.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 78.57% (33/42)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 62.50% (5/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 65.12% (28/43)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gslist.c.html'>src/glib/glib/gslist.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 38.50% (144/374)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 54.29% (19/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 31.13% (113/363)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gspawn-posix.c.html'>src/glib/glib/gspawn-posix.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1183)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1714)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gspawn-private.h.html'>src/glib/glib/gspawn-private.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/102)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/44)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gspawn.c.html'>src/glib/glib/gspawn.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/120)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/466)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gstdio.c.html'>src/glib/glib/gstdio.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/103)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/72)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gstdio.h.html'>src/glib/glib/gstdio.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/30)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gstrfuncs.c.html'>src/glib/glib/gstrfuncs.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 33.27% (376/1130)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 44.26% (27/61)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.60% (749/2619)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gstrfuncs.h.html'>src/glib/glib/gstrfuncs.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 38.46% (10/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.00% (1/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 42.86% (12/28)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gstring.c.html'>src/glib/glib/gstring.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 51.35% (285/555)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 40.00% (16/40)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 43.47% (513/1180)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gstring.h.html'>src/glib/glib/gstring.h</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 81.82% (36/44)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (3/3)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 84.27% (75/89)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gstrvbuilder.c.html'>src/glib/glib/gstrvbuilder.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/89)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gtestutils.c.html'>src/glib/glib/gtestutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.24% (5/2074)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.96% (1/104)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.15% (5/3446)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gthread-posix.c.html'>src/glib/glib/gthread-posix.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 27.30% (104/381)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 35.42% (17/48)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 29.33% (205/699)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gthread.c.html'>src/glib/glib/gthread.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 35.09% (93/265)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 34.04% (16/47)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 38.94% (169/434)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gthread.h.html'>src/glib/glib/gthread.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gthreadpool.c.html'>src/glib/glib/gthreadpool.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/491)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1071)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gtimer.c.html'>src/glib/glib/gtimer.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/245)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/467)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gtimezone.c.html'>src/glib/glib/gtimezone.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 23.14% (239/1033)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.17% (17/47)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.68% (553/1928)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gtranslit.c.html'>src/glib/glib/gtranslit.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/188)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/178)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gtree.c.html'>src/glib/glib/gtree.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/760)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/44)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1274)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gunicollate.c.html'>src/glib/glib/gunicollate.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/169)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/260)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gunidecomp.c.html'>src/glib/glib/gunidecomp.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 71.07% (280/394)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 53.85% (7/13)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 72.65% (494/680)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/guniprop.c.html'>src/glib/glib/guniprop.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 30.74% (190/618)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 31.71% (13/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 32.17% (435/1352)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/guri.c.html'>src/glib/glib/guri.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 77.05% (957/1242)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 57.89% (33/57)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 60.71% (1732/2853)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gutf8.c.html'>src/glib/glib/gutf8.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 37.48% (434/1158)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 38.30% (18/47)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 48.38% (851/1759)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gutils.c.html'>src/glib/glib/gutils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.22% (2/930)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  2.00% (1/50)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.38% (7/1850)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gutils.h.html'>src/glib/glib/gutils.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 42.11% (16/38)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 66.67% (2/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 56.90% (33/58)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gutilsprivate.c.html'>src/glib/glib/gutilsprivate.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 98.96% (95/96)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 98.92% (92/93)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gutilsprivate.h.html'>src/glib/glib/gutilsprivate.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 69.57% (16/23)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 83.33% (25/30)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/guuid.c.html'>src/glib/glib/guuid.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 44.44% (28/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.33% (2/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 48.60% (52/107)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gvariant-core.c.html'>src/glib/glib/gvariant-core.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 80.77% (336/416)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 93.10% (27/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 74.33% (689/927)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gvariant-parser.c.html'>src/glib/glib/gvariant-parser.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 87.56% (1436/1640)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 85.71% (72/84)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 74.93% (1692/2258)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gvariant-serialiser.c.html'>src/glib/glib/gvariant-serialiser.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 96.56% (843/873)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (48/48)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 83.74% (1282/1531)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gvariant.c.html'>src/glib/glib/gvariant.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 47.98% (1104/2301)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 57.14% (68/119)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 44.86% (2479/5526)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gvarianttype-private.h.html'>src/glib/glib/gvarianttype-private.h</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (48/48)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (48/48)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gvarianttype.c.html'>src/glib/glib/gvarianttype.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 91.71% (365/398)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 91.18% (31/34)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 81.41% (990/1216)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gvarianttypeinfo.c.html'>src/glib/glib/gvarianttypeinfo.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 95.76% (271/283)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 96.00% (24/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 75.38% (251/333)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/gwakeup.c.html'>src/glib/glib/gwakeup.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/119)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/libcharset/localcharset.c.html'>src/glib/glib/libcharset/localcharset.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 41.38% (48/116)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (3/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 37.65% (32/85)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/glib/valgrind.h.html'>src/glib/glib/valgrind.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/58)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gmodule/gmodule-deprecated.c.html'>src/glib/gmodule/gmodule-deprecated.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gmodule/gmodule-dl.c.html'>src/glib/gmodule/gmodule-dl.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/55)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gmodule/gmodule.c.html'>src/glib/gmodule/gmodule.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/369)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/614)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gatomicarray.c.html'>src/glib/gobject/gatomicarray.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (65/65)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (5/5)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 92.22% (83/90)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gboxed.c.html'>src/glib/gobject/gboxed.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 24.41% (52/213)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  5.00% (3/60)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  8.38% (146/1742)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gclosure.c.html'>src/glib/gobject/gclosure.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 13.57% (122/899)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 30.56% (11/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 23.39% (637/2723)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/genums.c.html'>src/glib/gobject/genums.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 31.17% (96/308)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 24.00% (6/25)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 21.21% (227/1070)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gmarshal.c.html'>src/glib/gobject/gmarshal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1159)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/44)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1128)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gobject.c.html'>src/glib/gobject/gobject.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 22.77% (612/2688)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.31% (47/166)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 19.64% (1186/6038)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gobject.h.html'>src/glib/gobject/gobject.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/60)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gparam.c.html'>src/glib/gobject/gparam.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 42.64% (310/727)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 37.10% (23/62)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.56% (737/2196)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gparamspecs.c.html'>src/glib/gobject/gparamspecs.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 36.67% (513/1399)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 15.56% (21/135)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.06% (824/2285)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gsignal.c.html'>src/glib/gobject/gsignal.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  9.18% (204/2222)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 11.36% (10/88)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  9.94% (460/4630)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gsourceclosure.c.html'>src/glib/gobject/gsourceclosure.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/160)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/263)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gtype-private.h.html'>src/glib/gobject/gtype-private.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gtype.c.html'>src/glib/gobject/gtype.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 52.96% (1287/2430)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 64.96% (76/117)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 53.21% (2625/4933)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gtype.h.html'>src/glib/gobject/gtype.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 44.44% (16/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 41.18% (7/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 64.41% (38/59)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gtypemodule.c.html'>src/glib/gobject/gtypemodule.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/259)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/650)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gtypeplugin.c.html'>src/glib/gobject/gtypeplugin.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 37.74% (20/53)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 20.00% (1/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  5.53% (12/217)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gvalue.c.html'>src/glib/gobject/gvalue.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 56.77% (130/229)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 70.59% (12/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 49.68% (389/783)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gvaluearray.c.html'>src/glib/gobject/gvaluearray.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/119)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/401)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gvaluetransform.c.html'>src/glib/gobject/gvaluetransform.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 78.37% (192/245)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 22.22% (2/9)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 95.00% (1045/1100)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/glib/gobject/gvaluetypes.c.html'>src/glib/gobject/gvaluetypes.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 42.16% (258/612)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 20.51% (16/78)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 28.12% (622/2212)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='work/build/gio/gioenumtypes.c.html'>work/build/gio/gioenumtypes.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  3.30% (50/1517)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  3.61% (3/83)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  3.36% (78/2324)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='work/build/gio/xdp-dbus.c.html'>work/build/gio/xdp-dbus.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3531)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/262)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4495)</pre>
+      </td>
+          </tr>
+      </tbody>
+      <tfoot>
+      <tr class="light-row-bold">
+        <td>
+          <pre>Totals</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre> 14.59% (21771/149198)</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre> 13.93% (1294/9292)</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre> 12.38% (37597/303646)</pre>
+        </td>
+              </tr>
+    </tfoot>
+  </table>
+
+<script>
+  const SORT_COLUMN = {
+    LINE: 2,
+    FUNCTION: 3,
+    REGION: 4,
+  }
+
+  const SORT_TYPES = {
+    UNSET: -1,
+    PERCENT: 0,
+    AGGREGATE: 1,
+  }
+
+  var SORT_ORDER = {
+    [SORT_COLUMN.LINE]: [SORT_TYPES.UNSET],
+    [SORT_COLUMN.FUNCTION]: [SORT_TYPES.UNSET],
+    [SORT_COLUMN.REGION]: [SORT_TYPES.UNSET],
+  }
+
+  function sortTable(columnNumber) {
+    SORT_ORDER[columnNumber] = ++SORT_ORDER[columnNumber] % 2;
+
+    let columnSortOrder = SORT_ORDER[columnNumber];
+    let tbody = document.getElementsByTagName("tbody")[0];
+
+    [].slice.call(tbody.rows).sort(function(a, b) {
+      let aColumn = a.cells[columnNumber-1].textContent;
+      let bColumn = b.cells[columnNumber-1].textContent;
+
+      let aColumnCompare, bColumnCompare;
+      if (columnSortOrder == SORT_TYPES.PERCENT) {
+        aColumnCompare = parseFloat(/([0-9.]+)%/.exec(aColumn)[1]);
+        bColumnCompare = parseFloat(/([0-9.]+)%/.exec(bColumn)[1]);
+      } else {
+        aColumnCompare = parseInt(/\/(\d+)/.exec(aColumn)[1]);
+        bColumnCompare = parseInt(/\/(\d+)/.exec(bColumn)[1]);
+      }
+
+      return (
+          aColumnCompare < bColumnCompare ? -1:
+              aColumnCompare > bColumnCompare ? 1 : 0);
+    }).forEach(function(value, index) {
+      tbody.appendChild(value);
+    });
+  }
+
+</script>    </div>
+  </body>
+</html>

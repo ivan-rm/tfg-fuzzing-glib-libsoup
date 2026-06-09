@@ -1,0 +1,26 @@
+Call tree
+LLVMFuzzerTestOneInput /src/glib/fuzzing/fuzz_uuid_string_is_valid.c -1
+  fuzz_set_logging_func /src/glib/fuzzing/fuzz_uuid_string_is_valid.c 27
+    g_log_set_writer_func /src/glib/fuzzing/fuzz.h 43
+      g_return_if_fail /src/glib/glib/gmessages.c 2006
+      g_mutex_lock /src/glib/glib/gmessages.c 2008
+        g_mutex_lock_impl /src/glib/glib/gthread.c 1283
+          AcquireSRWLockExclusive /src/glib/glib/gthread-win32.c 95
+      g_mutex_unlock /src/glib/glib/gmessages.c 2012
+        g_mutex_unlock_impl /src/glib/glib/gthread.c 1299
+          ReleaseSRWLockExclusive /src/glib/glib/gthread-win32.c 107
+      g_error /src/glib/glib/gmessages.c 2013
+      g_mutex_unlock /src/glib/glib/gmessages.c 2021
+  g_strndup /src/glib/fuzzing/fuzz_uuid_string_is_valid.c 30
+    g_return_val_if_fail /src/glib/glib/gstrfuncs.c 419
+    g_new /src/glib/glib/gstrfuncs.c 421
+    strncpy /src/glib/glib/gstrfuncs.c 422
+  g_uuid_string_is_valid /src/glib/fuzzing/fuzz_uuid_string_is_valid.c 31
+    g_return_val_if_fail /src/glib/glib/guuid.c 122
+    uuid_parse_string /src/glib/glib/guuid.c 124
+      strlen /src/glib/glib/guuid.c 75
+      g_ascii_xdigit_value /src/glib/glib/guuid.c 88
+        g_ascii_digit_value /src/glib/glib/gstrfuncs.c 1804
+          g_ascii_isdigit /src/glib/glib/gstrfuncs.c 1776
+      g_ascii_xdigit_value /src/glib/glib/guuid.c 89
+  g_free /src/glib/fuzzing/fuzz_uuid_string_is_valid.c 32

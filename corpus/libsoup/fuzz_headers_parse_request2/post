@@ -1,0 +1,9 @@
+POST /upload HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+Content-Length: 45
+Expect: 100-continue
+Cookie: session=fuzzed_data_here; security=high
+Connection: keep-alive
+field1=value1&field2=fuzzed_binary_data

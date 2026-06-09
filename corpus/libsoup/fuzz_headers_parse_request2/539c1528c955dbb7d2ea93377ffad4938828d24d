@@ -1,0 +1,3 @@
+GE /7 HTTP/1.1
+x60l=1
+Range: bytes=H,,0-00,-4,0-0,, 

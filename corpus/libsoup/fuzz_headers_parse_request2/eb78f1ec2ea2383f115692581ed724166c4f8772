@@ -1,0 +1,4 @@
+POST /upload@ HTTP/1.1
+Content-Type:Ùmultipart; filename=TP/1.1
+Content-Type:Ùmultipart; filename="TP/1.1
+Content-Type:Ùmultipart; filename="/fooundaryABC124--

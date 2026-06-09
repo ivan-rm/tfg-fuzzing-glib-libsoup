@@ -1,0 +1,29 @@
+GET /index.html HTTP/1.0
+Host: ,, deflate
+: nindex.htm= ?HTTP/1.1
+.0
+Accept:/*host
+Connectio
+ keep-acalhost
+Connection: keep-ale
+A: 1
+B: 2
+Content-Type: text/htmfileive
+X-Customÿÿÿÿmon_vadue
+A: 1
+B: ÿÿÿmo1
+B: 2
+Content-Type: text/htmfil2
+Content-Type: text/htmfilename=HttpOnly
+Link: </ssoccept:/*host
+Connectio
+ keep-acalhost
+Connection: keep-ale
+A: 1
+B: 2
+Content-Type: text/htmfileive
+X-Custom-Header-Fuzz: uÿÿÿÿmon_vadue
+A: 1
+B: ÿÿÿmo1
+B: 2
+Content-Type: text/htmfi[T @g

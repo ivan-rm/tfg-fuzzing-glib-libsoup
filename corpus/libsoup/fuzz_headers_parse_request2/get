@@ -1,0 +1,7 @@
+GET /index.html HTTP/1.1
+Host: localhost
+User-Agent: Mozilla/5.0
+Accept: */*
+Accept-Encoding: gzip, deflate
+Connection: keep-alive
+X-Custom-Header: fuzzing

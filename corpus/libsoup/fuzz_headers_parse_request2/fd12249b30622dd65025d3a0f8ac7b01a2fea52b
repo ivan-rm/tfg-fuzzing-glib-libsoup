@@ -1,0 +1,11 @@
+POST /upload HTTP/1.0
+*=oph
+CoP/1.1P/1.0
+*=oph
+CoP/1.1
+Range: bytes=ic0-POST /upload HTTP/1.0
+*=oph
+CoP/1.1P/1.0
+*=oph
+CoP/1.1
+Range: bytes=ic0-500,60000300=•,220close1P-100•••• bytes=ic0-500,60000300=•,220close1P-100•••500,60000300=•,220close1P-100•••• bytes=ic0-500,60000300=•,220close1P-100••••••••œœ: `a

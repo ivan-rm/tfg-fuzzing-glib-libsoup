@@ -1,0 +1,22 @@
+POST /upload HTTP/1.1
+H Mozilla/0.0
+lla/0.0
+C: 45
+Expect: 100ÿØÿ-contnue
+Coozilla/0.0
+C:4 5
+Expect: 100ÿØÿ:contnue
+Coozill2/1.0
+C&: 45
+Expect: 1005
+Expect: 100ÿØÿ-contnue
+CdaC: 45
+Expect: 100ÿØÿ-contnue
+Coozilla/0.0
+C:4 5
+Expect: 100ÿØÿ:contnue
+Coozill2/1.0
+C&: 45
+Expect: 1005
+Expect: 100ÿØÿ-contnue
+Cdat®a

@@ -1,0 +1,8 @@
+POST /upload HTTP/1.1
+Sontent-yTpyTpe:*multi3
+Content-Length: 180
+------3
+Content-Length: 1
+Content-Length: 180
+------WpryABC123
+Content-Length: 1BC123--

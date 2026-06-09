@@ -1,0 +1,618 @@
+fuzz_date_time.c:fuzz_set_logging_func:
+   18|  1.53k|{
+   19|  1.53k|#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+   20|  1.53k|        if (!set_logger)
+  ------------------
+  |  Branch (20:13): [True: 1, False: 1.53k]
+  ------------------
+   21|      1|        {
+   22|      1|                set_logger = 1;
+   23|      1|                g_log_set_writer_func (empty_logging_func, NULL, NULL);
+   24|      1|        }
+   25|  1.53k|#endif
+   26|  1.53k|}
+fuzz_date_time.c:empty_logging_func:
+   10|      1|{
+   11|      1|        return G_LOG_WRITER_HANDLED;
+   12|      1|}
+
+LLVMFuzzerTestOneInput:
+    5|  1.55k|{
+    6|       |        // We only accept NUL terminated strings
+    7|  1.55k|        if (!size || data[size - 1] != '\0')
+  ------------------
+  |  Branch (7:13): [True: 0, False: 1.55k]
+  |  Branch (7:22): [True: 17, False: 1.53k]
+  ------------------
+    8|     17|                return 0;
+    9|       |
+   10|  1.53k|        fuzz_set_logging_func ();
+   11|       |
+   12|  1.53k|        GDateTime *dt = soup_date_time_new_from_http_string ((const char*)data);
+   13|       |
+   14|  1.53k|        g_clear_pointer (&dt, g_date_time_unref);
+  ------------------
+  |  |  136|  1.53k|  G_STMT_START                                           \
+  |  |  ------------------
+  |  |  |  |  989|  1.53k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  137|  1.53k|  {                                                      \
+  |  |  138|  1.53k|    G_STATIC_ASSERT (sizeof *(pp) == sizeof (gpointer)); \
+  |  |  ------------------
+  |  |  |  |  872|  1.53k|#define G_STATIC_ASSERT(expr) _Static_assert (expr, "Expression evaluates to false")
+  |  |  ------------------
+  |  |  139|  1.53k|    glib_typeof ((pp)) _pp = (pp);                       \
+  |  |  ------------------
+  |  |  |  |   39|  1.53k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  140|  1.53k|    glib_typeof (*(pp)) _ptr = *_pp;                     \
+  |  |  ------------------
+  |  |  |  |   39|  1.53k|#define glib_typeof(t) __typeof__ (t)
+  |  |  ------------------
+  |  |  141|  1.53k|    *_pp = NULL;                                         \
+  |  |  142|  1.53k|    if (_ptr)                                            \
+  |  |  ------------------
+  |  |  |  Branch (142:9): [True: 470, False: 1.06k]
+  |  |  ------------------
+  |  |  143|  1.53k|      (destroy) (_ptr);                                  \
+  |  |  144|  1.53k|  }                                                      \
+  |  |  145|  1.53k|  G_STMT_END                                             \
+  |  |  ------------------
+  |  |  |  |  997|  1.53k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 1.53k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  146|  1.53k|  GLIB_AVAILABLE_MACRO_IN_2_34
+  ------------------
+   15|       |
+   16|  1.53k|        return 0;
+   17|  1.55k|}
+
+soup_date_time_new_from_http_string:
+  322|  1.53k|{
+  323|  1.53k|        g_return_val_if_fail (date_string != NULL, NULL);
+  ------------------
+  |  |  663|  1.53k|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  |  989|  1.53k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  664|  1.53k|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1248|  1.53k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1247|  1.53k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1239|  1.53k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|  1.53k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1240|  1.53k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  |  |  | 1241|  1.53k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1241:8): [True: 1.53k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1242|  1.53k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  1.53k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  1.53k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1243|  1.53k|   else                                         \
+  |  |  |  |  |  |  |  | 1244|  1.53k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1245|  1.53k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  865|  1.53k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  864|  1.53k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1246|  1.53k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1248:24): [True: 1.53k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  665|  1.53k|      { } \
+  |  |  666|  1.53k|    else \
+  |  |  667|  1.53k|      { \
+  |  |  668|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  669|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  897|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  670|      0|                                  #expr); \
+  |  |  671|      0|        return (val); \
+  |  |  672|      0|      } \
+  |  |  673|  1.53k|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  |  997|  1.53k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (997:30): [Folded, False: 1.53k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  324|       |
+  325|  1.73k|	while (g_ascii_isspace (*date_string))
+  ------------------
+  |  |   86|  1.73k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 195, False: 1.53k]
+  |  |  ------------------
+  ------------------
+  326|    195|		date_string++;
+  327|       |
+  328|       |        /* If it starts with a digit, it's either an ISO 8601 date, or
+  329|       |         * an RFC2822 date without the optional weekday; in the later
+  330|       |         * case, there will be a month name later on, so look for one
+  331|       |         * of the month-start letters.
+  332|       |         * Previous versions of this library supported parsing iso8601 strings
+  333|       |         * however g_date_time_new_from_iso8601() should be used now. Just
+  334|       |         * catch those in case for testing.
+  335|       |         */
+  336|  1.53k|	if (G_UNLIKELY (g_ascii_isdigit (*date_string) && !strpbrk (date_string, "JFMASOND"))) {
+  ------------------
+  |  | 1249|  1.53k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1247|  1.53k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1239|  1.53k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  1.53k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1240|  1.53k|   int G_PASTE (_g_boolean_var_, uniq);         \
+  |  |  |  |  |  | 1241|  3.91k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 845, False: 691]
+  |  |  |  |  |  |  |  Branch (1241:8): [True: 1, False: 844]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1242|  1.53k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1243|  1.53k|   else                                         \
+  |  |  |  |  |  | 1244|  1.53k|      G_PASTE (_g_boolean_var_, uniq) = 0;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|  1.53k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|  1.53k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1245|  1.53k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  865|  1.53k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  864|  1.53k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1246|  1.53k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1249:26): [True: 1, False: 1.53k]
+  |  |  ------------------
+  ------------------
+  337|      1|                g_debug ("Unsupported format passed to soup_date_time_new_from_http_string(): %s", date_string);
+  ------------------
+  |  |  368|      1|#define g_debug(...)    g_log (G_LOG_DOMAIN,         \
+  |  |  369|      1|                               G_LOG_LEVEL_DEBUG,    \
+  |  |  370|      1|                               __VA_ARGS__)
+  ------------------
+  338|      1|                return NULL;
+  339|      1|        }
+  340|       |
+  341|  1.53k|	return parse_textual_date (date_string);
+  342|  1.53k|}
+soup-date-utils.c:parse_textual_date:
+  254|  1.53k|{
+  255|  1.53k|        int month, day, year, hour, minute, second;
+  256|  1.53k|        GTimeZone *tz = NULL;
+  257|  1.53k|        GDateTime *date;
+  258|       |
+  259|       |	/* If it starts with a word, it must be a weekday, which we skip */
+  260|  1.53k|	if (g_ascii_isalpha (*date_string)) {
+  ------------------
+  |  |   65|  1.53k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_ALPHA) != 0)
+  |  |  ------------------
+  |  |  |  Branch (65:3): [True: 635, False: 900]
+  |  |  ------------------
+  ------------------
+  261|  1.59k|		while (g_ascii_isalpha (*date_string))
+  ------------------
+  |  |   65|  1.59k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_ALPHA) != 0)
+  |  |  ------------------
+  |  |  |  Branch (65:3): [True: 956, False: 635]
+  |  |  ------------------
+  ------------------
+  262|    956|			date_string++;
+  263|    635|		if (*date_string == ',')
+  ------------------
+  |  Branch (263:7): [True: 101, False: 534]
+  ------------------
+  264|    101|			date_string++;
+  265|  21.2k|		while (g_ascii_isspace (*date_string))
+  ------------------
+  |  |   86|  21.2k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_SPACE) != 0)
+  |  |  ------------------
+  |  |  |  Branch (86:3): [True: 20.6k, False: 635]
+  |  |  ------------------
+  ------------------
+  266|  20.6k|			date_string++;
+  267|    635|	}
+  268|       |
+  269|       |	/* If there's now another word, this must be an asctime-date */
+  270|  1.53k|	if (g_ascii_isalpha (*date_string)) {
+  ------------------
+  |  |   65|  1.53k|  ((g_ascii_table[(guchar) (c)] & G_ASCII_ALPHA) != 0)
+  |  |  ------------------
+  |  |  |  Branch (65:3): [True: 557, False: 978]
+  |  |  ------------------
+  ------------------
+  271|       |		/* (Sun) Nov  6 08:49:37 1994 */
+  272|    557|		if (!parse_month (&month, &date_string) ||
+  ------------------
+  |  Branch (272:7): [True: 8, False: 549]
+  ------------------
+  273|    549|		    !parse_day (&day, &date_string) ||
+  ------------------
+  |  Branch (273:7): [True: 113, False: 436]
+  ------------------
+  274|    436|		    !parse_time (&hour, &minute, &second, &date_string) ||
+  ------------------
+  |  Branch (274:7): [True: 276, False: 160]
+  ------------------
+  275|    160|		    !parse_year (&year, &date_string) ||
+  ------------------
+  |  Branch (275:7): [True: 92, False: 68]
+  ------------------
+  276|     68|		    !g_date_valid_dmy (day, month, year))
+  ------------------
+  |  Branch (276:7): [True: 1, False: 67]
+  ------------------
+  277|    490|			return NULL;
+  278|       |
+  279|       |		/* There shouldn't be a timezone, but check anyway */
+  280|     67|		parse_timezone (&tz, &date_string);
+  281|    978|	} else {
+  282|       |		/* Non-asctime date, so some variation of
+  283|       |		 * (Sun,) 06 Nov 1994 08:49:37 GMT
+  284|       |		 */
+  285|    978|		if (!parse_day (&day, &date_string) ||
+  ------------------
+  |  Branch (285:7): [True: 121, False: 857]
+  ------------------
+  286|    857|		    !parse_month (&month, &date_string) ||
+  ------------------
+  |  Branch (286:7): [True: 33, False: 824]
+  ------------------
+  287|    824|		    !parse_year (&year, &date_string) ||
+  ------------------
+  |  Branch (287:7): [True: 93, False: 731]
+  ------------------
+  288|    731|		    !parse_time (&hour, &minute, &second, &date_string) ||
+  ------------------
+  |  Branch (288:7): [True: 327, False: 404]
+  ------------------
+  289|    404|		    !g_date_valid_dmy (day, month, year))
+  ------------------
+  |  Branch (289:7): [True: 1, False: 403]
+  ------------------
+  290|    575|			return NULL;
+  291|       |
+  292|       |		/* This time there *should* be a timezone, but we
+  293|       |		 * survive if there isn't.
+  294|       |		 */
+  295|    403|		parse_timezone (&tz, &date_string);
+  296|    403|	}
+  297|       |
+  298|    470|        if (!tz)
+  ------------------
+  |  Branch (298:13): [True: 308, False: 162]
+  ------------------
+  299|    308|                tz = g_time_zone_new_utc ();
+  300|       |
+  301|    470|        date = g_date_time_new (tz, year, month, day, hour, minute, second);
+  302|    470|        g_time_zone_unref (tz);
+  303|       |
+  304|    470|        return date;
+  305|  1.53k|}
+soup-date-utils.c:parse_month:
+  140|  1.41k|{
+  141|  1.41k|	int i;
+  142|       |
+  143|  4.88k|	for (i = 0; i < G_N_ELEMENTS (months); i++) {
+  ------------------
+  |  |  955|  4.88k|#define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
+  ------------------
+  |  Branch (143:14): [True: 4.84k, False: 41]
+  ------------------
+  144|  4.84k|		if (!g_ascii_strncasecmp (*date_string, months[i], 3)) {
+  ------------------
+  |  Branch (144:7): [True: 1.37k, False: 3.47k]
+  ------------------
+  145|  1.37k|			*month = i + 1;
+  146|  1.37k|			*date_string += 3;
+  147|  2.14k|			while (**date_string == ' ' || **date_string == '-')
+  ------------------
+  |  Branch (147:11): [True: 388, False: 1.75k]
+  |  Branch (147:35): [True: 385, False: 1.37k]
+  ------------------
+  148|    773|				(*date_string)++;
+  149|  1.37k|			return TRUE;
+  ------------------
+  |  |  933|  1.37k|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|  1.37k|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  150|  1.37k|		}
+  151|  4.84k|	}
+  152|     41|	return FALSE;
+  ------------------
+  |  |  929|     41|#define	FALSE	(0)
+  ------------------
+  153|  1.41k|}
+soup-date-utils.c:parse_day:
+  125|  1.52k|{
+  126|  1.52k|	char *end;
+  127|       |
+  128|  1.52k|	*day = strtoul (*date_string, &end, 10);
+  129|  1.52k|	if (end == (char *)*date_string)
+  ------------------
+  |  Branch (129:6): [True: 73, False: 1.45k]
+  ------------------
+  130|     73|		return FALSE;
+  ------------------
+  |  |  929|     73|#define	FALSE	(0)
+  ------------------
+  131|       |
+  132|  2.52k|	while (*end == ' ' || *end == '-')
+  ------------------
+  |  Branch (132:9): [True: 449, False: 2.07k]
+  |  Branch (132:24): [True: 623, False: 1.45k]
+  ------------------
+  133|  1.07k|		end++;
+  134|  1.45k|	*date_string = end;
+  135|  1.45k|	return *day >= 1 && *day <= 31;
+  ------------------
+  |  Branch (135:9): [True: 1.35k, False: 96]
+  |  Branch (135:22): [True: 1.29k, False: 65]
+  ------------------
+  136|  1.52k|}
+soup-date-utils.c:parse_time:
+  180|  1.16k|{
+  181|  1.16k|	char *p, *end;
+  182|       |
+  183|  1.16k|	*hour = strtoul (*date_string, &end, 10);
+  184|  1.16k|	if (end == (char *)*date_string || *end++ != ':')
+  ------------------
+  |  Branch (184:6): [True: 106, False: 1.06k]
+  |  Branch (184:37): [True: 18, False: 1.04k]
+  ------------------
+  185|    124|		return FALSE;
+  ------------------
+  |  |  929|    124|#define	FALSE	(0)
+  ------------------
+  186|  1.04k|	p = end;
+  187|  1.04k|	*minute = strtoul (p, &end, 10);
+  188|  1.04k|	if (end == p || *end++ != ':')
+  ------------------
+  |  Branch (188:6): [True: 2, False: 1.04k]
+  |  Branch (188:18): [True: 19, False: 1.02k]
+  ------------------
+  189|     21|		return FALSE;
+  ------------------
+  |  |  929|     21|#define	FALSE	(0)
+  ------------------
+  190|  1.02k|	p = end;
+  191|  1.02k|	*second = strtoul (p, &end, 10);
+  192|  1.02k|	if (end == p)
+  ------------------
+  |  Branch (192:6): [True: 3, False: 1.01k]
+  ------------------
+  193|      3|		return FALSE;
+  ------------------
+  |  |  929|      3|#define	FALSE	(0)
+  ------------------
+  194|  1.01k|	p = end;
+  195|       |
+  196|  1.48k|	while (*p == ' ')
+  ------------------
+  |  Branch (196:9): [True: 466, False: 1.01k]
+  ------------------
+  197|    466|		p++;
+  198|  1.01k|	*date_string = p;
+  199|  1.01k|	return *hour >= 0 && *hour < 24 && *minute >= 0 && *minute < 60 && *second >= 0 && *second < 60;
+  ------------------
+  |  Branch (199:9): [True: 936, False: 83]
+  |  Branch (199:23): [True: 868, False: 68]
+  |  Branch (199:37): [True: 791, False: 77]
+  |  Branch (199:53): [True: 717, False: 74]
+  |  Branch (199:69): [True: 636, False: 81]
+  |  Branch (199:85): [True: 564, False: 72]
+  ------------------
+  200|  1.02k|}
+soup-date-utils.c:parse_year:
+  157|    984|{
+  158|    984|	char *end;
+  159|       |
+  160|    984|	*year = strtoul (*date_string, &end, 10);
+  161|    984|	if (end == (char *)*date_string)
+  ------------------
+  |  Branch (161:6): [True: 59, False: 925]
+  ------------------
+  162|     59|		return FALSE;
+  ------------------
+  |  |  929|     59|#define	FALSE	(0)
+  ------------------
+  163|       |
+  164|    925|	if (end == (char *)*date_string + 2) {
+  ------------------
+  |  Branch (164:6): [True: 50, False: 875]
+  ------------------
+  165|     50|		if (*year < 70)
+  ------------------
+  |  Branch (165:7): [True: 43, False: 7]
+  ------------------
+  166|     43|			*year += 2000;
+  167|      7|		else
+  168|      7|			*year += 1900;
+  169|    875|	} else if (end == (char *)*date_string + 3)
+  ------------------
+  |  Branch (169:13): [True: 11, False: 864]
+  ------------------
+  170|     11|		*year += 1900;
+  171|       |
+  172|  2.22k|	while (*end == ' ' || *end == '-')
+  ------------------
+  |  Branch (172:9): [True: 441, False: 1.78k]
+  |  Branch (172:24): [True: 857, False: 925]
+  ------------------
+  173|  1.29k|		end++;
+  174|    925|	*date_string = end;
+  175|    925|	return *year > 0 && *year < 9999;
+  ------------------
+  |  Branch (175:9): [True: 838, False: 87]
+  |  Branch (175:22): [True: 799, False: 39]
+  ------------------
+  176|    984|}
+soup-date-utils.c:parse_timezone:
+  204|    470|{
+  205|    470|        gint32 offset_minutes;
+  206|    470|        gboolean utc;
+  207|       |
+  208|    470|	if (!**date_string) {
+  ------------------
+  |  Branch (208:6): [True: 90, False: 380]
+  ------------------
+  209|     90|                utc = FALSE;
+  ------------------
+  |  |  929|     90|#define	FALSE	(0)
+  ------------------
+  210|     90|		offset_minutes = 0;
+  211|    380|	} else if (**date_string == '+' || **date_string == '-') {
+  ------------------
+  |  Branch (211:13): [True: 19, False: 361]
+  |  Branch (211:37): [True: 260, False: 101]
+  ------------------
+  212|    279|		gulong val;
+  213|    279|		int sign = (**date_string == '+') ? 1 : -1;
+  ------------------
+  |  Branch (213:14): [True: 19, False: 260]
+  ------------------
+  214|    279|		val = strtoul (*date_string + 1, (char **)date_string, 10);
+  215|    279|		if (val > 9999)
+  ------------------
+  |  Branch (215:7): [True: 96, False: 183]
+  ------------------
+  216|     96|			return FALSE;
+  ------------------
+  |  |  929|     96|#define	FALSE	(0)
+  ------------------
+  217|    183|		if (**date_string == ':') {
+  ------------------
+  |  Branch (217:7): [True: 141, False: 42]
+  ------------------
+  218|    141|			gulong val2 = strtoul (*date_string + 1, (char **)date_string, 10);
+  219|    141|			if (val > 99 || val2 > 99)
+  ------------------
+  |  Branch (219:8): [True: 6, False: 135]
+  |  Branch (219:20): [True: 110, False: 25]
+  ------------------
+  220|    116|				return FALSE;
+  ------------------
+  |  |  929|    116|#define	FALSE	(0)
+  ------------------
+  221|     25|			val = 60 * val + val2;
+  222|     25|		} else
+  223|     42|			val =  60 * (val / 100) + (val % 100);
+  224|     67|		offset_minutes = sign * val;
+  225|     67|		utc = (sign == -1) && !val;
+  ------------------
+  |  Branch (225:9): [True: 64, False: 3]
+  |  Branch (225:25): [True: 9, False: 55]
+  ------------------
+  226|    101|	} else if (**date_string == 'Z') {
+  ------------------
+  |  Branch (226:13): [True: 1, False: 100]
+  ------------------
+  227|      1|		offset_minutes = 0;
+  228|      1|		utc = TRUE;
+  ------------------
+  |  |  933|      1|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      1|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  229|      1|		(*date_string)++;
+  230|    100|	} else if (!strcmp (*date_string, "GMT") ||
+  ------------------
+  |  Branch (230:13): [True: 1, False: 99]
+  ------------------
+  231|     99|		   !strcmp (*date_string, "UTC")) {
+  ------------------
+  |  Branch (231:6): [True: 1, False: 98]
+  ------------------
+  232|      2|		offset_minutes = 0;
+  233|      2|		utc = TRUE;
+  ------------------
+  |  |  933|      2|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|      2|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  234|      2|		(*date_string) += 3;
+  235|     98|	} else if (strchr ("ECMP", **date_string) &&
+  ------------------
+  |  Branch (235:13): [True: 22, False: 76]
+  ------------------
+  236|     22|		   ((*date_string)[1] == 'D' || (*date_string)[1] == 'S') &&
+  ------------------
+  |  Branch (236:7): [True: 3, False: 19]
+  |  Branch (236:35): [True: 3, False: 16]
+  ------------------
+  237|      6|		   (*date_string)[2] == 'T') {
+  ------------------
+  |  Branch (237:6): [True: 2, False: 4]
+  ------------------
+  238|      2|		offset_minutes = -60 * (5 * strcspn ("ECMP", *date_string));
+  239|      2|		if ((*date_string)[1] == 'D')
+  ------------------
+  |  Branch (239:7): [True: 1, False: 1]
+  ------------------
+  240|      1|			offset_minutes += 60;
+  241|      2|                utc = FALSE;
+  ------------------
+  |  |  929|      2|#define	FALSE	(0)
+  ------------------
+  242|      2|	} else
+  243|     96|		return FALSE;
+  ------------------
+  |  |  929|     96|#define	FALSE	(0)
+  ------------------
+  244|       |
+  245|    162|        if (utc)
+  ------------------
+  |  Branch (245:13): [True: 12, False: 150]
+  ------------------
+  246|     12|                *timezone = g_time_zone_new_utc ();
+  247|    150|        else
+  248|    150|                *timezone = g_time_zone_new_offset (offset_minutes * 60);
+  249|    162|	return TRUE;
+  ------------------
+  |  |  933|    162|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  929|    162|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  250|    470|}
+

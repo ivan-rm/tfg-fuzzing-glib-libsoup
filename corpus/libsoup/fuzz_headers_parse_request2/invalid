@@ -1,0 +1,17 @@
+GET /index.html HTTP/1.1
+Host: localhost
+Connection: keep-alive
+X-Custom-Header-Fuzz: uncommon_value
+A: 1
+B: 2
+Content-Type: text/html; charset=utf-8; charset=iso-8859-1
+Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2015 07:28:00 GMT
+Set-Cookie: session=123; Secure; HttpOnly
+Link: </style.css>; rel=preload; as=style
+Link: </script.js>; rel=preload; as=script
+X-Padding: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Invalid-Header-Name-With-Spaces : value
+Empty-Value:
+:header-with-no-name
+Content-Length: 42
+Content-Length: 42

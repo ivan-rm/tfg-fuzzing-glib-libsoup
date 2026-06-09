@@ -1,0 +1,20 @@
+T /znl HTTP/1.1
+inl HTTP/1.1
+t-Length:ET /inl HTTP/1.1
+t-Length: HTTP/1.1
+ 45
+ E: HTTP/1.1
+ 45
+ Expect:th: 45
+ Expectth: 45
+ Expect: 110-contin/g
+ HTTP/1.1
+ 45
+ Expect:th: 45
+ Expectth: xpect:th: 45
+ Expecttin/g
+ HTTP/1.1
+ 45
+ Expect:th: 45
+ Expectth: 45
+ Expecg

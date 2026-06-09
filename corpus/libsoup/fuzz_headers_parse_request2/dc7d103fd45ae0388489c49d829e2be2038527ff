@@ -1,0 +1,7 @@
+POST ?upload HTTP/1.1
+GET /i?upload HTTP/1.1
+GET /index.html HTTP/1.1
+Hÿ
+Acc“age
+Range:  ?upload HTTP/1.1
+GET /ibytes=CoÿokContentndeltip-

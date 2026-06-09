@@ -1,0 +1,19 @@
+Call tree
+LLVMFuzzerTestOneInput /src/libsoup/fuzzing/fuzz_http2.c -1
+  fuzz_set_logging_func /src/libsoup/fuzzing/fuzz_http2.c 10
+    g_log_set_writer_func /src/libsoup/fuzzing/fuzz.h 23
+  soup_body_input_stream_http2_new /src/libsoup/fuzzing/fuzz_http2.c 12
+    G_INPUT_STREAM /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 78
+    g_object_new /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 78
+  SOUP_BODY_INPUT_STREAM_HTTP2 /src/libsoup/fuzzing/fuzz_http2.c 13
+  soup_body_input_stream_http2_add_data /src/libsoup/fuzzing/fuzz_http2.c 23
+    g_return_if_fail /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 101
+    SOUP_IS_BODY_INPUT_STREAM_HTTP2 /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 101
+    g_return_if_fail /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 102
+    soup_body_input_stream_http2_get_instance_private /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 104
+    g_queue_push_tail /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 106
+    g_bytes_new /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 106
+    g_cancellable_cancel /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 109
+    g_clear_object /src/libsoup/libsoup/http2/soup-body-input-stream-http2.c 110
+  g_input_stream_read /src/libsoup/fuzzing/fuzz_http2.c 27
+  g_object_unref /src/libsoup/fuzzing/fuzz_http2.c 30

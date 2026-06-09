@@ -1,0 +1,7 @@
+GET /index.html HTTP/1.1
+Host: localhost
+Connection: keep-aliveŸ																																							
+X-Custom-Header-Fuzz: uncommon_value
+A: 1
+B: ent-Length: 42
+Content-Length: 42ËOGET  

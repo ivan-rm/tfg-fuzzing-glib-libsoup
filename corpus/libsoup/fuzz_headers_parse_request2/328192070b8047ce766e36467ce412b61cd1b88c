@@ -1,0 +1,3 @@
+POST /upload HTTP/1.0
+Content-TB:}ndargth3
+Content-Disposition: form-data; name="file"; filename="f.uzzt<?xmlontent-Type: text/plainrmBoundaryABC123--

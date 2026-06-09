@@ -1,0 +1,15 @@
+GET /index.html HTTP/1.1
+Host: locaalue
+A: 1
+B: 2
+Content-Type: text/htmlSecure; HttpOnly
+ Secure; HCookie: ttpOten-tp :Tyetext/B: 2
+Content-Type: text/h: 2
+Content-Type: text/htmlÊßœ—arset=utf- ;: 02875ÆÈom-Header-Fuzz: uÿÿÿÿmon_value
+A: 1
+B: 2
+Content-Type:tmlÊßœ—arset=utf- ;: 02875ÆÈom-Header-Fuzz: uÿÿÿÿmon_value
+A: 1
+B: 2
+Content-Type:xt/lÊßœ—arset=utf- ;5 07:28ÆÈoe: text/B: 2
+Content-cure; Httÿÿÿÿÿÿÿÿ 42

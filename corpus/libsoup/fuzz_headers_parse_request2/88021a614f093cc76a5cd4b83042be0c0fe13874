@@ -1,0 +1,6 @@
+GET <? HTTP/1.0
+TTP/@_te
+Connection: T <? HTTP/1,Expect
+
+
+z@g

@@ -1,0 +1,10 @@
+POST /upload HTTP/1.0
+Content-Type: multipart/fo text/plain
+CO: 180
+---3
+Content-Length3
+Content-Disposition: ; form-dat;;;;:;;;;;©;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;+;;;;;*=(;;;;;;;;;;;;;;;;;;;;;;+;;;;;(;;;;;;;;;;;;;;;;;;;;;;;;a; name="file"; filename="fuzz.t<?xmlontent-Type: text/plain
+CO: 180
+----
+e"; filename="fuzONTENIDO_AQUI
+3Con-WebKitFormBoundaryABC123--

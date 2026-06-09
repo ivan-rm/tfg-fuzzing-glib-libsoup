@@ -1,0 +1,10 @@
+POSTR ?upload HTTP/1.1
+ContenC123
+Content-Length: 362
+Conten@t-Type:BC123
+Content-Leng@t-Type:BC123
+Content-Length: 362
+Conten@t-Type:BC123
+Content-Length: 361
+-Exp360
+/

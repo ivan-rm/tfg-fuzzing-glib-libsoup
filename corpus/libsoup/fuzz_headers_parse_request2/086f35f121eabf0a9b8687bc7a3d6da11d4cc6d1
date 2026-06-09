@@ -1,0 +1,29 @@
+OPTIONS * HTTP/1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnection: cl/s-HeaÒer
+ HTTP/1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnektion: TTP/1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnection: cl/s-HeaÒer
+ HTTP/1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnektion: cl/s-Header
+Cÿÿÿÿÿÿÿ*nnection: cl/se
+Cÿÿÿÿÿÿÿ*nnection:1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnection: cl/s-Header
+ HTTP/1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnektion: cl/s-Header
+Cÿÿÿÿÿÿÿ*nnection: cl/se
+Cÿÿÿÿÿÿÿ*nnection: cl/scl/s-Header
+Cÿÿÿÿÿÿÿ*nnection: cl/se
+Cÿÿÿÿÿÿÿ*nnection:1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnection: cl/s-Header
+ HTTP/1.1
+Acces-Header
+Cÿÿÿÿÿÿ˜*nnektion: cl/s-Header
+Cÿÿÿÿÿÿÿ*nnection: cl/se
+Cÿÿÿÿÿÿÿ*nnection: cl/s cl/se

@@ -1,0 +1,30 @@
+GET /index.h|ml HTTP/1.1
+Expect: oding: gzip,ent: Mozilla/5.0’
+Accept: */*
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+
+coding: gzip, defleot
+aCnnection: keep-alive
+X-Custom-Header: ml HTTP/1.1
+Expect: oding: gzip,ent: Mozilla/5.0’
+Accept: */*
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+
+AccepExpect: 
+
+coding: gzip,
+AccepExpect: 
+
+coding: gzip, defleot
+aCnnection:fuzzing

@@ -1,0 +1,6 @@
+GET /index.html HTTP/1.1
+Host: html; charstent-Type: textommon_value
+Expect: 1
+Content-Tyattachment: text/html; charset=et=utf48; charset=isoml HTTP/1.1
+H0st: localhost
+Connecsession=1; Secure; Htteader-Fuzz

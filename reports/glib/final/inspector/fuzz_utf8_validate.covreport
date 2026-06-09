@@ -1,0 +1,2278 @@
+fuzz_utf8_validate.c:fuzz_set_logging_func:
+   37|    619|{
+   38|    619|#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+   39|    619|  static gboolean writer_set = FALSE;
+  ------------------
+  |  |  967|    619|#define	FALSE	(0)
+  ------------------
+   40|       |
+   41|    619|  if (!writer_set)
+  ------------------
+  |  Branch (41:7): [True: 1, False: 618]
+  ------------------
+   42|      1|    {
+   43|      1|      g_log_set_writer_func (empty_logging_func, NULL, NULL);
+   44|      1|      writer_set = TRUE;
+  ------------------
+  |  |  971|      1|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|      1|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+   45|      1|    }
+   46|    619|#endif
+   47|    619|}
+
+LLVMFuzzerTestOneInput:
+   24|    619|{
+   25|    619|  fuzz_set_logging_func ();
+   26|       |
+   27|       |  /* We don’t care whether the fuzzer provides valid or invalid UTF-8 data, just
+   28|       |   * that the validation function doesn’t crash or do anything undefined. */
+   29|    619|  g_utf8_validate_len ((const gchar *) data, size, NULL);
+   30|       |
+   31|    619|  return 0;
+   32|    619|}
+
+g_error_init:
+   49|      2|{
+   50|      2|  error_domain_ht = g_hash_table_new (NULL, NULL);
+   51|      2|}
+
+g_hash_table_new:
+  991|      4|{
+  992|      4|  return g_hash_table_new_full (hash_func, key_equal_func, NULL, NULL);
+  993|      4|}
+g_hash_table_new_full:
+ 1026|      4|{
+ 1027|      4|  GHashTable *hash_table;
+ 1028|       |
+ 1029|      4|  hash_table = g_slice_new (GHashTable);
+  ------------------
+  |  |   56|      4|#define  g_slice_new(type)      ((type*) g_slice_alloc (g_slice_alloc_size (type)))
+  |  |  ------------------
+  |  |  |  |   53|      4|#define g_slice_alloc_size(type) (sizeof (type) > 0 ? sizeof (type) : 1)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (53:35): [True: 4, Folded]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1030|      4|  g_atomic_ref_count_init (&hash_table->ref_count);
+ 1031|      4|  hash_table->nnodes             = 0;
+ 1032|      4|  hash_table->noccupied          = 0;
+ 1033|      4|  hash_table->hash_func          = hash_func ? hash_func : g_direct_hash;
+  ------------------
+  |  Branch (1033:36): [True: 2, False: 2]
+  ------------------
+ 1034|      4|  hash_table->key_equal_func     = key_equal_func;
+ 1035|      4|#ifndef G_DISABLE_ASSERT
+ 1036|      4|  hash_table->version            = 0;
+ 1037|      4|#endif
+ 1038|      4|  hash_table->key_destroy_func   = key_destroy_func;
+ 1039|      4|  hash_table->value_destroy_func = value_destroy_func;
+ 1040|       |
+ 1041|      4|  g_hash_table_setup_storage (hash_table);
+ 1042|       |
+ 1043|      4|  return hash_table;
+ 1044|      4|}
+ghash.c:g_hash_table_setup_storage:
+  526|      4|{
+  527|      4|  gboolean small = FALSE;
+  ------------------
+  |  |  967|      4|#define	FALSE	(0)
+  ------------------
+  528|       |
+  529|       |  /* We want to use small arrays only if:
+  530|       |   *   - we are running on a system where that makes sense (64 bit); and
+  531|       |   *   - we are not running under valgrind.
+  532|       |   */
+  533|       |
+  534|      4|#ifdef USE_SMALL_ARRAYS
+  535|      4|  small = TRUE;
+  ------------------
+  |  |  971|      4|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|      4|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  536|       |
+  537|      4|# ifdef ENABLE_VALGRIND
+  538|      4|  if (RUNNING_ON_VALGRIND)
+  ------------------
+  |  | 6216|      4|    (unsigned)VALGRIND_DO_CLIENT_REQUEST_EXPR(0 /* if not */,         \
+  |  |  ------------------
+  |  |  |  |  414|      4|    __extension__                                                 \
+  |  |  |  |  415|      4|    ({ volatile uintptr_t _zzq_args[6];                           \
+  |  |  |  |  416|      4|    volatile unsigned long int _zzq_result;                       \
+  |  |  |  |  417|      4|    _zzq_args[0] = (uintptr_t)(_zzq_request);                     \
+  |  |  |  |  418|      4|    _zzq_args[1] = (uintptr_t)(_zzq_arg1);                        \
+  |  |  |  |  419|      4|    _zzq_args[2] = (uintptr_t)(_zzq_arg2);                        \
+  |  |  |  |  420|      4|    _zzq_args[3] = (uintptr_t)(_zzq_arg3);                        \
+  |  |  |  |  421|      4|    _zzq_args[4] = (uintptr_t)(_zzq_arg4);                        \
+  |  |  |  |  422|      4|    _zzq_args[5] = (uintptr_t)(_zzq_arg5);                        \
+  |  |  |  |  423|      4|    __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
+  |  |  |  |  424|      4|                     /* %RDX = client_request ( %RAX ) */         \
+  |  |  |  |  425|      4|                     "xchgq %%rbx,%%rbx"                          \
+  |  |  |  |  426|      4|                     : "=d" (_zzq_result)                         \
+  |  |  |  |  427|      4|                     : "a" (&_zzq_args[0]), "0" (_zzq_default)    \
+  |  |  |  |  428|      4|                     : "cc", "memory"                             \
+  |  |  |  |  429|      4|                    );                                            \
+  |  |  |  |  430|      4|    _zzq_result;                                                  \
+  |  |  |  |  431|      4|    })
+  |  |  ------------------
+  |  |  |  Branch (6216:5): [True: 0, False: 4]
+  |  |  ------------------
+  |  | 6217|      4|                                    VG_USERREQ__RUNNING_ON_VALGRIND,  \
+  |  | 6218|      4|                                    0, 0, 0, 0, 0)                    \
+  ------------------
+  539|      0|    small = FALSE;
+  ------------------
+  |  |  967|      0|#define	FALSE	(0)
+  ------------------
+  540|      4|# endif
+  541|      4|#endif
+  542|       |
+  543|      4|  g_hash_table_set_shift (hash_table, HASH_TABLE_MIN_SHIFT);
+  ------------------
+  |  |  185|      4|#define HASH_TABLE_MIN_SHIFT 3  /* 1 << 3 == 8 buckets */
+  ------------------
+  544|       |
+  545|      4|  hash_table->have_big_keys = !small;
+  546|      4|  hash_table->have_big_values = !small;
+  547|       |
+  548|      4|  hash_table->keys   = g_hash_table_realloc_key_or_value_array (NULL, hash_table->size, hash_table->have_big_keys);
+  549|      4|  hash_table->values = hash_table->keys;
+  550|       |  hash_table->hashes = g_new0 (guint, hash_table->size);
+  ------------------
+  |  |  335|      4|#define g_new0(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc0)
+  |  |  ------------------
+  |  |  |  |  263|      4|	(struct_type *) (G_GNUC_EXTENSION ({			\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  ------------------
+  |  |  |  |  264|      4|	  gsize __n = (gsize) (n_structs);			\
+  |  |  |  |  265|      4|	  gsize __s = sizeof (struct_type);			\
+  |  |  |  |  266|      4|	  gpointer __p;						\
+  |  |  |  |  267|      4|	  if (__s == 1)						\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (267:8): [True: 0, False: 4]
+  |  |  |  |  ------------------
+  |  |  |  |  268|      4|	    __p = g_##func (__n);				\
+  |  |  |  |  269|      4|	  else if (__builtin_constant_p (__n) &&		\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (269:13): [True: 0, False: 4]
+  |  |  |  |  ------------------
+  |  |  |  |  270|      4|	           (__s == 0 || __n <= G_MAXSIZE / __s))	\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   89|      0|#define G_MAXSIZE	G_MAXULONG
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   43|      0|#define G_MAXULONG	ULONG_MAX
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (270:14): [True: 0, False: 0]
+  |  |  |  |  |  Branch (270:26): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  271|      4|	    __p = g_##func (__n * __s);				\
+  |  |  |  |  272|      4|	  else							\
+  |  |  |  |  273|      4|	    __p = g_##func##_n (__n, __s);			\
+  |  |  |  |  274|      4|	  __p;							\
+  |  |  |  |  275|      4|	}))
+  |  |  ------------------
+  ------------------
+  551|      4|}
+ghash.c:g_hash_table_set_shift:
+  297|      4|{
+  298|      4|  if (shift > 31)
+  ------------------
+  |  Branch (298:7): [True: 0, False: 4]
+  ------------------
+  299|      4|    g_error ("adding more entries to hash table would overflow");
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      0|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  300|       |
+  301|      4|  hash_table->size = 1u << shift;
+  302|      4|  hash_table->mod  = prime_mod [shift];
+  303|       |
+  304|       |  /* hash_table->size is always a power of two, so we can calculate the mask
+  305|       |   * by simply subtracting 1 from it. The leading assertion ensures that
+  306|       |   * we're really dealing with a power of two. */
+  307|       |
+  308|      4|  g_assert ((hash_table->size & (hash_table->size - 1)) == 0);
+  ------------------
+  |  |  275|      4|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      4|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|      4|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|      4|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      4|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      4| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      4|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      4|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 4, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      4|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      4|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      4|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 4, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|      4|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|      4|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      4|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 4]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  309|      4|  hash_table->mask = hash_table->size - 1;
+  310|      4|}
+ghash.c:g_hash_table_realloc_key_or_value_array:
+  336|      4|{
+  337|      4|#ifdef USE_SMALL_ARRAYS
+  338|      4|  return g_realloc (a, size * (is_big ? BIG_ENTRY_SIZE : SMALL_ENTRY_SIZE));
+  ------------------
+  |  |  204|      0|#define BIG_ENTRY_SIZE (SIZEOF_VOID_P)
+  |  |  ------------------
+  |  |  |  |  432|      0|#define SIZEOF_VOID_P 8
+  |  |  ------------------
+  ------------------
+                return g_realloc (a, size * (is_big ? BIG_ENTRY_SIZE : SMALL_ENTRY_SIZE));
+  ------------------
+  |  |  205|      4|#define SMALL_ENTRY_SIZE (SIZEOF_INT)
+  |  |  ------------------
+  |  |  |  |  420|      4|#define SIZEOF_INT 4
+  |  |  ------------------
+  ------------------
+  |  Branch (338:32): [True: 0, False: 4]
+  ------------------
+  339|       |#else
+  340|       |  return g_renew (gpointer, a, size);
+  341|       |#endif
+  342|      4|}
+
+glib_init:
+  411|      2|{
+  412|      2|  static gboolean glib_inited;
+  413|       |
+  414|      2|  if (glib_inited)
+  ------------------
+  |  Branch (414:7): [True: 0, False: 2]
+  ------------------
+  415|      0|    return;
+  416|       |
+  417|      2|  glib_inited = TRUE;
+  ------------------
+  |  |  971|      2|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|      2|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  418|       |
+  419|      2|  g_messages_prefixed_init ();
+  420|      2|  g_debug_init ();
+  421|      2|  g_quark_init ();
+  422|      2|  g_error_init ();
+  423|      2|}
+glib-init.c:glib_init_ctor:
+  518|      2|{
+  519|      2|  glib_init ();
+  520|      2|}
+glib-init.c:g_messages_prefixed_init:
+  379|      2|{
+  380|      2|  const GDebugKey keys[] = {
+  381|      2|    { "error", G_LOG_LEVEL_ERROR },
+  382|      2|    { "critical", G_LOG_LEVEL_CRITICAL },
+  383|      2|    { "warning", G_LOG_LEVEL_WARNING },
+  384|      2|    { "message", G_LOG_LEVEL_MESSAGE },
+  385|      2|    { "info", G_LOG_LEVEL_INFO },
+  386|      2|    { "debug", G_LOG_LEVEL_DEBUG }
+  387|      2|  };
+  388|       |
+  389|      2|  g_log_msg_prefix = g_parse_debug_envvar ("G_MESSAGES_PREFIXED", keys, G_N_ELEMENTS (keys), g_log_msg_prefix);
+  ------------------
+  |  |  993|      2|#define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
+  ------------------
+  390|      2|}
+glib-init.c:g_parse_debug_envvar:
+  356|      4|{
+  357|      4|  const gchar *value;
+  358|       |
+  359|       |#ifdef OS_WIN32
+  360|       |  /* "fatal-warnings,fatal-criticals,all,help" is pretty short */
+  361|       |  gchar buffer[100];
+  362|       |
+  363|       |  if (GetEnvironmentVariable (envvar, buffer, 100) < 100)
+  364|       |    value = buffer;
+  365|       |  else
+  366|       |    return 0;
+  367|       |#else
+  368|      4|  value = getenv (envvar);
+  369|      4|#endif
+  370|       |
+  371|      4|  if (value == NULL)
+  ------------------
+  |  Branch (371:7): [True: 4, False: 0]
+  ------------------
+  372|      4|    return default_value;
+  373|       |
+  374|      0|  return g_parse_debug_string (value, keys, n_keys);
+  375|      4|}
+glib-init.c:g_debug_init:
+  394|      2|{
+  395|      2|  const GDebugKey keys[] = {
+  396|      2|    { "gc-friendly", 1 },
+  397|      2|    {"fatal-warnings",  G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL },
+  398|      2|    {"fatal-criticals", G_LOG_LEVEL_CRITICAL }
+  399|      2|  };
+  400|      2|  GLogLevelFlags flags;
+  401|       |
+  402|      2|  flags = g_parse_debug_envvar ("G_DEBUG", keys, G_N_ELEMENTS (keys), 0);
+  ------------------
+  |  |  993|      2|#define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
+  ------------------
+  403|       |
+  404|      2|  g_log_always_fatal |= flags & G_LOG_LEVEL_MASK;
+  405|       |
+  406|      2|  g_mem_gc_friendly = flags & 1;
+  407|      2|}
+
+g_malloc:
+   95|      6|{
+   96|      6|  if (G_LIKELY (n_bytes))
+  ------------------
+  |  | 1284|      6|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|      6|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      6| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      6|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      6|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      6|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 6, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      6|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      6|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      6|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      6|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      6|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      6|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      6|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 6, False: 0]
+  |  |  ------------------
+  ------------------
+   97|      6|    {
+   98|      6|      gpointer mem;
+   99|       |
+  100|      6|      mem = malloc (n_bytes);
+  101|      6|      TRACE (GLIB_MEM_ALLOC ((void *) mem, n_bytes, 0, 0));
+  102|      6|      if (mem)
+  ------------------
+  |  Branch (102:11): [True: 6, False: 0]
+  ------------------
+  103|      6|	return mem;
+  104|       |
+  105|      6|      g_error ("%s: failed to allocate %"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      6|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      6|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  106|      0|               G_STRLOC, n_bytes);
+  107|      0|    }
+  108|       |
+  109|      0|  TRACE (GLIB_MEM_ALLOC ((void *) NULL, n_bytes, 0, 0));
+  110|       |
+  111|       |  return NULL;
+  112|      6|}
+g_malloc0:
+  128|      4|{
+  129|      4|  if (G_LIKELY (n_bytes))
+  ------------------
+  |  | 1284|      4|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|      4|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      4| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      4|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      4|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 4, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      4|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      4|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      4|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 4, False: 0]
+  |  |  ------------------
+  ------------------
+  130|      4|    {
+  131|      4|      gpointer mem;
+  132|       |
+  133|      4|      mem = calloc (1, n_bytes);
+  134|      4|      TRACE (GLIB_MEM_ALLOC ((void *) mem, n_bytes, 1, 0));
+  135|      4|      if (mem)
+  ------------------
+  |  Branch (135:11): [True: 4, False: 0]
+  ------------------
+  136|      4|	return mem;
+  137|       |
+  138|      4|      g_error ("%s: failed to allocate %"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      4|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      4|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  139|      0|               G_STRLOC, n_bytes);
+  140|      0|    }
+  141|       |
+  142|      0|  TRACE (GLIB_MEM_ALLOC ((void *) NULL, n_bytes, 1, 0));
+  143|       |
+  144|       |  return NULL;
+  145|      4|}
+g_realloc:
+  166|      4|{
+  167|      4|  gpointer newmem;
+  168|       |
+  169|      4|  if (G_LIKELY (n_bytes))
+  ------------------
+  |  | 1284|      4|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|      4|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      4| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      4|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      4|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 4, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      4|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      4|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      4|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 4, False: 0]
+  |  |  ------------------
+  ------------------
+  170|      4|    {
+  171|      4|      newmem = realloc (mem, n_bytes);
+  172|      4|      TRACE (GLIB_MEM_REALLOC ((void *) newmem, (void *) mem, n_bytes, 0));
+  173|      4|      if (newmem)
+  ------------------
+  |  Branch (173:11): [True: 4, False: 0]
+  ------------------
+  174|      4|	return newmem;
+  175|       |
+  176|      4|      g_error ("%s: failed to allocate %"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      4|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      4|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  177|      0|               G_STRLOC, n_bytes);
+  178|      0|    }
+  179|       |
+  180|      0|  free (mem);
+  181|       |
+  182|      0|  TRACE (GLIB_MEM_REALLOC((void*) NULL, (void*)mem, 0, 0));
+  183|       |
+  184|       |  return NULL;
+  185|      4|}
+g_malloc0_n:
+  430|      4|{
+  431|      4|  size_t len;
+  432|       |
+  433|      4|  if (!g_size_checked_mul (&len, n_blocks, n_block_bytes))
+  ------------------
+  |  |  480|      4|  (!ckd_mul (dest, a, b))
+  ------------------
+  |  Branch (433:7): [True: 0, False: 4]
+  ------------------
+  434|      0|    {
+  435|      0|      g_error ("%s: overflow allocating %"G_GSIZE_FORMAT"*%"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      0|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  436|      0|               G_STRLOC, n_blocks, n_block_bytes);
+  437|      0|    }
+  438|       |
+  439|      4|  return g_malloc0 (len);
+  440|      4|}
+
+g_log_set_writer_func:
+ 2005|      1|{
+ 2006|      1|  g_return_if_fail (func != NULL);
+  ------------------
+  |  |  653|      1|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      1|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  654|      1|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|      1|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      1|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      1| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      1|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      1|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      1|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 1, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      1|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      1|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      1|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 1, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  655|      1|      { } \
+  |  |  656|      1|    else \
+  |  |  657|      1|      { \
+  |  |  658|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  659|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  660|      0|                                  #expr); \
+  |  |  661|      0|        return; \
+  |  |  662|      0|      } \
+  |  |  663|      1|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      1|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 1]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2007|       |
+ 2008|      1|  g_mutex_lock (&g_messages_lock);
+ 2009|       |
+ 2010|      1|  if (log_writer_func != g_log_writer_default)
+  ------------------
+  |  Branch (2010:7): [True: 0, False: 1]
+  ------------------
+ 2011|      0|    {
+ 2012|      0|      g_mutex_unlock (&g_messages_lock);
+ 2013|      0|      g_error ("g_log_set_writer_func() called multiple times");
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      0|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2014|      0|      return;
+ 2015|      0|    }
+ 2016|       |
+ 2017|      1|  log_writer_func = func;
+ 2018|      1|  log_writer_user_data = user_data;
+ 2019|      1|  log_writer_user_data_free = user_data_free;
+ 2020|       |
+ 2021|      1|  g_mutex_unlock (&g_messages_lock);
+ 2022|      1|}
+
+g_quark_init:
+   62|      2|{
+   63|      2|  g_assert (quark_seq_id == 0);
+  ------------------
+  |  |  275|      2|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      2|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|      2|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|      2|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      2|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      2| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      2|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      2|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      2|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 2, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      2|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      2|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      2|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      2|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      2|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      2|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      2|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 2, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|      2|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|      2|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      2|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 2]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+   64|      2|  quark_ht = g_hash_table_new (g_str_hash, g_str_equal);
+   65|      2|  quarks = g_new (gchar*, QUARK_BLOCK_SIZE);
+  ------------------
+  |  |  318|      2|#define g_new(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc)
+  |  |  ------------------
+  |  |  |  |  263|      2|	(struct_type *) (G_GNUC_EXTENSION ({			\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   62|      2|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  ------------------
+  |  |  |  |  264|      2|	  gsize __n = (gsize) (n_structs);			\
+  |  |  |  |  265|      2|	  gsize __s = sizeof (struct_type);			\
+  |  |  |  |  266|      2|	  gpointer __p;						\
+  |  |  |  |  267|      2|	  if (__s == 1)						\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (267:8): [True: 0, False: 2]
+  |  |  |  |  ------------------
+  |  |  |  |  268|      2|	    __p = g_##func (__n);				\
+  |  |  |  |  269|      2|	  else if (__builtin_constant_p (__n) &&		\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (269:13): [True: 2, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  270|      2|	           (__s == 0 || __n <= G_MAXSIZE / __s))	\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   89|      2|#define G_MAXSIZE	G_MAXULONG
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   43|      2|#define G_MAXULONG	ULONG_MAX
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (270:14): [True: 0, False: 2]
+  |  |  |  |  |  Branch (270:26): [True: 2, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  271|      2|	    __p = g_##func (__n * __s);				\
+  |  |  |  |  272|      2|	  else							\
+  |  |  |  |  273|      2|	    __p = g_##func##_n (__n, __s);			\
+  |  |  |  |  274|      2|	  __p;							\
+  |  |  |  |  275|      2|	}))
+  |  |  ------------------
+  ------------------
+   66|       |  quarks[0] = NULL;
+   67|      2|  quark_seq_id = 1;
+   68|      2|}
+
+g_atomic_ref_count_init:
+  191|      4|{
+  192|      4|  g_return_if_fail (arc != NULL);
+  ------------------
+  |  |  653|      4|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      4|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  654|      4|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|      4|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      4|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      4| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      4|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      4|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 4, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      4|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      4|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      4|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 4, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  655|      4|      { } \
+  |  |  656|      4|    else \
+  |  |  657|      4|      { \
+  |  |  658|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  659|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  660|      0|                                  #expr); \
+  |  |  661|      0|        return; \
+  |  |  662|      0|      } \
+  |  |  663|      4|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      4|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 4]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  193|       |
+  194|       |  /* Atomic refcounting is implemented using the positive range
+  195|       |   * of signed integers:
+  196|       |   *
+  197|       |   * G_MININT                 Z¯< 0 > Z⁺                G_MAXINT
+  198|       |   * |----------------------------|----------------------------|
+  199|       |   *
+  200|       |   * Acquiring a reference moves us towards MAXINT, and releasing a
+  201|       |   * reference moves us towards 0.
+  202|       |   */
+  203|      4|  *arc = 1;
+  204|      4|}
+
+g_slice_alloc:
+  190|      4|{
+  191|      4|  gpointer mem;
+  192|       |
+  193|      4|  mem = g_malloc (mem_size);
+  194|      4|  TRACE (GLIB_SLICE_ALLOC((void*)mem, mem_size));
+  195|       |
+  196|      4|  return mem;
+  197|      4|}
+
+gthread.c:g_mutex_lock_impl:
+  963|      1|{
+  964|       |  /* empty -> owned and we're done.  Anything else, and we need to wait... */
+  965|      1|  if G_UNLIKELY (!g_atomic_int_compare_and_exchange (&mutex->i[0],
+  ------------------
+  |  | 1285|      1|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|      1|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      1| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      1|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      1|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      5|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [Folded, False: 1]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 1, False: 0]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 1]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      1|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      1|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      1|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 0, False: 1]
+  |  |  ------------------
+  ------------------
+  966|      1|                                                     G_MUTEX_STATE_EMPTY,
+  967|      1|                                                     G_MUTEX_STATE_OWNED))
+  968|      0|    g_mutex_lock_slowpath (mutex);
+  969|      1|}
+gthread.c:g_mutex_unlock_impl:
+  973|      1|{
+  974|      1|  guint prev;
+  975|       |
+  976|      1|  prev = exchange_release (&mutex->i[0], G_MUTEX_STATE_EMPTY);
+  ------------------
+  |  |  863|      1|  atomic_exchange_explicit((atomic_uint *) (ptr), (new), __ATOMIC_RELEASE)
+  ------------------
+  977|       |
+  978|       |  /* 1-> 0 and we're done.  Anything else and we need to signal... */
+  979|      1|  if G_UNLIKELY (prev != G_MUTEX_STATE_OWNED)
+  ------------------
+  |  | 1285|      1|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|      1|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      1| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      1|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      1|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      1|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 1]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      1|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      1|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      1|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 0, False: 1]
+  |  |  ------------------
+  ------------------
+  980|      0|    g_mutex_unlock_slowpath (mutex, prev);
+  981|      1|}
+
+g_mutex_lock:
+ 1282|      1|{
+ 1283|      1|  g_mutex_lock_impl (mutex);
+ 1284|      1|}
+g_mutex_unlock:
+ 1298|      1|{
+ 1299|      1|  g_mutex_unlock_impl (mutex);
+ 1300|      1|}
+
+g_utf8_validate_len:
+ 2280|    619|{
+ 2281|    619|  utf8_verify (&str, &max_len);
+ 2282|       |
+ 2283|    619|  if (end != NULL)
+  ------------------
+  |  Branch (2283:7): [True: 0, False: 619]
+  ------------------
+ 2284|      0|    *end = str;
+ 2285|       |
+ 2286|    619|  return max_len == 0;
+ 2287|    619|}
+gutf8.c:utf8_verify:
+ 2085|    619|{
+ 2086|    619|  const char *str = *strp;
+ 2087|    619|  gsize len = lenp ? *lenp : strlen (str);
+  ------------------
+  |  Branch (2087:15): [True: 619, False: 0]
+  ------------------
+ 2088|       |
+ 2089|       |  /* See Unicode 10.0.0, Chapter 3, Section D92 */
+ 2090|       |
+ 2091|  25.7k|  while (len > 0)
+  ------------------
+  |  Branch (2091:10): [True: 25.5k, False: 183]
+  ------------------
+ 2092|  25.5k|    {
+ 2093|  25.5k|      guint8 b = load_u8 (str, 0);
+ 2094|       |
+ 2095|  25.5k|      if (b == 0x00)
+  ------------------
+  |  Branch (2095:11): [True: 24, False: 25.5k]
+  ------------------
+ 2096|     24|        goto out;
+ 2097|       |
+ 2098|  25.5k|      else if (b <= 0x7F)
+  ------------------
+  |  Branch (2098:16): [True: 8.69k, False: 16.8k]
+  ------------------
+ 2099|  8.69k|        {
+ 2100|       |          /*
+ 2101|       |           * Special-case and optimize the ASCII case.
+ 2102|       |           */
+ 2103|  8.69k|          utf8_verify_ascii ((const char **)&str, &len);
+ 2104|  8.69k|        }
+ 2105|       |
+ 2106|  16.8k|      else if (b >= 0xC2 && b <= 0xDF)
+  ------------------
+  |  Branch (2106:16): [True: 16.7k, False: 60]
+  |  Branch (2106:29): [True: 6.94k, False: 9.79k]
+  ------------------
+ 2107|  6.94k|        {
+ 2108|  6.94k|          if G_UNLIKELY (len < 2)
+  ------------------
+  |  | 1285|  6.94k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  6.94k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  6.94k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  6.94k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  6.94k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  6.94k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 11, False: 6.93k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  6.94k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  6.94k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  6.94k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  6.94k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  6.94k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 11, False: 6.93k]
+  |  |  ------------------
+  ------------------
+ 2109|     11|            goto out;
+ 2110|  6.93k|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 1)))
+  ------------------
+  |  | 1285|  6.93k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  6.93k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  6.93k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  6.93k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  6.93k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  6.93k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 17, False: 6.92k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  6.93k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     17|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     17|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  6.93k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  6.93k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  6.93k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  6.93k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 17, False: 6.92k]
+  |  |  ------------------
+  ------------------
+ 2111|     17|            goto out;
+ 2112|       |
+ 2113|  6.92k|          str += 2;
+ 2114|  6.92k|          len -= 2;
+ 2115|       |
+ 2116|  6.92k|        }
+ 2117|       |
+ 2118|  9.85k|      else if (b == 0xE0)
+  ------------------
+  |  Branch (2118:16): [True: 315, False: 9.54k]
+  ------------------
+ 2119|    315|        {
+ 2120|    315|          if G_UNLIKELY (len < 3)
+  ------------------
+  |  | 1285|    315|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    315|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    315| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    315|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    315|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    315|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 5, False: 310]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    315|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      5|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      5|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    315|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    315|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    315|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    315|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 5, False: 310]
+  |  |  ------------------
+  ------------------
+ 2121|      5|            goto out;
+ 2122|    310|          if G_UNLIKELY (load_u8 (str, 1) < 0xA0 || load_u8 (str, 1) > 0xBF)
+  ------------------
+  |  | 1285|    310|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    310|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    310| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    310|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    310|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    907|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 23, False: 287]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 2, False: 285]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    310|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     25|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     25|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    310|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    310|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    310|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    310|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 25, False: 285]
+  |  |  ------------------
+  ------------------
+ 2123|     25|            goto out;
+ 2124|    285|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 2)))
+  ------------------
+  |  | 1285|    285|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    285|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    285| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    285|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    285|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    285|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 12, False: 273]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    285|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     12|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     12|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    285|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    285|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    285|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    285|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 12, False: 273]
+  |  |  ------------------
+  ------------------
+ 2125|     12|            goto out;
+ 2126|       |
+ 2127|    273|          str += 3;
+ 2128|    273|          len -= 3;
+ 2129|    273|        }
+ 2130|       |
+ 2131|  9.54k|      else if (b >= 0xE1 && b <= 0xEC)
+  ------------------
+  |  Branch (2131:16): [True: 9.48k, False: 60]
+  |  Branch (2131:29): [True: 5.87k, False: 3.60k]
+  ------------------
+ 2132|  5.87k|        {
+ 2133|  5.87k|          if G_UNLIKELY (len < 3)
+  ------------------
+  |  | 1285|  5.87k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  5.87k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  5.87k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  5.87k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  5.87k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  5.87k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 5, False: 5.87k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  5.87k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      5|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      5|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  5.87k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  5.87k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  5.87k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  5.87k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 5, False: 5.87k]
+  |  |  ------------------
+  ------------------
+ 2134|      5|            goto out;
+ 2135|  5.87k|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 1)))
+  ------------------
+  |  | 1285|  5.87k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  5.87k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  5.87k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  5.87k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  5.87k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  5.87k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 23, False: 5.84k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  5.87k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     23|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     23|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  5.87k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  5.87k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  5.87k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  5.87k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 23, False: 5.84k]
+  |  |  ------------------
+  ------------------
+ 2136|     23|            goto out;
+ 2137|  5.84k|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 2)))
+  ------------------
+  |  | 1285|  5.84k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  5.84k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  5.84k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  5.84k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  5.84k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  5.84k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 11, False: 5.83k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  5.84k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  5.84k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  5.84k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  5.84k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  5.84k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 11, False: 5.83k]
+  |  |  ------------------
+  ------------------
+ 2138|     11|            goto out;
+ 2139|       |
+ 2140|  5.83k|          str += 3;
+ 2141|  5.83k|          len -= 3;
+ 2142|  5.83k|        }
+ 2143|       |
+ 2144|  3.66k|      else if (b == 0xED)
+  ------------------
+  |  Branch (2144:16): [True: 1.36k, False: 2.30k]
+  ------------------
+ 2145|  1.36k|        {
+ 2146|  1.36k|          if G_UNLIKELY (len < 3)
+  ------------------
+  |  | 1285|  1.36k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  1.36k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  1.36k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  1.36k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  1.36k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  1.36k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 5, False: 1.36k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  1.36k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      5|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      5|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  1.36k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  1.36k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  1.36k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  1.36k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 5, False: 1.36k]
+  |  |  ------------------
+  ------------------
+ 2147|      5|            goto out;
+ 2148|  1.36k|          if G_UNLIKELY (load_u8 (str, 1) < 0x80 || load_u8 (str, 1) > 0x9F)
+  ------------------
+  |  | 1285|  1.36k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  1.36k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  1.36k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  1.36k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  1.36k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  4.07k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 10, False: 1.35k]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 12, False: 1.33k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  1.36k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     22|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     22|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  1.36k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  1.36k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  1.36k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  1.36k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 22, False: 1.33k]
+  |  |  ------------------
+  ------------------
+ 2149|     22|            goto out;
+ 2150|  1.33k|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 2)))
+  ------------------
+  |  | 1285|  1.33k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  1.33k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  1.33k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  1.33k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  1.33k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  1.33k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 10, False: 1.32k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  1.33k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     10|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     10|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  1.33k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  1.33k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  1.33k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  1.33k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 10, False: 1.32k]
+  |  |  ------------------
+  ------------------
+ 2151|     10|            goto out;
+ 2152|       |
+ 2153|  1.32k|          str += 3;
+ 2154|  1.32k|          len -= 3;
+ 2155|  1.32k|        }
+ 2156|       |
+ 2157|  2.30k|      else if (b >= 0xEE && b <= 0xEF)
+  ------------------
+  |  Branch (2157:16): [True: 2.24k, False: 60]
+  |  Branch (2157:29): [True: 501, False: 1.74k]
+  ------------------
+ 2158|    501|        {
+ 2159|    501|          if G_UNLIKELY (len < 3)
+  ------------------
+  |  | 1285|    501|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    501|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    501| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    501|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    501|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    501|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 10, False: 491]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    501|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     10|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     10|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    501|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    501|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    501|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    501|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 10, False: 491]
+  |  |  ------------------
+  ------------------
+ 2160|     10|            goto out;
+ 2161|    491|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 1)))
+  ------------------
+  |  | 1285|    491|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    491|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    491| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    491|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    491|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    491|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 20, False: 471]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    491|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     20|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     20|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    491|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    491|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    491|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    491|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 20, False: 471]
+  |  |  ------------------
+  ------------------
+ 2162|     20|            goto out;
+ 2163|    471|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 2)))
+  ------------------
+  |  | 1285|    471|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    471|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    471| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    471|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    471|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    471|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 15, False: 456]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    471|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     15|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     15|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    471|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    471|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    471|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    471|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 15, False: 456]
+  |  |  ------------------
+  ------------------
+ 2164|     15|            goto out;
+ 2165|       |
+ 2166|    456|          str += 3;
+ 2167|    456|          len -= 3;
+ 2168|    456|        }
+ 2169|       |
+ 2170|  1.80k|      else if (b == 0xF0)
+  ------------------
+  |  Branch (2170:16): [True: 622, False: 1.17k]
+  ------------------
+ 2171|    622|        {
+ 2172|    622|          if G_UNLIKELY (len < 4)
+  ------------------
+  |  | 1285|    622|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    622|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    622| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    622|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    622|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    622|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 6, False: 616]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    622|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      6|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      6|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    622|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    622|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    622|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    622|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 6, False: 616]
+  |  |  ------------------
+  ------------------
+ 2173|      6|            goto out;
+ 2174|    616|          if G_UNLIKELY (load_u8 (str, 1) < 0x90 || load_u8 (str, 1) > 0xBF)
+  ------------------
+  |  | 1285|    616|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    616|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    616| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    616|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    616|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  1.83k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 13, False: 603]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 7, False: 596]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    616|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     20|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     20|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    616|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    616|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    616|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    616|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 20, False: 596]
+  |  |  ------------------
+  ------------------
+ 2175|     20|            goto out;
+ 2176|    596|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 2)))
+  ------------------
+  |  | 1285|    596|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    596|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    596| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    596|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    596|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    596|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 12, False: 584]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    596|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     12|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     12|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    596|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    596|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    596|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    596|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 12, False: 584]
+  |  |  ------------------
+  ------------------
+ 2177|     12|            goto out;
+ 2178|    584|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 3)))
+  ------------------
+  |  | 1285|    584|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    584|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    584| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    584|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    584|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    584|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 9, False: 575]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    584|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      9|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      9|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    584|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    584|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    584|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    584|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 9, False: 575]
+  |  |  ------------------
+  ------------------
+ 2179|      9|            goto out;
+ 2180|       |
+ 2181|    575|          str += 4;
+ 2182|    575|          len -= 4;
+ 2183|    575|        }
+ 2184|       |
+ 2185|  1.17k|      else if (b >= 0xF1 && b <= 0xF3)
+  ------------------
+  |  Branch (2185:16): [True: 1.11k, False: 60]
+  |  Branch (2185:29): [True: 473, False: 646]
+  ------------------
+ 2186|    473|        {
+ 2187|    473|          if G_UNLIKELY (len < 4)
+  ------------------
+  |  | 1285|    473|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    473|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    473| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    473|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    473|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    473|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 5, False: 468]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    473|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      5|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      5|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    473|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    473|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    473|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    473|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 5, False: 468]
+  |  |  ------------------
+  ------------------
+ 2188|      5|            goto out;
+ 2189|    468|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 1)))
+  ------------------
+  |  | 1285|    468|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    468|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    468| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    468|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    468|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    468|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 14, False: 454]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    468|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     14|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     14|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    468|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    468|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    468|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    468|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 14, False: 454]
+  |  |  ------------------
+  ------------------
+ 2190|     14|            goto out;
+ 2191|    454|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 2)))
+  ------------------
+  |  | 1285|    454|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    454|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    454| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    454|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    454|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    454|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 11, False: 443]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    454|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     11|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     11|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    454|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    454|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    454|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    454|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 11, False: 443]
+  |  |  ------------------
+  ------------------
+ 2192|     11|            goto out;
+ 2193|    443|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 3)))
+  ------------------
+  |  | 1285|    443|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    443|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    443| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    443|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    443|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    443|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 12, False: 431]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    443|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     12|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     12|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    443|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    443|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    443|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    443|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 12, False: 431]
+  |  |  ------------------
+  ------------------
+ 2194|     12|            goto out;
+ 2195|       |
+ 2196|    431|          str += 4;
+ 2197|    431|          len -= 4;
+ 2198|    431|        }
+ 2199|       |
+ 2200|    706|      else if (b == 0xF4)
+  ------------------
+  |  Branch (2200:16): [True: 618, False: 88]
+  ------------------
+ 2201|    618|        {
+ 2202|    618|          if G_UNLIKELY (len < 4)
+  ------------------
+  |  | 1285|    618|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    618|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    618| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    618|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    618|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    618|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 6, False: 612]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    618|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      6|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      6|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    618|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    618|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    618|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    618|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 6, False: 612]
+  |  |  ------------------
+  ------------------
+ 2203|      6|            goto out;
+ 2204|    612|          if G_UNLIKELY (load_u8 (str, 1) < 0x80 || load_u8 (str, 1) > 0x8F)
+  ------------------
+  |  | 1285|    612|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    612|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    612| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    612|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    612|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  1.83k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 5, False: 607]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 15, False: 592]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    612|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     20|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     20|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    612|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    612|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    612|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    612|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 20, False: 592]
+  |  |  ------------------
+  ------------------
+ 2205|     20|            goto out;
+ 2206|    592|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 2)))
+  ------------------
+  |  | 1285|    592|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    592|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    592| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    592|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    592|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    592|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 8, False: 584]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    592|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      8|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      8|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    592|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    592|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    592|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    592|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 8, False: 584]
+  |  |  ------------------
+  ------------------
+ 2207|      8|            goto out;
+ 2208|    584|          if G_UNLIKELY (!UTF8_CHAR_IS_TAIL (load_u8 (str, 3)))
+  ------------------
+  |  | 1285|    584|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    584|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    584| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    584|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    584|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    584|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 10, False: 574]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    584|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     10|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     10|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    584|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    584|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    584|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    584|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 10, False: 574]
+  |  |  ------------------
+  ------------------
+ 2209|     10|            goto out;
+ 2210|       |
+ 2211|    574|          str += 4;
+ 2212|    574|          len -= 4;
+ 2213|    574|        }
+ 2214|       |
+ 2215|     88|      else goto out;
+ 2216|  25.5k|    }
+ 2217|       |
+ 2218|    619|out:
+ 2219|    619|  *strp = str;
+ 2220|       |
+ 2221|    619|  if (lenp)
+  ------------------
+  |  Branch (2221:7): [True: 619, False: 0]
+  ------------------
+ 2222|    619|    *lenp = len;
+ 2223|    619|}
+gutf8.c:load_u8:
+ 1991|   167k|{
+ 1992|   167k|  return ((const guint8 *)memory)[offset];
+ 1993|   167k|}
+gutf8.c:utf8_verify_ascii:
+ 2036|  8.69k|{
+ 2037|  8.69k|  const char *str = *strp;
+ 2038|  8.69k|  gsize len = lenp ? *lenp : strlen (str);
+  ------------------
+  |  Branch (2038:15): [True: 8.69k, False: 0]
+  ------------------
+ 2039|       |
+ 2040|  32.6k|  while (len > 0 && load_u8 (str, 0) < 128)
+  ------------------
+  |  Branch (2040:10): [True: 32.5k, False: 62]
+  |  Branch (2040:21): [True: 23.9k, False: 8.61k]
+  ------------------
+ 2041|  23.9k|    {
+ 2042|  23.9k|      if ((gpointer) align_to ((guintptr) str, sizeof (gsize)) == str)
+  ------------------
+  |  | 1986|  23.9k|#define align_to(_val, _to) (((_val) + (_to) - 1) & ~((_to) - 1))
+  ------------------
+  |  Branch (2042:11): [True: 4.96k, False: 18.9k]
+  ------------------
+ 2043|  4.96k|        {
+ 2044|  6.36k|          while (len >= 2 * sizeof (gsize))
+  ------------------
+  |  Branch (2044:18): [True: 6.28k, False: 71]
+  ------------------
+ 2045|  6.28k|            {
+ 2046|  6.28k|              if (!utf8_word_is_ascii (load_word (str, 0)) ||
+  ------------------
+  |  Branch (2046:19): [True: 3.37k, False: 2.91k]
+  ------------------
+ 2047|  2.91k|                  !utf8_word_is_ascii (load_word (str, sizeof (gsize))))
+  ------------------
+  |  Branch (2047:19): [True: 1.51k, False: 1.39k]
+  ------------------
+ 2048|  4.89k|                break;
+ 2049|       |
+ 2050|  1.39k|              str += 2 * sizeof(gsize);
+ 2051|  1.39k|              len -= 2 * sizeof(gsize);
+ 2052|  1.39k|            }
+ 2053|       |
+ 2054|  32.1k|          while (len > 0 && load_u8 (str, 0) < 128)
+  ------------------
+  |  Branch (2054:18): [True: 32.0k, False: 29]
+  |  Branch (2054:29): [True: 27.1k, False: 4.91k]
+  ------------------
+ 2055|  27.1k|            {
+ 2056|  27.1k|              if G_UNLIKELY (load_u8 (str, 0) == 0x00)
+  ------------------
+  |  | 1285|  27.1k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  27.1k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  27.1k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  27.1k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  27.1k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  27.1k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 15, False: 27.1k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  27.1k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     15|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     15|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  27.1k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  27.1k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  27.1k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  27.1k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 15, False: 27.1k]
+  |  |  ------------------
+  ------------------
+ 2057|     15|                goto out;
+ 2058|       |
+ 2059|  27.1k|              ++str;
+ 2060|  27.1k|              --len;
+ 2061|  27.1k|            }
+ 2062|  4.96k|        }
+ 2063|  18.9k|      else
+ 2064|  18.9k|        {
+ 2065|  18.9k|          if G_UNLIKELY (load_u8 (str, 0) == 0x00)
+  ------------------
+  |  | 1285|  18.9k|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|  18.9k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|  18.9k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|  18.9k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|  18.9k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  18.9k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 5, False: 18.9k]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|  18.9k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      5|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      5|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|  18.9k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|  18.9k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|  18.9k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|  18.9k|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 5, False: 18.9k]
+  |  |  ------------------
+  ------------------
+ 2066|      5|            goto out;
+ 2067|       |
+ 2068|  18.9k|          ++str;
+ 2069|  18.9k|          --len;
+ 2070|  18.9k|        }
+ 2071|  23.9k|    }
+ 2072|       |
+ 2073|  8.69k|out:
+ 2074|  8.69k|  *strp = str;
+ 2075|       |
+ 2076|  8.69k|  if (lenp)
+  ------------------
+  |  Branch (2076:7): [True: 8.69k, False: 0]
+  ------------------
+ 2077|  8.69k|    *lenp = len;
+ 2078|  8.69k|}
+gutf8.c:utf8_word_is_ascii:
+ 2028|  9.19k|{
+ 2029|       |  /* True unless any byte is NULL or has the MSB set. */
+ 2030|  9.19k|  return ((((word - UTF8_ASCII_SUB) | word) & UTF8_ASCII_MASK) == 0);
+  ------------------
+  |  | 2024|  9.19k|#define UTF8_ASCII_SUB  ((gsize)0x0101010101010101L)
+  ------------------
+                return ((((word - UTF8_ASCII_SUB) | word) & UTF8_ASCII_MASK) == 0);
+  ------------------
+  |  | 2023|  9.19k|#define UTF8_ASCII_MASK ((gsize)0x8080808080808080L)
+  ------------------
+ 2031|  9.19k|}
+gutf8.c:load_word:
+ 2006|  9.19k|{
+ 2007|  9.19k|#if GLIB_SIZEOF_VOID_P == 8
+ 2008|  9.19k|  _attribute_aligned(8) const guint8 *m = ((const guint8 *)memory) + offset;
+  ------------------
+  |  | 1996|  9.19k|# define _attribute_aligned(n) __attribute__((aligned(n)))
+  ------------------
+ 2009|       |
+ 2010|  9.19k|  return ((guint64)m[0] <<  0) | ((guint64)m[1] <<  8) |
+ 2011|  9.19k|         ((guint64)m[2] << 16) | ((guint64)m[3] << 24) |
+ 2012|  9.19k|         ((guint64)m[4] << 32) | ((guint64)m[5] << 40) |
+ 2013|  9.19k|         ((guint64)m[6] << 48) | ((guint64)m[7] << 56);
+ 2014|       |#else
+ 2015|       |  _attribute_aligned(4) const guint8 *m = ((const guint8 *)memory) + offset;
+ 2016|       |
+ 2017|       |  return ((guint)m[0] <<  0) | ((guint)m[1] <<  8) |
+ 2018|       |         ((guint)m[2] << 16) | ((guint)m[3] << 24);
+ 2019|       |#endif
+ 2020|  9.19k|}
+

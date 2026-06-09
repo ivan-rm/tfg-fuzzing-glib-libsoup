@@ -1,0 +1,3 @@
+POST /`pload HTTP/1.1
+C-Type: m~lti*=rtaryABC123
+Content-Disposition:; filename=				

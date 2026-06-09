@@ -1,0 +1,60 @@
+GET /i³ndex HTTP/1.1
+ÿst: lk
+P/1k
+B: 1
+BŒ: 1T _ve
+A:al;=  2
+B: 1
+GŒ: .1
+ÿst: lk
+B: 1
+BŒ:GElk
+P/1k
+B: B: 1
+BŒ: 1T _ve
+A:al;=  1
+B: 1
+GŒ: .1
+ÿst: lk
+B: 1
+BŒ:GET /index HTTP/1.1
+ÿst: lk
+P/1k
+B: 1
+BŒ: 1T _ve
+A:al;=  1
+B: 1
+GŒ:  _ve
+A:al;=  1
+B: 1
+GŒ: .1
+ÿst: lk
+B: 1
+BŒ:GET /index HTTP/1.1
+ÿst: lk
+P/1k
+B: 1
+BŒ: 1T _ve
+A:al;=  1.1
+ÿst: lk
+B: 1
+BŒ: 1T _ve
+A:al;=  1
+ 1T _ve
+A:al;=  1
+B: 1
+G1
+BŒ: 1T _ve
+A:al;=  1
+B: 1
+GŒ: .1
+ÿst: lk
+B: 1
+BŒ: 1T _ve
+A:aly;=  1
+ 1T _ve
+A:al;=  1
+B: 1
+GŒ: 1
+Ba
+Co³

@@ -1,0 +1,4 @@
+POST /upload HTTP/1.1
+Host=nt: Mozilla/6.0
+Content-Type: application/x-www-formw-urlencoded; c*='ngth: 45
+Exchinary_data

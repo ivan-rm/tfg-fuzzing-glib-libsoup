@@ -1,0 +1,11 @@
+GET /index.h|ml HTTP/1.1
+Expecat :c1
+ExpectExpect: : --bKitFormBoundarycalhost
+Usoor-Agent: Mozilla/5.0
+Acce: */*
+A
+
+Expect:$ 
+
+coding: gzigzip, deflate
+Connec:to niom-Heq=ader: fuzzing

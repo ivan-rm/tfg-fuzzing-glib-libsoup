@@ -1,0 +1,6 @@
+OPTIONS * HTTP/1.1
+Host: localhost
+Max-Forwards: 1
+Access-Control-Request-Method: POST
+Access-Control-Request-Headers: X-Custom-Header
+Connection: close

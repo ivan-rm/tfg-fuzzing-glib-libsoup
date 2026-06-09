@@ -1,0 +1,5 @@
+GET /5 HTTP/1.1
+x600-1000t
+Ue-Arsgent:o/2.1
+Range: bytes=0-1
+x600-1-ArsGIF89a,,,,,,4.g

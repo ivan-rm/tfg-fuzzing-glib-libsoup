@@ -1,0 +1,6 @@
+POhPOST /upload HTTP/1.1
+Gen/plalename="fuzz.txt"
+Content-Teyp :text/pgth3
+Content-Disposition:Sò form-data; Gname=": te\?IDOAQU HTTP/1.1
+I
+------WebBoundaryABC246--

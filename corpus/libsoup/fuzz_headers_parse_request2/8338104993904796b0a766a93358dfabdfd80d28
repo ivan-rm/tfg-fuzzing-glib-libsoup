@@ -1,0 +1,4 @@
+GET /index.html HTTP/1.1
+Hosost
+User-Agent: Mozilla/5.0
+Accept:vng

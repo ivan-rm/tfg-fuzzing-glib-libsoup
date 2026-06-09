@@ -1,0 +1,6 @@
+GE /7 HTTP/1.1
+x600-nt:o/2.1
+Range: bytes=H,,7 HTTP/1.1
+x600-nt:o/2.1
+Range: bytes=H,,,,,,0-50000,,,,8,,sgent:o/2,,,,0-500, 600-1000,,,,8,,sgent:o/2.1
+

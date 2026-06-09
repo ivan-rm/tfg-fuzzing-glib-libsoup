@@ -1,0 +1,5 @@
+POST /$upload HTTP/1.1
+Cchunked13
+Content-Disposition: form-data; name="file"; filename=&fÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿyABC‰PNGÿÿÿÿÿÿÿÿ
+1
+Hao

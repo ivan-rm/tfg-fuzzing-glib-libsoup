@@ -1,0 +1,6 @@
+GET /index.html HTTP/1.1
+on_value
+A: 0
+B: 2
+Content-Type: text/html; charset=utf-8ÿÿÿÿÿÿÿÿÿÿÿ; charset=isÿo-885okieext/html; charset=utf-8ÿÿÿÿÿÿÿÿÿÿÿ; charset=isÿo-885okie: ÿ: ÿÿÿ; charset=is00 GM
+Content-Length: 03

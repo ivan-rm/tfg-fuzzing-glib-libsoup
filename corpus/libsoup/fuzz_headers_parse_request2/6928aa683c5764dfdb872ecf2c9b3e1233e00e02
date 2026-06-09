@@ -1,0 +1,6 @@
+GET / HTTP/1.0
+HTTP/1.1
+Host: localhost
+Connection: kAccept-Encoding: ection: keep-alive
+X-Cu-Length: 42
+Content-Length: 42

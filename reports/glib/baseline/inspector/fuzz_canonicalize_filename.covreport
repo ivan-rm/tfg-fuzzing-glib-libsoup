@@ -1,0 +1,3114 @@
+fuzz_canonicalize_filename.c:fuzz_set_logging_func:
+   37|    316|{
+   38|    316|#ifdef FUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION
+   39|    316|  static gboolean writer_set = FALSE;
+  ------------------
+  |  |  967|    316|#define	FALSE	(0)
+  ------------------
+   40|       |
+   41|    316|  if (!writer_set)
+  ------------------
+  |  Branch (41:7): [True: 1, False: 315]
+  ------------------
+   42|      1|    {
+   43|      1|      g_log_set_writer_func (empty_logging_func, NULL, NULL);
+   44|      1|      writer_set = TRUE;
+  ------------------
+  |  |  971|      1|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|      1|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+   45|      1|    }
+   46|    316|#endif
+   47|    316|}
+
+LLVMFuzzerTestOneInput:
+   24|    316|{
+   25|    316|  unsigned char *nul_terminated_data = NULL;
+   26|    316|  gchar *canonicalized = NULL;
+   27|       |
+   28|    316|  fuzz_set_logging_func ();
+   29|       |
+   30|       |  /* ignore @size (g_canonicalize_filename() doesn’t support it); ensure @data is nul-terminated */
+   31|    316|  nul_terminated_data = (unsigned char *) g_strndup ((const gchar *) data, size);
+   32|    316|  canonicalized = g_canonicalize_filename ((const gchar *) nul_terminated_data, "/");
+   33|    316|  g_free (nul_terminated_data);
+   34|       |
+   35|    316|  g_free (canonicalized);
+   36|       |
+   37|    316|  return 0;
+   38|    316|}
+
+g_error_init:
+   49|      2|{
+   50|      2|  error_domain_ht = g_hash_table_new (NULL, NULL);
+   51|      2|}
+
+g_build_filename:
+ 2322|    286|{
+ 2323|    286|  gchar *str;
+ 2324|    286|  va_list args;
+ 2325|       |
+ 2326|    286|  va_start (args, first_element);
+ 2327|    286|  str = g_build_filename_va (first_element, &args, NULL);
+ 2328|    286|  va_end (args);
+ 2329|       |
+ 2330|    286|  return str;
+ 2331|    286|}
+g_path_is_absolute:
+ 2474|    632|{
+ 2475|    632|  g_return_val_if_fail (file_name != NULL, FALSE);
+  ------------------
+  |  |  666|    632|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    632|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|    632|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|    632|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    632|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    632| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    632|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    632|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|    632|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 632, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    632|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    632|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    632|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    632|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    632|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    632|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    632|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 632, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|    632|      { } \
+  |  |  669|    632|    else \
+  |  |  670|    632|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|    632|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    632|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 632]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2476|       |
+ 2477|    632|  if (G_IS_DIR_SEPARATOR (file_name[0]))
+  ------------------
+  |  |  197|    632|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|    632|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 346, False: 286]
+  |  |  ------------------
+  ------------------
+ 2478|    346|    return TRUE;
+  ------------------
+  |  |  971|    346|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|    346|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 2479|       |
+ 2480|       |#ifdef G_OS_WIN32
+ 2481|       |  /* Recognize drive letter on native Windows */
+ 2482|       |  if (g_ascii_isalpha (file_name[0]) &&
+ 2483|       |      file_name[1] == ':' && G_IS_DIR_SEPARATOR (file_name[2]))
+ 2484|       |    return TRUE;
+ 2485|       |#endif
+ 2486|       |
+ 2487|    286|  return FALSE;
+  ------------------
+  |  |  967|    286|#define	FALSE	(0)
+  ------------------
+ 2488|    632|}
+g_path_skip_root:
+ 2503|    316|{
+ 2504|    316|  g_return_val_if_fail (file_name != NULL, NULL);
+  ------------------
+  |  |  666|    316|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    316|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|    316|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|    316|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    316|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    316| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    316|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    316|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|    316|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 316, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    316|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    316|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    316|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    316|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    316|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    316|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    316|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 316, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|    316|      { } \
+  |  |  669|    316|    else \
+  |  |  670|    316|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|    316|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    316|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 316]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2505|       |
+ 2506|       |#ifdef G_PLATFORM_WIN32
+ 2507|       |  /* Skip \\server\share or //server/share */
+ 2508|       |  if (G_IS_DIR_SEPARATOR (file_name[0]) &&
+ 2509|       |      G_IS_DIR_SEPARATOR (file_name[1]) &&
+ 2510|       |      file_name[2] &&
+ 2511|       |      !G_IS_DIR_SEPARATOR (file_name[2]))
+ 2512|       |    {
+ 2513|       |      gchar *p;
+ 2514|       |      p = strchr (file_name + 2, G_DIR_SEPARATOR);
+ 2515|       |
+ 2516|       |#ifdef G_OS_WIN32
+ 2517|       |      {
+ 2518|       |        gchar *q;
+ 2519|       |
+ 2520|       |        q = strchr (file_name + 2, '/');
+ 2521|       |        if (p == NULL || (q != NULL && q < p))
+ 2522|       |        p = q;
+ 2523|       |      }
+ 2524|       |#endif
+ 2525|       |
+ 2526|       |      if (p && p > file_name + 2 && p[1])
+ 2527|       |        {
+ 2528|       |          file_name = p + 1;
+ 2529|       |
+ 2530|       |          while (file_name[0] && !G_IS_DIR_SEPARATOR (file_name[0]))
+ 2531|       |            file_name++;
+ 2532|       |
+ 2533|       |          /* Possibly skip a backslash after the share name */
+ 2534|       |          if (G_IS_DIR_SEPARATOR (file_name[0]))
+ 2535|       |            file_name++;
+ 2536|       |
+ 2537|       |          return (gchar *)file_name;
+ 2538|       |        }
+ 2539|       |    }
+ 2540|       |#endif
+ 2541|       |
+ 2542|       |  /* Skip initial slashes */
+ 2543|    316|  if (G_IS_DIR_SEPARATOR (file_name[0]))
+  ------------------
+  |  |  197|    316|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|    316|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 316, False: 0]
+  |  |  ------------------
+  ------------------
+ 2544|    316|    {
+ 2545|  2.11M|      while (G_IS_DIR_SEPARATOR (file_name[0]))
+  ------------------
+  |  |  197|  2.11M|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|  2.11M|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 2.11M, False: 316]
+  |  |  ------------------
+  ------------------
+ 2546|  2.11M|        file_name++;
+ 2547|    316|      return (gchar *)file_name;
+ 2548|    316|    }
+ 2549|       |
+ 2550|       |#ifdef G_OS_WIN32
+ 2551|       |  /* Skip X:\ */
+ 2552|       |  if (g_ascii_isalpha (file_name[0]) &&
+ 2553|       |      file_name[1] == ':' &&
+ 2554|       |      G_IS_DIR_SEPARATOR (file_name[2]))
+ 2555|       |    return (gchar *)file_name + 3;
+ 2556|       |#endif
+ 2557|       |
+ 2558|      0|  return NULL;
+ 2559|    316|}
+g_canonicalize_filename:
+ 2836|    316|{
+ 2837|    316|  gchar *canon, *input, *output, *after_root, *output_start;
+ 2838|       |
+ 2839|    316|  g_return_val_if_fail (relative_to == NULL || g_path_is_absolute (relative_to), NULL);
+  ------------------
+  |  |  666|    316|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    316|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|    316|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|    316|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    316|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    316| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    316|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    316|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|    948|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 316]
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 316, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    316|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    316|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    316|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    316|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    316|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    316|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    316|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 316, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|    316|      { } \
+  |  |  669|    316|    else \
+  |  |  670|    316|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|    316|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    316|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 316]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2840|       |
+ 2841|    316|  if (!g_path_is_absolute (filename))
+  ------------------
+  |  Branch (2841:7): [True: 286, False: 30]
+  ------------------
+ 2842|    286|    {
+ 2843|    286|      gchar *cwd_allocated = NULL;
+ 2844|    286|      const gchar  *cwd;
+ 2845|       |
+ 2846|    286|      if (relative_to != NULL)
+  ------------------
+  |  Branch (2846:11): [True: 286, False: 0]
+  ------------------
+ 2847|    286|        cwd = relative_to;
+ 2848|      0|      else
+ 2849|      0|        cwd = cwd_allocated = g_get_current_dir ();
+ 2850|       |
+ 2851|    286|      canon = g_build_filename (cwd, filename, NULL);
+ 2852|    286|      g_free (cwd_allocated);
+ 2853|    286|    }
+ 2854|     30|  else
+ 2855|     30|    {
+ 2856|     30|      canon = g_strdup (filename);
+  ------------------
+  |  |  324|     30|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+ 2857|     30|    }
+ 2858|       |
+ 2859|    316|  after_root = (char *)g_path_skip_root (canon);
+ 2860|       |
+ 2861|    316|  if (after_root == NULL)
+  ------------------
+  |  Branch (2861:7): [True: 0, False: 316]
+  ------------------
+ 2862|      0|    {
+ 2863|       |      /* This shouldn't really happen, as g_get_current_dir() should
+ 2864|       |         return an absolute pathname, but bug 573843 shows this is
+ 2865|       |         not always happening */
+ 2866|      0|      g_free (canon);
+ 2867|      0|      return g_build_filename (G_DIR_SEPARATOR_S, filename, NULL);
+  ------------------
+  |  |  213|      0|#define G_DIR_SEPARATOR_S "/"
+  ------------------
+ 2868|      0|    }
+ 2869|       |
+ 2870|       |  /* Find the first dir separator and use the canonical dir separator. */
+ 2871|    316|  for (output = after_root - 1;
+ 2872|  2.11M|       (output >= canon) && G_IS_DIR_SEPARATOR (*output);
+  ------------------
+  |  |  197|  2.11M|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|  2.11M|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 2.11M, False: 0]
+  |  |  ------------------
+  ------------------
+  |  Branch (2872:8): [True: 2.11M, False: 316]
+  ------------------
+ 2873|  2.11M|       output--)
+ 2874|  2.11M|    *output = G_DIR_SEPARATOR;
+  ------------------
+  |  |  212|  2.11M|#define G_DIR_SEPARATOR '/'
+  ------------------
+ 2875|       |
+ 2876|       |  /* 1 to re-increment after the final decrement above (so that output >= canon),
+ 2877|       |   * and 1 to skip the first `/`. There might not be a first `/` if
+ 2878|       |   * the @canon is a Windows `//server/share` style path with no
+ 2879|       |   * trailing directories. @after_root will be '\0' in that case. */
+ 2880|    316|  output++;
+ 2881|    316|  if (*output == G_DIR_SEPARATOR)
+  ------------------
+  |  |  212|    316|#define G_DIR_SEPARATOR '/'
+  ------------------
+  |  Branch (2881:7): [True: 316, False: 0]
+  ------------------
+ 2882|    316|    output++;
+ 2883|       |
+ 2884|       |  /* POSIX allows double slashes at the start to mean something special
+ 2885|       |   * (as does windows too). So, "//" != "/", but more than two slashes
+ 2886|       |   * is treated as "/".
+ 2887|       |   */
+ 2888|    316|  if (after_root - output == 1)
+  ------------------
+  |  Branch (2888:7): [True: 1, False: 315]
+  ------------------
+ 2889|      1|    output++;
+ 2890|       |
+ 2891|    316|  input = after_root;
+ 2892|    316|  output_start = output;
+ 2893|   855k|  while (*input)
+  ------------------
+  |  Branch (2893:10): [True: 854k, False: 54]
+  ------------------
+ 2894|   854k|    {
+ 2895|       |      /* input points to the next non-separator to be processed. */
+ 2896|       |      /* output points to the next location to write to. */
+ 2897|   854k|      g_assert (input > canon && G_IS_DIR_SEPARATOR (input[-1]));
+  ------------------
+  |  |  275|   854k|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|   854k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|   854k|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|   854k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|   854k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|   854k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|   854k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|   854k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|  2.56M|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 854k, False: 0]
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 854k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|   854k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|   854k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|   854k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|   854k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|   854k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|   854k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|   854k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 854k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|   854k|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|   854k|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|   854k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 854k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2898|   854k|      g_assert (output > canon && G_IS_DIR_SEPARATOR (output[-1]));
+  ------------------
+  |  |  275|   854k|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|   854k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|   854k|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|   854k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|   854k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|   854k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|   854k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|   854k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|  2.56M|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 854k, False: 0]
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 854k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|   854k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|   854k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|   854k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|   854k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|   854k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|   854k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|   854k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 854k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|   854k|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|   854k|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|   854k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 854k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2899|   854k|      g_assert (input >= output);
+  ------------------
+  |  |  275|   854k|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|   854k|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|   854k|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|   854k|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|   854k|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|   854k| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|   854k|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|   854k|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|   854k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 854k, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|   854k|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|   854k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|   854k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|   854k|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|   854k|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|   854k|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|   854k|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 854k, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|   854k|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|   854k|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|   854k|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 854k]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2900|       |
+ 2901|       |      /* Ignore repeated dir separators. */
+ 2902|  10.1M|      while (G_IS_DIR_SEPARATOR (input[0]))
+  ------------------
+  |  |  197|  10.1M|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|  10.1M|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 9.31M, False: 854k]
+  |  |  ------------------
+  ------------------
+ 2903|  9.31M|       input++;
+ 2904|       |
+ 2905|       |      /* Ignore single dot directory components. */
+ 2906|   854k|      if (input[0] == '.' && (input[1] == 0 || G_IS_DIR_SEPARATOR (input[1])))
+  ------------------
+  |  |  197|   455k|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|   455k|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 19.1k, False: 436k]
+  |  |  ------------------
+  ------------------
+  |  Branch (2906:11): [True: 455k, False: 399k]
+  |  Branch (2906:31): [True: 12, False: 455k]
+  ------------------
+ 2907|  19.2k|        {
+ 2908|  19.2k|           if (input[1] == 0)
+  ------------------
+  |  Branch (2908:16): [True: 12, False: 19.1k]
+  ------------------
+ 2909|     12|             break;
+ 2910|  19.1k|           input += 2;
+ 2911|  19.1k|        }
+ 2912|       |      /* Remove double-dot directory components along with the preceding
+ 2913|       |       * path component. */
+ 2914|   835k|      else if (input[0] == '.' && input[1] == '.' &&
+  ------------------
+  |  Branch (2914:16): [True: 436k, False: 399k]
+  |  Branch (2914:35): [True: 432k, False: 3.71k]
+  ------------------
+ 2915|   432k|               (input[2] == 0 || G_IS_DIR_SEPARATOR (input[2])))
+  ------------------
+  |  |  197|   432k|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|   432k|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 357k, False: 74.8k]
+  |  |  ------------------
+  ------------------
+  |  Branch (2915:17): [True: 44, False: 432k]
+  ------------------
+ 2916|   357k|        {
+ 2917|   357k|          if (output > output_start)
+  ------------------
+  |  Branch (2917:15): [True: 300k, False: 57.0k]
+  ------------------
+ 2918|   300k|            {
+ 2919|   300k|              do
+ 2920|  1.26M|                {
+ 2921|  1.26M|                  output--;
+ 2922|  1.26M|                }
+ 2923|  1.26M|              while (!G_IS_DIR_SEPARATOR (output[-1]) && output > output_start);
+  ------------------
+  |  |  197|  2.52M|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|  1.26M|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  ------------------
+  |  Branch (2923:22): [True: 960k, False: 300k]
+  |  Branch (2923:58): [True: 960k, False: 0]
+  ------------------
+ 2924|   300k|            }
+ 2925|   357k|          if (input[2] == 0)
+  ------------------
+  |  Branch (2925:15): [True: 44, False: 357k]
+  ------------------
+ 2926|     44|            break;
+ 2927|   357k|          input += 3;
+ 2928|   357k|        }
+ 2929|       |      /* Copy the input to the output until the next separator,
+ 2930|       |       * while converting it to canonical separator */
+ 2931|   478k|      else
+ 2932|   478k|        {
+ 2933|  11.5M|          while (*input && !G_IS_DIR_SEPARATOR (*input))
+  ------------------
+  |  |  197|  11.5M|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|  11.5M|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  ------------------
+  |  Branch (2933:18): [True: 11.5M, False: 206]
+  |  Branch (2933:28): [True: 11.0M, False: 478k]
+  ------------------
+ 2934|  11.0M|            *output++ = *input++;
+ 2935|   478k|          if (input[0] == 0)
+  ------------------
+  |  Branch (2935:15): [True: 206, False: 478k]
+  ------------------
+ 2936|    206|            break;
+ 2937|   478k|          input++;
+ 2938|   478k|          *output++ = G_DIR_SEPARATOR;
+  ------------------
+  |  |  212|   478k|#define G_DIR_SEPARATOR '/'
+  ------------------
+ 2939|   478k|        }
+ 2940|   854k|    }
+ 2941|       |
+ 2942|       |  /* Remove a potentially trailing dir separator */
+ 2943|    316|  if (output > output_start && G_IS_DIR_SEPARATOR (output[-1]))
+  ------------------
+  |  |  197|    221|#define G_IS_DIR_SEPARATOR(c) ((c) == G_DIR_SEPARATOR)
+  |  |  ------------------
+  |  |  |  |  212|    221|#define G_DIR_SEPARATOR '/'
+  |  |  ------------------
+  |  |  |  Branch (197:31): [True: 82, False: 139]
+  |  |  ------------------
+  ------------------
+  |  Branch (2943:7): [True: 221, False: 95]
+  ------------------
+ 2944|     82|    output--;
+ 2945|       |
+ 2946|    316|  *output = '\0';
+ 2947|       |
+ 2948|    316|  return canon;
+ 2949|    316|}
+gfileutils.c:g_build_path_va:
+ 1930|    286|{
+ 1931|    286|  GString *result;
+ 1932|    286|  size_t separator_len = strlen (separator);
+ 1933|    286|  gboolean is_first = TRUE;
+  ------------------
+  |  |  971|    286|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|    286|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1934|    286|  gboolean have_leading = FALSE;
+  ------------------
+  |  |  967|    286|#define	FALSE	(0)
+  ------------------
+ 1935|    286|  const gchar *single_element = NULL;
+ 1936|    286|  const gchar *next_element;
+ 1937|    286|  const gchar *last_trailing = NULL;
+ 1938|    286|  size_t i = 0;
+ 1939|       |
+ 1940|    286|  result = g_string_new (NULL);
+ 1941|       |
+ 1942|    286|  if (str_array)
+  ------------------
+  |  Branch (1942:7): [True: 0, False: 286]
+  ------------------
+ 1943|      0|    next_element = str_array[i++];
+ 1944|    286|  else
+ 1945|    286|    next_element = first_element;
+ 1946|       |
+ 1947|    858|  while (TRUE)
+  ------------------
+  |  |  971|    858|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|    858|#define	FALSE	(0)
+  |  |  ------------------
+  |  |  |  Branch (971:14): [True: 858, Folded]
+  |  |  ------------------
+  ------------------
+ 1948|    858|    {
+ 1949|    858|      const gchar *element;
+ 1950|    858|      const gchar *start;
+ 1951|    858|      const gchar *end;
+ 1952|       |
+ 1953|    858|      if (next_element)
+  ------------------
+  |  Branch (1953:11): [True: 572, False: 286]
+  ------------------
+ 1954|    572|	{
+ 1955|    572|	  element = next_element;
+ 1956|    572|	  if (str_array)
+  ------------------
+  |  Branch (1956:8): [True: 0, False: 572]
+  ------------------
+ 1957|      0|	    next_element = str_array[i++];
+ 1958|    572|	  else
+ 1959|    572|	    next_element = va_arg (*args, gchar *);
+ 1960|    572|	}
+ 1961|    286|      else
+ 1962|    286|	break;
+ 1963|       |
+ 1964|       |      /* Ignore empty elements */
+ 1965|    572|      if (!*element)
+  ------------------
+  |  Branch (1965:11): [True: 1, False: 571]
+  ------------------
+ 1966|      1|	continue;
+ 1967|       |      
+ 1968|    571|      start = element;
+ 1969|       |
+ 1970|    571|      if (separator_len)
+  ------------------
+  |  Branch (1970:11): [True: 571, False: 0]
+  ------------------
+ 1971|    571|	{
+ 1972|    857|	  while (strncmp (start, separator, separator_len) == 0)
+  ------------------
+  |  Branch (1972:11): [True: 286, False: 571]
+  ------------------
+ 1973|    286|	    start += separator_len;
+ 1974|    571|      	}
+ 1975|       |
+ 1976|    571|      end = start + strlen (start);
+ 1977|       |      
+ 1978|    571|      if (separator_len)
+  ------------------
+  |  Branch (1978:11): [True: 571, False: 0]
+  ------------------
+ 1979|    571|	{
+ 1980|  2.58M|	  while (end >= start + separator_len &&
+  ------------------
+  |  Branch (1980:11): [True: 2.58M, False: 286]
+  ------------------
+ 1981|  2.58M|		 strncmp (end - separator_len, separator, separator_len) == 0)
+  ------------------
+  |  Branch (1981:4): [True: 2.58M, False: 285]
+  ------------------
+ 1982|  2.58M|	    end -= separator_len;
+ 1983|       |	  
+ 1984|    571|	  last_trailing = end;
+ 1985|    857|	  while (last_trailing >= element + separator_len &&
+  ------------------
+  |  Branch (1985:11): [True: 571, False: 286]
+  ------------------
+ 1986|    571|		 strncmp (last_trailing - separator_len, separator, separator_len) == 0)
+  ------------------
+  |  Branch (1986:4): [True: 286, False: 285]
+  ------------------
+ 1987|    286|	    last_trailing -= separator_len;
+ 1988|       |
+ 1989|    571|	  if (!have_leading)
+  ------------------
+  |  Branch (1989:8): [True: 286, False: 285]
+  ------------------
+ 1990|    286|	    {
+ 1991|       |	      /* If the leading and trailing separator strings are in the
+ 1992|       |	       * same element and overlap, the result is exactly that element
+ 1993|       |	       */
+ 1994|    286|	      if (last_trailing <= start)
+  ------------------
+  |  Branch (1994:12): [True: 286, False: 0]
+  ------------------
+ 1995|    286|		single_element = element;
+ 1996|       |		  
+ 1997|    286|	      g_string_append_len (result, element, start - element);
+  ------------------
+  |  |  253|    286|  g_string_append_len_inline (gstr, val, len)
+  ------------------
+ 1998|    286|	      have_leading = TRUE;
+  ------------------
+  |  |  971|    286|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|    286|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+ 1999|    286|	    }
+ 2000|    285|	  else
+ 2001|    285|	    single_element = NULL;
+ 2002|    571|	}
+ 2003|       |
+ 2004|    571|      if (end == start)
+  ------------------
+  |  Branch (2004:11): [True: 286, False: 285]
+  ------------------
+ 2005|    286|	continue;
+ 2006|       |
+ 2007|    285|      if (!is_first)
+  ------------------
+  |  Branch (2007:11): [True: 0, False: 285]
+  ------------------
+ 2008|      0|	g_string_append (result, separator);
+  ------------------
+  |  |  271|      0|  (__builtin_constant_p (val) ?                     \
+  |  |  ------------------
+  |  |  |  Branch (271:4): [True: 0, False: 0]
+  |  |  ------------------
+  |  |  272|      0|    G_GNUC_EXTENSION ({                             \
+  |  |  ------------------
+  |  |  |  |   62|      0|#define G_GNUC_EXTENSION __extension__
+  |  |  ------------------
+  |  |  273|      0|      const char * const __val = (val);             \
+  |  |  274|      0|      g_string_append_len (gstr, __val,             \
+  |  |  ------------------
+  |  |  |  |  253|      0|  g_string_append_len_inline (gstr, val, len)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (253:42): [True: 0, False: 0]
+  |  |  |  |  |  Branch (253:42): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  275|      0|        G_LIKELY (__val != NULL) ?                  \
+  |  |  276|      0|          (gssize) strlen (_G_STR_NONNULL (__val))  \
+  |  |  277|      0|        : (gssize) -1);                             \
+  |  |  278|      0|    })                                              \
+  |  |  279|      0|    :                                               \
+  |  |  280|      0|    g_string_append_len (gstr, val, (gssize) -1))
+  |  |  ------------------
+  |  |  |  |  253|      0|  g_string_append_len_inline (gstr, val, len)
+  |  |  ------------------
+  ------------------
+ 2009|       |      
+ 2010|    285|      g_string_append_len (result, start, end - start);
+  ------------------
+  |  |  253|    285|  g_string_append_len_inline (gstr, val, len)
+  ------------------
+ 2011|    285|      is_first = FALSE;
+  ------------------
+  |  |  967|    285|#define	FALSE	(0)
+  ------------------
+ 2012|    285|    }
+ 2013|       |
+ 2014|    286|  if (single_element)
+  ------------------
+  |  Branch (2014:7): [True: 1, False: 285]
+  ------------------
+ 2015|      1|    {
+ 2016|      1|      g_string_free (result, TRUE);
+  ------------------
+  |  |   74|      1|  (__builtin_constant_p (free_segment) ?        \
+  |  |  ------------------
+  |  |  |  Branch (74:4): [True: 1, Folded]
+  |  |  ------------------
+  |  |   75|      1|    ((free_segment) ?                           \
+  |  |  ------------------
+  |  |  |  Branch (75:6): [True: 1, Folded]
+  |  |  ------------------
+  |  |   76|      1|      (g_string_free) ((str), (free_segment)) : \
+  |  |   77|      1|      g_string_free_and_steal (str))            \
+  |  |   78|      1|    :                                           \
+  |  |   79|      1|    (g_string_free) ((str), (free_segment)))
+  ------------------
+ 2017|      1|      return g_strdup (single_element);
+  ------------------
+  |  |  324|      1|#define g_strdup(x) g_strdup_inline (x)
+  ------------------
+ 2018|      1|    }
+ 2019|    285|  else
+ 2020|    285|    {
+ 2021|    285|      if (last_trailing)
+  ------------------
+  |  Branch (2021:11): [True: 285, False: 0]
+  ------------------
+ 2022|    285|	g_string_append (result, last_trailing);
+  ------------------
+  |  |  271|    285|  (__builtin_constant_p (val) ?                     \
+  |  |  ------------------
+  |  |  |  Branch (271:4): [True: 0, False: 285]
+  |  |  ------------------
+  |  |  272|    285|    G_GNUC_EXTENSION ({                             \
+  |  |  ------------------
+  |  |  |  |   62|      0|#define G_GNUC_EXTENSION __extension__
+  |  |  ------------------
+  |  |  273|      0|      const char * const __val = (val);             \
+  |  |  274|      0|      g_string_append_len (gstr, __val,             \
+  |  |  ------------------
+  |  |  |  |  253|      0|  g_string_append_len_inline (gstr, val, len)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (253:42): [True: 0, False: 0]
+  |  |  |  |  |  Branch (253:42): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  275|      0|        G_LIKELY (__val != NULL) ?                  \
+  |  |  276|      0|          (gssize) strlen (_G_STR_NONNULL (__val))  \
+  |  |  277|      0|        : (gssize) -1);                             \
+  |  |  278|      0|    })                                              \
+  |  |  279|    285|    :                                               \
+  |  |  280|    285|    g_string_append_len (gstr, val, (gssize) -1))
+  |  |  ------------------
+  |  |  |  |  253|    285|  g_string_append_len_inline (gstr, val, len)
+  |  |  ------------------
+  ------------------
+ 2023|       |  
+ 2024|    285|      return g_string_free (result, FALSE);
+  ------------------
+  |  |   74|    285|  (__builtin_constant_p (free_segment) ?        \
+  |  |  ------------------
+  |  |  |  Branch (74:4): [True: 285, Folded]
+  |  |  ------------------
+  |  |   75|    285|    ((free_segment) ?                           \
+  |  |  ------------------
+  |  |  |  Branch (75:6): [Folded, False: 285]
+  |  |  ------------------
+  |  |   76|    285|      (g_string_free) ((str), (free_segment)) : \
+  |  |   77|    285|      g_string_free_and_steal (str))            \
+  |  |   78|    285|    :                                           \
+  |  |   79|    285|    (g_string_free) ((str), (free_segment)))
+  ------------------
+ 2025|    285|    }
+ 2026|    286|}
+gfileutils.c:g_build_filename_va:
+ 2229|    286|{
+ 2230|    286|  gchar *str;
+ 2231|       |
+ 2232|    286|#ifndef G_OS_WIN32
+ 2233|    286|  str = g_build_path_va (G_DIR_SEPARATOR_S, first_argument, args, str_array);
+  ------------------
+  |  |  213|    286|#define G_DIR_SEPARATOR_S "/"
+  ------------------
+ 2234|       |#else
+ 2235|       |  str = g_build_pathname_va (first_argument, args, str_array);
+ 2236|       |#endif
+ 2237|       |
+ 2238|    286|  return str;
+ 2239|    286|}
+
+g_hash_table_new:
+  991|      4|{
+  992|      4|  return g_hash_table_new_full (hash_func, key_equal_func, NULL, NULL);
+  993|      4|}
+g_hash_table_new_full:
+ 1026|      4|{
+ 1027|      4|  GHashTable *hash_table;
+ 1028|       |
+ 1029|      4|  hash_table = g_slice_new (GHashTable);
+  ------------------
+  |  |   56|      4|#define  g_slice_new(type)      ((type*) g_slice_alloc (g_slice_alloc_size (type)))
+  |  |  ------------------
+  |  |  |  |   53|      4|#define g_slice_alloc_size(type) (sizeof (type) > 0 ? sizeof (type) : 1)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (53:35): [True: 4, Folded]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 1030|      4|  g_atomic_ref_count_init (&hash_table->ref_count);
+ 1031|      4|  hash_table->nnodes             = 0;
+ 1032|      4|  hash_table->noccupied          = 0;
+ 1033|      4|  hash_table->hash_func          = hash_func ? hash_func : g_direct_hash;
+  ------------------
+  |  Branch (1033:36): [True: 2, False: 2]
+  ------------------
+ 1034|      4|  hash_table->key_equal_func     = key_equal_func;
+ 1035|      4|#ifndef G_DISABLE_ASSERT
+ 1036|      4|  hash_table->version            = 0;
+ 1037|      4|#endif
+ 1038|      4|  hash_table->key_destroy_func   = key_destroy_func;
+ 1039|      4|  hash_table->value_destroy_func = value_destroy_func;
+ 1040|       |
+ 1041|      4|  g_hash_table_setup_storage (hash_table);
+ 1042|       |
+ 1043|      4|  return hash_table;
+ 1044|      4|}
+ghash.c:g_hash_table_setup_storage:
+  526|      4|{
+  527|      4|  gboolean small = FALSE;
+  ------------------
+  |  |  967|      4|#define	FALSE	(0)
+  ------------------
+  528|       |
+  529|       |  /* We want to use small arrays only if:
+  530|       |   *   - we are running on a system where that makes sense (64 bit); and
+  531|       |   *   - we are not running under valgrind.
+  532|       |   */
+  533|       |
+  534|      4|#ifdef USE_SMALL_ARRAYS
+  535|      4|  small = TRUE;
+  ------------------
+  |  |  971|      4|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|      4|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  536|       |
+  537|      4|# ifdef ENABLE_VALGRIND
+  538|      4|  if (RUNNING_ON_VALGRIND)
+  ------------------
+  |  | 6216|      4|    (unsigned)VALGRIND_DO_CLIENT_REQUEST_EXPR(0 /* if not */,         \
+  |  |  ------------------
+  |  |  |  |  414|      4|    __extension__                                                 \
+  |  |  |  |  415|      4|    ({ volatile uintptr_t _zzq_args[6];                           \
+  |  |  |  |  416|      4|    volatile unsigned long int _zzq_result;                       \
+  |  |  |  |  417|      4|    _zzq_args[0] = (uintptr_t)(_zzq_request);                     \
+  |  |  |  |  418|      4|    _zzq_args[1] = (uintptr_t)(_zzq_arg1);                        \
+  |  |  |  |  419|      4|    _zzq_args[2] = (uintptr_t)(_zzq_arg2);                        \
+  |  |  |  |  420|      4|    _zzq_args[3] = (uintptr_t)(_zzq_arg3);                        \
+  |  |  |  |  421|      4|    _zzq_args[4] = (uintptr_t)(_zzq_arg4);                        \
+  |  |  |  |  422|      4|    _zzq_args[5] = (uintptr_t)(_zzq_arg5);                        \
+  |  |  |  |  423|      4|    __asm__ volatile(__SPECIAL_INSTRUCTION_PREAMBLE               \
+  |  |  |  |  424|      4|                     /* %RDX = client_request ( %RAX ) */         \
+  |  |  |  |  425|      4|                     "xchgq %%rbx,%%rbx"                          \
+  |  |  |  |  426|      4|                     : "=d" (_zzq_result)                         \
+  |  |  |  |  427|      4|                     : "a" (&_zzq_args[0]), "0" (_zzq_default)    \
+  |  |  |  |  428|      4|                     : "cc", "memory"                             \
+  |  |  |  |  429|      4|                    );                                            \
+  |  |  |  |  430|      4|    _zzq_result;                                                  \
+  |  |  |  |  431|      4|    })
+  |  |  ------------------
+  |  |  |  Branch (6216:5): [True: 0, False: 4]
+  |  |  ------------------
+  |  | 6217|      4|                                    VG_USERREQ__RUNNING_ON_VALGRIND,  \
+  |  | 6218|      4|                                    0, 0, 0, 0, 0)                    \
+  ------------------
+  539|      0|    small = FALSE;
+  ------------------
+  |  |  967|      0|#define	FALSE	(0)
+  ------------------
+  540|      4|# endif
+  541|      4|#endif
+  542|       |
+  543|      4|  g_hash_table_set_shift (hash_table, HASH_TABLE_MIN_SHIFT);
+  ------------------
+  |  |  185|      4|#define HASH_TABLE_MIN_SHIFT 3  /* 1 << 3 == 8 buckets */
+  ------------------
+  544|       |
+  545|      4|  hash_table->have_big_keys = !small;
+  546|      4|  hash_table->have_big_values = !small;
+  547|       |
+  548|      4|  hash_table->keys   = g_hash_table_realloc_key_or_value_array (NULL, hash_table->size, hash_table->have_big_keys);
+  549|      4|  hash_table->values = hash_table->keys;
+  550|       |  hash_table->hashes = g_new0 (guint, hash_table->size);
+  ------------------
+  |  |  335|      4|#define g_new0(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc0)
+  |  |  ------------------
+  |  |  |  |  263|      4|	(struct_type *) (G_GNUC_EXTENSION ({			\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  ------------------
+  |  |  |  |  264|      4|	  gsize __n = (gsize) (n_structs);			\
+  |  |  |  |  265|      4|	  gsize __s = sizeof (struct_type);			\
+  |  |  |  |  266|      4|	  gpointer __p;						\
+  |  |  |  |  267|      4|	  if (__s == 1)						\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (267:8): [True: 0, False: 4]
+  |  |  |  |  ------------------
+  |  |  |  |  268|      4|	    __p = g_##func (__n);				\
+  |  |  |  |  269|      4|	  else if (__builtin_constant_p (__n) &&		\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (269:13): [True: 0, False: 4]
+  |  |  |  |  ------------------
+  |  |  |  |  270|      4|	           (__s == 0 || __n <= G_MAXSIZE / __s))	\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   89|      0|#define G_MAXSIZE	G_MAXULONG
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   43|      0|#define G_MAXULONG	ULONG_MAX
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (270:14): [True: 0, False: 0]
+  |  |  |  |  |  Branch (270:26): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  271|      4|	    __p = g_##func (__n * __s);				\
+  |  |  |  |  272|      4|	  else							\
+  |  |  |  |  273|      4|	    __p = g_##func##_n (__n, __s);			\
+  |  |  |  |  274|      4|	  __p;							\
+  |  |  |  |  275|      4|	}))
+  |  |  ------------------
+  ------------------
+  551|      4|}
+ghash.c:g_hash_table_set_shift:
+  297|      4|{
+  298|      4|  if (shift > 31)
+  ------------------
+  |  Branch (298:7): [True: 0, False: 4]
+  ------------------
+  299|      4|    g_error ("adding more entries to hash table would overflow");
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      0|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  300|       |
+  301|      4|  hash_table->size = 1u << shift;
+  302|      4|  hash_table->mod  = prime_mod [shift];
+  303|       |
+  304|       |  /* hash_table->size is always a power of two, so we can calculate the mask
+  305|       |   * by simply subtracting 1 from it. The leading assertion ensures that
+  306|       |   * we're really dealing with a power of two. */
+  307|       |
+  308|      4|  g_assert ((hash_table->size & (hash_table->size - 1)) == 0);
+  ------------------
+  |  |  275|      4|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      4|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|      4|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|      4|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      4|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      4| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      4|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      4|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 4, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      4|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      4|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      4|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 4, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|      4|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|      4|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      4|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 4]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  309|      4|  hash_table->mask = hash_table->size - 1;
+  310|      4|}
+ghash.c:g_hash_table_realloc_key_or_value_array:
+  336|      4|{
+  337|      4|#ifdef USE_SMALL_ARRAYS
+  338|      4|  return g_realloc (a, size * (is_big ? BIG_ENTRY_SIZE : SMALL_ENTRY_SIZE));
+  ------------------
+  |  |  204|      0|#define BIG_ENTRY_SIZE (SIZEOF_VOID_P)
+  |  |  ------------------
+  |  |  |  |  432|      0|#define SIZEOF_VOID_P 8
+  |  |  ------------------
+  ------------------
+                return g_realloc (a, size * (is_big ? BIG_ENTRY_SIZE : SMALL_ENTRY_SIZE));
+  ------------------
+  |  |  205|      4|#define SMALL_ENTRY_SIZE (SIZEOF_INT)
+  |  |  ------------------
+  |  |  |  |  420|      4|#define SIZEOF_INT 4
+  |  |  ------------------
+  ------------------
+  |  Branch (338:32): [True: 0, False: 4]
+  ------------------
+  339|       |#else
+  340|       |  return g_renew (gpointer, a, size);
+  341|       |#endif
+  342|      4|}
+
+glib_init:
+  411|      2|{
+  412|      2|  static gboolean glib_inited;
+  413|       |
+  414|      2|  if (glib_inited)
+  ------------------
+  |  Branch (414:7): [True: 0, False: 2]
+  ------------------
+  415|      0|    return;
+  416|       |
+  417|      2|  glib_inited = TRUE;
+  ------------------
+  |  |  971|      2|#define	TRUE	(!FALSE)
+  |  |  ------------------
+  |  |  |  |  967|      2|#define	FALSE	(0)
+  |  |  ------------------
+  ------------------
+  418|       |
+  419|      2|  g_messages_prefixed_init ();
+  420|      2|  g_debug_init ();
+  421|      2|  g_quark_init ();
+  422|      2|  g_error_init ();
+  423|      2|}
+glib-init.c:glib_init_ctor:
+  518|      2|{
+  519|      2|  glib_init ();
+  520|      2|}
+glib-init.c:g_messages_prefixed_init:
+  379|      2|{
+  380|      2|  const GDebugKey keys[] = {
+  381|      2|    { "error", G_LOG_LEVEL_ERROR },
+  382|      2|    { "critical", G_LOG_LEVEL_CRITICAL },
+  383|      2|    { "warning", G_LOG_LEVEL_WARNING },
+  384|      2|    { "message", G_LOG_LEVEL_MESSAGE },
+  385|      2|    { "info", G_LOG_LEVEL_INFO },
+  386|      2|    { "debug", G_LOG_LEVEL_DEBUG }
+  387|      2|  };
+  388|       |
+  389|      2|  g_log_msg_prefix = g_parse_debug_envvar ("G_MESSAGES_PREFIXED", keys, G_N_ELEMENTS (keys), g_log_msg_prefix);
+  ------------------
+  |  |  993|      2|#define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
+  ------------------
+  390|      2|}
+glib-init.c:g_parse_debug_envvar:
+  356|      4|{
+  357|      4|  const gchar *value;
+  358|       |
+  359|       |#ifdef OS_WIN32
+  360|       |  /* "fatal-warnings,fatal-criticals,all,help" is pretty short */
+  361|       |  gchar buffer[100];
+  362|       |
+  363|       |  if (GetEnvironmentVariable (envvar, buffer, 100) < 100)
+  364|       |    value = buffer;
+  365|       |  else
+  366|       |    return 0;
+  367|       |#else
+  368|      4|  value = getenv (envvar);
+  369|      4|#endif
+  370|       |
+  371|      4|  if (value == NULL)
+  ------------------
+  |  Branch (371:7): [True: 4, False: 0]
+  ------------------
+  372|      4|    return default_value;
+  373|       |
+  374|      0|  return g_parse_debug_string (value, keys, n_keys);
+  375|      4|}
+glib-init.c:g_debug_init:
+  394|      2|{
+  395|      2|  const GDebugKey keys[] = {
+  396|      2|    { "gc-friendly", 1 },
+  397|      2|    {"fatal-warnings",  G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL },
+  398|      2|    {"fatal-criticals", G_LOG_LEVEL_CRITICAL }
+  399|      2|  };
+  400|      2|  GLogLevelFlags flags;
+  401|       |
+  402|      2|  flags = g_parse_debug_envvar ("G_DEBUG", keys, G_N_ELEMENTS (keys), 0);
+  ------------------
+  |  |  993|      2|#define G_N_ELEMENTS(arr)		(sizeof (arr) / sizeof ((arr)[0]))
+  ------------------
+  403|       |
+  404|      2|  g_log_always_fatal |= flags & G_LOG_LEVEL_MASK;
+  405|       |
+  406|      2|  g_mem_gc_friendly = flags & 1;
+  407|      2|}
+
+g_malloc:
+   95|    639|{
+   96|    639|  if (G_LIKELY (n_bytes))
+  ------------------
+  |  | 1284|    639|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|    639|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    639| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    639|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    639|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    639|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 639, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    639|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    639|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    639|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    639|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    639|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    639|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    639|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 639, False: 0]
+  |  |  ------------------
+  ------------------
+   97|    639|    {
+   98|    639|      gpointer mem;
+   99|       |
+  100|    639|      mem = malloc (n_bytes);
+  101|    639|      TRACE (GLIB_MEM_ALLOC ((void *) mem, n_bytes, 0, 0));
+  102|    639|      if (mem)
+  ------------------
+  |  Branch (102:11): [True: 639, False: 0]
+  ------------------
+  103|    639|	return mem;
+  104|       |
+  105|    639|      g_error ("%s: failed to allocate %"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|    639|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    639|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  106|      0|               G_STRLOC, n_bytes);
+  107|      0|    }
+  108|       |
+  109|      0|  TRACE (GLIB_MEM_ALLOC ((void *) NULL, n_bytes, 0, 0));
+  110|       |
+  111|       |  return NULL;
+  112|    639|}
+g_malloc0:
+  128|      4|{
+  129|      4|  if (G_LIKELY (n_bytes))
+  ------------------
+  |  | 1284|      4|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|      4|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      4| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      4|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      4|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 4, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      4|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      4|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      4|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 4, False: 0]
+  |  |  ------------------
+  ------------------
+  130|      4|    {
+  131|      4|      gpointer mem;
+  132|       |
+  133|      4|      mem = calloc (1, n_bytes);
+  134|      4|      TRACE (GLIB_MEM_ALLOC ((void *) mem, n_bytes, 1, 0));
+  135|      4|      if (mem)
+  ------------------
+  |  Branch (135:11): [True: 4, False: 0]
+  ------------------
+  136|      4|	return mem;
+  137|       |
+  138|      4|      g_error ("%s: failed to allocate %"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      4|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      4|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  139|      0|               G_STRLOC, n_bytes);
+  140|      0|    }
+  141|       |
+  142|      0|  TRACE (GLIB_MEM_ALLOC ((void *) NULL, n_bytes, 1, 0));
+  143|       |
+  144|       |  return NULL;
+  145|      4|}
+g_realloc:
+  166|    437|{
+  167|    437|  gpointer newmem;
+  168|       |
+  169|    437|  if (G_LIKELY (n_bytes))
+  ------------------
+  |  | 1284|    437|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|    437|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    437| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    437|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    437|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    437|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 437, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    437|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    437|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    437|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    437|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    437|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    437|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    437|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 437, False: 0]
+  |  |  ------------------
+  ------------------
+  170|    437|    {
+  171|    437|      newmem = realloc (mem, n_bytes);
+  172|    437|      TRACE (GLIB_MEM_REALLOC ((void *) newmem, (void *) mem, n_bytes, 0));
+  173|    437|      if (newmem)
+  ------------------
+  |  Branch (173:11): [True: 437, False: 0]
+  ------------------
+  174|    437|	return newmem;
+  175|       |
+  176|    437|      g_error ("%s: failed to allocate %"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|    437|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    437|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  177|      0|               G_STRLOC, n_bytes);
+  178|      0|    }
+  179|       |
+  180|      0|  free (mem);
+  181|       |
+  182|      0|  TRACE (GLIB_MEM_REALLOC((void*) NULL, (void*)mem, 0, 0));
+  183|       |
+  184|       |  return NULL;
+  185|    437|}
+g_free:
+  207|    919|{
+  208|    919|  free (mem);
+  209|    919|  TRACE(GLIB_MEM_FREE((void*) mem));
+  210|    919|}
+g_free_sized:
+  234|    286|{
+  235|       |#ifdef HAVE_FREE_SIZED
+  236|       |  free_sized (mem, size);
+  237|       |#else
+  238|    286|  free (mem);
+  239|    286|#endif
+  240|    286|  TRACE (GLIB_MEM_FREE ((void*) mem));
+  241|    286|}
+g_malloc0_n:
+  430|      4|{
+  431|      4|  size_t len;
+  432|       |
+  433|      4|  if (!g_size_checked_mul (&len, n_blocks, n_block_bytes))
+  ------------------
+  |  |  480|      4|  (!ckd_mul (dest, a, b))
+  ------------------
+  |  Branch (433:7): [True: 0, False: 4]
+  ------------------
+  434|      0|    {
+  435|      0|      g_error ("%s: overflow allocating %"G_GSIZE_FORMAT"*%"G_GSIZE_FORMAT" bytes",
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      0|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  436|      0|               G_STRLOC, n_blocks, n_block_bytes);
+  437|      0|    }
+  438|       |
+  439|      4|  return g_malloc0 (len);
+  440|      4|}
+
+g_log_set_writer_func:
+ 2005|      1|{
+ 2006|      1|  g_return_if_fail (func != NULL);
+  ------------------
+  |  |  653|      1|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      1|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  654|      1|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|      1|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      1|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      1| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      1|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      1|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      1|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 1, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      1|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      1|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      1|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 1, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  655|      1|      { } \
+  |  |  656|      1|    else \
+  |  |  657|      1|      { \
+  |  |  658|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  659|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  660|      0|                                  #expr); \
+  |  |  661|      0|        return; \
+  |  |  662|      0|      } \
+  |  |  663|      1|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      1|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 1]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2007|       |
+ 2008|      1|  g_mutex_lock (&g_messages_lock);
+ 2009|       |
+ 2010|      1|  if (log_writer_func != g_log_writer_default)
+  ------------------
+  |  Branch (2010:7): [True: 0, False: 1]
+  ------------------
+ 2011|      0|    {
+ 2012|      0|      g_mutex_unlock (&g_messages_lock);
+ 2013|      0|      g_error ("g_log_set_writer_func() called multiple times");
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      0|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+ 2014|      0|      return;
+ 2015|      0|    }
+ 2016|       |
+ 2017|      1|  log_writer_func = func;
+ 2018|      1|  log_writer_user_data = user_data;
+ 2019|      1|  log_writer_user_data_free = user_data_free;
+ 2020|       |
+ 2021|      1|  g_mutex_unlock (&g_messages_lock);
+ 2022|      1|}
+
+g_quark_init:
+   62|      2|{
+   63|      2|  g_assert (quark_seq_id == 0);
+  ------------------
+  |  |  275|      2|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      2|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|      2|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|      2|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      2|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      2| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      2|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      2|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      2|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 2, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      2|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      2|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      2|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      2|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      2|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      2|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      2|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 2, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|      2|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|      2|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      2|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 2]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+   64|      2|  quark_ht = g_hash_table_new (g_str_hash, g_str_equal);
+   65|      2|  quarks = g_new (gchar*, QUARK_BLOCK_SIZE);
+  ------------------
+  |  |  318|      2|#define g_new(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc)
+  |  |  ------------------
+  |  |  |  |  263|      2|	(struct_type *) (G_GNUC_EXTENSION ({			\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   62|      2|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  ------------------
+  |  |  |  |  264|      2|	  gsize __n = (gsize) (n_structs);			\
+  |  |  |  |  265|      2|	  gsize __s = sizeof (struct_type);			\
+  |  |  |  |  266|      2|	  gpointer __p;						\
+  |  |  |  |  267|      2|	  if (__s == 1)						\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (267:8): [True: 0, False: 2]
+  |  |  |  |  ------------------
+  |  |  |  |  268|      2|	    __p = g_##func (__n);				\
+  |  |  |  |  269|      2|	  else if (__builtin_constant_p (__n) &&		\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (269:13): [True: 2, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  270|      2|	           (__s == 0 || __n <= G_MAXSIZE / __s))	\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   89|      2|#define G_MAXSIZE	G_MAXULONG
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   43|      2|#define G_MAXULONG	ULONG_MAX
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (270:14): [True: 0, False: 2]
+  |  |  |  |  |  Branch (270:26): [True: 2, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  271|      2|	    __p = g_##func (__n * __s);				\
+  |  |  |  |  272|      2|	  else							\
+  |  |  |  |  273|      2|	    __p = g_##func##_n (__n, __s);			\
+  |  |  |  |  274|      2|	  __p;							\
+  |  |  |  |  275|      2|	}))
+  |  |  ------------------
+  ------------------
+   66|       |  quarks[0] = NULL;
+   67|      2|  quark_seq_id = 1;
+   68|      2|}
+
+g_atomic_ref_count_init:
+  191|      4|{
+  192|      4|  g_return_if_fail (arc != NULL);
+  ------------------
+  |  |  653|      4|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      4|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  654|      4|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|      4|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      4|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      4| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      4|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      4|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      4|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 4, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      4|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      4|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      4|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      4|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      4|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 4, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  655|      4|      { } \
+  |  |  656|      4|    else \
+  |  |  657|      4|      { \
+  |  |  658|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  659|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  660|      0|                                  #expr); \
+  |  |  661|      0|        return; \
+  |  |  662|      0|      } \
+  |  |  663|      4|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      4|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 4]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  193|       |
+  194|       |  /* Atomic refcounting is implemented using the positive range
+  195|       |   * of signed integers:
+  196|       |   *
+  197|       |   * G_MININT                 Z¯< 0 > Z⁺                G_MAXINT
+  198|       |   * |----------------------------|----------------------------|
+  199|       |   *
+  200|       |   * Acquiring a reference moves us towards MAXINT, and releasing a
+  201|       |   * reference moves us towards 0.
+  202|       |   */
+  203|      4|  *arc = 1;
+  204|      4|}
+
+g_slice_alloc:
+  190|    290|{
+  191|    290|  gpointer mem;
+  192|       |
+  193|    290|  mem = g_malloc (mem_size);
+  194|    290|  TRACE (GLIB_SLICE_ALLOC((void*)mem, mem_size));
+  195|       |
+  196|    290|  return mem;
+  197|    290|}
+g_slice_free1:
+  274|    286|{
+  275|    286|  if (G_UNLIKELY (g_mem_gc_friendly && mem_block))
+  ------------------
+  |  | 1285|    286|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    286|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    286| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    286|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    286|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    572|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 286]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    286|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    286|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    286|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    286|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    286|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:26): [True: 0, False: 286]
+  |  |  ------------------
+  ------------------
+  276|      0|    memset (mem_block, 0, mem_size);
+  277|    286|  g_free_sized (mem_block, mem_size);
+  278|    286|  TRACE (GLIB_SLICE_FREE((void*)mem_block, mem_size));
+  279|    286|}
+
+g_strdup:
+  316|     31|{
+  317|     31|  gchar *new_str;
+  318|     31|  gsize length;
+  319|       |
+  320|     31|  if G_LIKELY (str)
+  ------------------
+  |  | 1284|     31|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|     31|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|     31| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|     31|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|     31|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|     31|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 31, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|     31|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     31|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     31|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|     31|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|     31|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|     31|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|     31|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:25): [True: 31, False: 0]
+  |  |  ------------------
+  ------------------
+  321|     31|    {
+  322|     31|      length = strlen (str) + 1;
+  323|     31|      new_str = g_new (char, length);
+  ------------------
+  |  |  318|     31|#define g_new(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc)
+  |  |  ------------------
+  |  |  |  |  263|     31|	(struct_type *) (G_GNUC_EXTENSION ({			\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   62|     31|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  ------------------
+  |  |  |  |  264|     31|	  gsize __n = (gsize) (n_structs);			\
+  |  |  |  |  265|     31|	  gsize __s = sizeof (struct_type);			\
+  |  |  |  |  266|     31|	  gpointer __p;						\
+  |  |  |  |  267|     31|	  if (__s == 1)						\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (267:8): [True: 31, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  268|     31|	    __p = g_##func (__n);				\
+  |  |  |  |  269|     31|	  else if (__builtin_constant_p (__n) &&		\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (269:13): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  270|      0|	           (__s == 0 || __n <= G_MAXSIZE / __s))	\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   89|      0|#define G_MAXSIZE	G_MAXULONG
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   43|      0|#define G_MAXULONG	ULONG_MAX
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (270:14): [True: 0, False: 0]
+  |  |  |  |  |  Branch (270:26): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  271|      0|	    __p = g_##func (__n * __s);				\
+  |  |  |  |  272|      0|	  else							\
+  |  |  |  |  273|      0|	    __p = g_##func##_n (__n, __s);			\
+  |  |  |  |  274|     31|	  __p;							\
+  |  |  |  |  275|     31|	}))
+  |  |  ------------------
+  ------------------
+  324|     31|      memcpy (new_str, str, length);
+  325|     31|    }
+  326|      0|  else
+  327|      0|    new_str = NULL;
+  328|       |
+  329|     31|  return new_str;
+  330|     31|}
+g_strndup:
+  414|    316|{
+  415|    316|  gchar *new_str;
+  416|       |
+  417|    316|  if (str)
+  ------------------
+  |  Branch (417:7): [True: 316, False: 0]
+  ------------------
+  418|    316|    {
+  419|    316|      g_return_val_if_fail (n < G_MAXSIZE, NULL);
+  ------------------
+  |  |  666|    316|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    316|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|    316|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|    316|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    316|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    316| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    316|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    316|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|    316|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 316, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    316|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    316|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    316|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    316|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    316|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    316|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    316|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 316, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|    316|      { } \
+  |  |  669|    316|    else \
+  |  |  670|    316|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|    316|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    316|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 316]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  420|       |
+  421|    316|      new_str = g_new (gchar, n + 1);
+  ------------------
+  |  |  318|    316|#define g_new(struct_type, n_structs)			_G_NEW (struct_type, n_structs, malloc)
+  |  |  ------------------
+  |  |  |  |  263|    316|	(struct_type *) (G_GNUC_EXTENSION ({			\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   62|    316|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  ------------------
+  |  |  |  |  264|    316|	  gsize __n = (gsize) (n_structs);			\
+  |  |  |  |  265|    316|	  gsize __s = sizeof (struct_type);			\
+  |  |  |  |  266|    316|	  gpointer __p;						\
+  |  |  |  |  267|    316|	  if (__s == 1)						\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (267:8): [True: 316, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  268|    316|	    __p = g_##func (__n);				\
+  |  |  |  |  269|    316|	  else if (__builtin_constant_p (__n) &&		\
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (269:13): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  270|      0|	           (__s == 0 || __n <= G_MAXSIZE / __s))	\
+  |  |  |  |  ------------------
+  |  |  |  |  |  |   89|      0|#define G_MAXSIZE	G_MAXULONG
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   43|      0|#define G_MAXULONG	ULONG_MAX
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (270:14): [True: 0, False: 0]
+  |  |  |  |  |  Branch (270:26): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  |  |  271|      0|	    __p = g_##func (__n * __s);				\
+  |  |  |  |  272|      0|	  else							\
+  |  |  |  |  273|      0|	    __p = g_##func##_n (__n, __s);			\
+  |  |  |  |  274|    316|	  __p;							\
+  |  |  |  |  275|    316|	}))
+  |  |  ------------------
+  ------------------
+  422|    316|      strncpy (new_str, str, n);
+  423|    316|      new_str[n] = '\0';
+  424|    316|    }
+  425|      0|  else
+  426|      0|    new_str = NULL;
+  427|       |
+  428|    316|  return new_str;
+  429|    316|}
+
+gfileutils.c:g_strdup_inline:
+  310|     31|{
+  311|     31|  if (__builtin_constant_p (!str) && !str)
+  ------------------
+  |  Branch (311:7): [True: 31, False: 0]
+  |  Branch (311:38): [True: 0, False: 31]
+  ------------------
+  312|      0|    return NULL;
+  313|       |
+  314|     31|  if (__builtin_constant_p (!!str) && !!str && __builtin_constant_p (strlen (str)))
+  ------------------
+  |  Branch (314:7): [True: 31, False: 0]
+  |  Branch (314:39): [True: 31, False: 0]
+  |  Branch (314:48): [True: 0, False: 31]
+  ------------------
+  315|      0|    {
+  316|      0|      const size_t len = strlen (str) + 1;
+  317|      0|      char *dup_str = (char *) g_malloc (len);
+  318|      0|      return (char *) memcpy (dup_str, str, len);
+  319|      0|    }
+  320|       |
+  321|     31|  return g_strdup (str);
+  322|     31|}
+
+g_string_sized_new:
+  106|    286|{
+  107|    286|  GString *string = g_slice_new (GString);
+  ------------------
+  |  |   56|    286|#define  g_slice_new(type)      ((type*) g_slice_alloc (g_slice_alloc_size (type)))
+  |  |  ------------------
+  |  |  |  |   53|    286|#define g_slice_alloc_size(type) (sizeof (type) > 0 ? sizeof (type) : 1)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (53:35): [True: 286, Folded]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  108|       |
+  109|    286|  string->allocated_len = 0;
+  110|    286|  string->len   = 0;
+  111|    286|  string->str   = NULL;
+  112|       |
+  113|    286|  g_string_expand (string, MAX (dfl_size, 64));
+  ------------------
+  |  |  975|    286|#define MAX(a, b)  (((a) > (b)) ? (a) : (b))
+  |  |  ------------------
+  |  |  |  Branch (975:21): [True: 0, False: 286]
+  |  |  ------------------
+  ------------------
+  114|    286|  string->str[0] = 0;
+  115|       |
+  116|    286|  return string;
+  117|    286|}
+g_string_new:
+  130|    286|{
+  131|    286|  GString *string;
+  132|       |
+  133|    286|  if (init == NULL || *init == '\0')
+  ------------------
+  |  Branch (133:7): [True: 286, False: 0]
+  |  Branch (133:23): [True: 0, False: 0]
+  ------------------
+  134|    286|    string = g_string_sized_new (2);
+  135|      0|  else
+  136|      0|    {
+  137|      0|      size_t len;
+  138|       |
+  139|      0|      len = strlen (init);
+  140|      0|      string = g_string_sized_new (len + 2);
+  141|       |
+  142|      0|      g_string_append_len (string, init, len);
+  ------------------
+  |  |  253|      0|  g_string_append_len_inline (gstr, val, len)
+  ------------------
+  143|      0|    }
+  144|       |
+  145|    286|  return string;
+  146|    286|}
+g_string_free:
+  268|    286|{
+  269|    286|  gchar *segment;
+  270|       |
+  271|    286|  g_return_val_if_fail (string != NULL, NULL);
+  ------------------
+  |  |  666|    286|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    286|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|    286|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|    286|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    286|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    286| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    286|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    286|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|    286|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 286, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    286|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    286|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    286|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    286|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    286|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    286|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    286|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 286, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|    286|      { } \
+  |  |  669|    286|    else \
+  |  |  670|    286|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|    286|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    286|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 286]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  272|       |
+  273|    286|  if (free_segment)
+  ------------------
+  |  Branch (273:7): [True: 1, False: 285]
+  ------------------
+  274|      1|    {
+  275|      1|      g_free (string->str);
+  276|      1|      segment = NULL;
+  277|      1|    }
+  278|    285|  else
+  279|    285|    segment = string->str;
+  280|       |
+  281|    286|  g_slice_free (GString, string);
+  ------------------
+  |  |   89|    286|#define g_slice_free(type, mem)                                 \
+  |  |  ------------------
+  |  |  |  | 1027|    286|#define G_STMT_START  do
+  |  |  ------------------
+  |  |   90|    286|G_STMT_START {                                                  \
+  |  |   91|    286|  if (1) g_slice_free1 (sizeof (type), (mem));			\
+  |  |  ------------------
+  |  |  |  Branch (91:7): [True: 286, Folded]
+  |  |  ------------------
+  |  |   92|    286|  else   (void) ((type*) 0 == (mem)); 				\
+  |  |   93|    286|} G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    286|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 286]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  282|       |
+  283|    286|  return segment;
+  284|    286|}
+g_string_free_and_steal:
+  301|    285|{
+  302|    285|  return (g_string_free) (string, FALSE);
+  ------------------
+  |  |  967|    285|#define	FALSE	(0)
+  ------------------
+  303|    285|}
+g_string_insert_len:
+  505|    147|{
+  506|    147|  gsize len_unsigned, pos_unsigned;
+  507|       |
+  508|    147|  g_return_val_if_fail (string != NULL, NULL);
+  ------------------
+  |  |  666|    147|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    147|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|    147|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|    147|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    147|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    147| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    147|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    147|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|    147|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 147, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    147|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    147|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    147|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    147|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    147|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    147|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    147|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 147, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|    147|      { } \
+  |  |  669|    147|    else \
+  |  |  670|    147|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|    147|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    147|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 147]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  509|    147|  g_return_val_if_fail (len == 0 || val != NULL, string);
+  ------------------
+  |  |  666|    147|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    147|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|    147|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|    147|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    147|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    147| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    147|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    147|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|    441|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 147]
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 147, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    147|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    147|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    147|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    147|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    147|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    147|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    147|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 147, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|    147|      { } \
+  |  |  669|    147|    else \
+  |  |  670|    147|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|    147|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    147|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 147]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  510|       |
+  511|    147|  if (len == 0)
+  ------------------
+  |  Branch (511:7): [True: 0, False: 147]
+  ------------------
+  512|      0|    return string;
+  513|       |
+  514|    147|  if (len < 0)
+  ------------------
+  |  Branch (514:7): [True: 52, False: 95]
+  ------------------
+  515|     52|    len_unsigned = strlen (val);
+  516|     95|  else
+  517|     95|    len_unsigned = len;
+  518|       |
+  519|    147|  if (pos < 0)
+  ------------------
+  |  Branch (519:7): [True: 147, False: 0]
+  ------------------
+  520|    147|    pos_unsigned = string->len;
+  521|      0|  else
+  522|      0|    {
+  523|      0|      pos_unsigned = pos;
+  524|      0|      g_return_val_if_fail (pos_unsigned <= string->len, string);
+  ------------------
+  |  |  666|      0|  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  667|      0|    if (G_LIKELY (expr)) \
+  |  |  ------------------
+  |  |  |  | 1284|      0|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|      0|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|      0| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|      0|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|      0|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|      0|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|      0|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|      0|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|      0|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:24): [True: 0, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  668|      0|      { } \
+  |  |  669|      0|    else \
+  |  |  670|      0|      { \
+  |  |  671|      0|        g_return_if_fail_warning (G_LOG_DOMAIN, \
+  |  |  672|      0|                                  G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  673|      0|                                  #expr); \
+  |  |  674|      0|        return (val); \
+  |  |  675|      0|      } \
+  |  |  676|      0|  } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+  525|      0|    }
+  526|       |
+  527|       |  /* Check whether val represents a substring of string.
+  528|       |   * This test probably violates chapter and verse of the C standards,
+  529|       |   * since ">=" and "<=" are only valid when val really is a substring.
+  530|       |   * In practice, it will work on modern archs.
+  531|       |   */
+  532|    147|  if (G_UNLIKELY (val >= string->str && val <= string->str + string->len))
+  ------------------
+  |  | 1285|    147|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    147|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    147| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    147|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    147|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    420|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 126, False: 21]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 126]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    147|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    147|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    147|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    147|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    147|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:26): [True: 0, False: 147]
+  |  |  ------------------
+  ------------------
+  533|      0|    {
+  534|      0|      gsize offset = val - string->str;
+  535|      0|      gsize precount = 0;
+  536|       |
+  537|      0|      g_string_maybe_expand (string, len_unsigned);
+  538|      0|      val = string->str + offset;
+  539|       |      /* At this point, val is valid again.  */
+  540|       |
+  541|       |      /* Open up space where we are going to insert.  */
+  542|      0|      if (pos_unsigned < string->len)
+  ------------------
+  |  Branch (542:11): [True: 0, False: 0]
+  ------------------
+  543|      0|        memmove (string->str + pos_unsigned + len_unsigned,
+  544|      0|                 string->str + pos_unsigned, string->len - pos_unsigned);
+  545|       |
+  546|       |      /* Move the source part before the gap, if any.  */
+  547|      0|      if (offset < pos_unsigned)
+  ------------------
+  |  Branch (547:11): [True: 0, False: 0]
+  ------------------
+  548|      0|        {
+  549|      0|          precount = MIN (len_unsigned, pos_unsigned - offset);
+  ------------------
+  |  |  978|      0|#define MIN(a, b)  (((a) < (b)) ? (a) : (b))
+  |  |  ------------------
+  |  |  |  Branch (978:21): [True: 0, False: 0]
+  |  |  ------------------
+  ------------------
+  550|      0|          memcpy (string->str + pos_unsigned, val, precount);
+  551|      0|        }
+  552|       |
+  553|       |      /* Move the source part after the gap, if any.  */
+  554|      0|      if (len_unsigned > precount)
+  ------------------
+  |  Branch (554:11): [True: 0, False: 0]
+  ------------------
+  555|      0|        memcpy (string->str + pos_unsigned + precount,
+  556|      0|                val + /* Already moved: */ precount +
+  557|      0|                      /* Space opened up: */ len_unsigned,
+  558|      0|                len_unsigned - precount);
+  559|      0|    }
+  560|    147|  else
+  561|    147|    {
+  562|    147|      g_string_maybe_expand (string, len_unsigned);
+  563|       |
+  564|       |      /* If we aren't appending at the end, move a hunk
+  565|       |       * of the old string to the end, opening up space
+  566|       |       */
+  567|    147|      if (pos_unsigned < string->len)
+  ------------------
+  |  Branch (567:11): [True: 0, False: 147]
+  ------------------
+  568|      0|        memmove (string->str + pos_unsigned + len_unsigned,
+  569|      0|                 string->str + pos_unsigned, string->len - pos_unsigned);
+  570|       |
+  571|       |      /* insert the new string */
+  572|    147|      if (len_unsigned == 1)
+  ------------------
+  |  Branch (572:11): [True: 1, False: 146]
+  ------------------
+  573|      1|        string->str[pos_unsigned] = *val;
+  574|    146|      else
+  575|    146|        memcpy (string->str + pos_unsigned, val, len_unsigned);
+  576|    147|    }
+  577|       |
+  578|    147|  string->len += len_unsigned;
+  579|       |
+  580|    147|  string->str[string->len] = 0;
+  581|       |
+  582|    147|  return string;
+  583|    147|}
+gstring.c:g_string_expand:
+   70|    433|{
+   71|       |  /* Detect potential overflow */
+   72|    433|  if G_UNLIKELY ((G_MAXSIZE - string->len - 1) < len)
+  ------------------
+  |  | 1285|    433|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    433|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    433| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    433|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    433|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    433|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 433]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    433|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    433|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    433|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    433|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    433|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 0, False: 433]
+  |  |  ------------------
+  ------------------
+   73|    433|    g_error ("adding %" G_GSIZE_FORMAT " to string would overflow", len);
+  ------------------
+  |  |  353|      0|#define g_error(...)  G_STMT_START {                 \
+  |  |  ------------------
+  |  |  |  | 1027|      0|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  354|      0|                        g_log (G_LOG_DOMAIN,         \
+  |  |  355|      0|                               G_LOG_LEVEL_ERROR,    \
+  |  |  356|      0|                               __VA_ARGS__);         \
+  |  |  357|      0|                        for (;;) ;                   \
+  |  |  358|      0|                      } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|      0|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+   74|       |
+   75|    433|  string->allocated_len = g_nearest_pow (string->len + len + 1);
+   76|       |  /* If the new size is bigger than G_MAXSIZE / 2, only allocate enough
+   77|       |   * memory for this string and don't over-allocate.
+   78|       |   */
+   79|    433|  if (string->allocated_len == 0)
+  ------------------
+  |  Branch (79:7): [True: 0, False: 433]
+  ------------------
+   80|      0|    string->allocated_len = string->len + len + 1;
+   81|       |
+   82|    433|  string->str = g_realloc (string->str, string->allocated_len);
+   83|    433|}
+gstring.c:g_string_maybe_expand:
+   88|    147|{
+   89|    147|  if (G_UNLIKELY (len >= string->allocated_len - string->len))
+  ------------------
+  |  | 1285|    147|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    147|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    147| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    147|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    147|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    147|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 147, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    147|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    147|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    147|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    147|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    147|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    147|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    147|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:26): [True: 147, False: 0]
+  |  |  ------------------
+  ------------------
+   90|    147|    g_string_expand (string, len);
+   91|    147|}
+
+gfileutils.c:g_string_append_len_inline:
+  223|    856|{
+  224|    856|  gsize len_unsigned;
+  225|       |
+  226|    856|  if G_UNLIKELY (gstring == NULL)
+  ------------------
+  |  | 1285|    856|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    856|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    856| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    856|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    856|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    856|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 856]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    856|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    856|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    856|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    856|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    856|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 0, False: 856]
+  |  |  ------------------
+  ------------------
+  227|      0|    return g_string_append_len (gstring, val, len);
+  228|       |
+  229|    856|  if G_UNLIKELY (val == NULL)
+  ------------------
+  |  | 1285|    856|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|    856|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    856| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    856|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    856|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    856|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 856]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    856|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    856|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    856|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    856|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    856|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 0, False: 856]
+  |  |  ------------------
+  ------------------
+  230|      0|    return (len != 0) ? g_string_append_len (gstring, val, len) : gstring;
+  ------------------
+  |  Branch (230:12): [True: 0, False: 0]
+  ------------------
+  231|       |
+  232|    856|  if (len < 0)
+  ------------------
+  |  Branch (232:7): [True: 285, False: 571]
+  ------------------
+  233|    285|    len_unsigned = strlen (val);
+  234|    571|  else
+  235|    571|    len_unsigned = (gsize) len;
+  236|       |
+  237|    856|  if (G_LIKELY (len_unsigned < gstring->allocated_len - gstring->len))
+  ------------------
+  |  | 1284|    856|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|    856|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    856| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    856|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    856|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|    856|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 709, False: 147]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    856|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    709|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    709|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    856|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    856|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    856|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    856|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 709, False: 147]
+  |  |  ------------------
+  ------------------
+  238|    709|    {
+  239|    709|      char *end = gstring->str + gstring->len;
+  240|    709|      if (G_LIKELY (val + len_unsigned <= end || val >= end + len_unsigned))
+  ------------------
+  |  | 1284|    709|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  ------------------
+  |  |  |  | 1283|    709|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|    709| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|    709|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|    709|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|  1.51k|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 611, False: 98]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 98, False: 0]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|    709|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    709|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    709|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|    709|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|    709|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|    709|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|    709|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1284:24): [True: 709, False: 0]
+  |  |  ------------------
+  ------------------
+  241|    709|        memcpy (end, val, len_unsigned);
+  242|      0|      else
+  243|      0|        memmove (end, val, len_unsigned);
+  244|    709|      gstring->len += len_unsigned;
+  245|    709|      gstring->str[gstring->len] = 0;
+  246|    709|      return gstring;
+  247|    709|    }
+  248|    147|  else
+  249|    147|    return g_string_insert_len (gstring, -1, val, len);
+  250|    856|}
+
+gthread.c:g_mutex_lock_impl:
+  963|      1|{
+  964|       |  /* empty -> owned and we're done.  Anything else, and we need to wait... */
+  965|      1|  if G_UNLIKELY (!g_atomic_int_compare_and_exchange (&mutex->i[0],
+  ------------------
+  |  | 1285|      1|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|      1|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      1| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      1|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      1|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      5|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [Folded, False: 1]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 1, False: 0]
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 1]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      1|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      1|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      1|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 0, False: 1]
+  |  |  ------------------
+  ------------------
+  966|      1|                                                     G_MUTEX_STATE_EMPTY,
+  967|      1|                                                     G_MUTEX_STATE_OWNED))
+  968|      0|    g_mutex_lock_slowpath (mutex);
+  969|      1|}
+gthread.c:g_mutex_unlock_impl:
+  973|      1|{
+  974|      1|  guint prev;
+  975|       |
+  976|      1|  prev = exchange_release (&mutex->i[0], G_MUTEX_STATE_EMPTY);
+  ------------------
+  |  |  863|      1|  atomic_exchange_explicit((atomic_uint *) (ptr), (new), __ATOMIC_RELEASE)
+  ------------------
+  977|       |
+  978|       |  /* 1-> 0 and we're done.  Anything else and we need to signal... */
+  979|      1|  if G_UNLIKELY (prev != G_MUTEX_STATE_OWNED)
+  ------------------
+  |  | 1285|      1|#define G_UNLIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 0))
+  |  |  ------------------
+  |  |  |  | 1283|      1|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1277|      1| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |   62|      1|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1278|      1|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  | 1279|      1|   if (expr)                                    \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  Branch (1279:8): [True: 0, False: 1]
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1280|      1|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      0|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      0|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1281|      1|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  903|      1|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  902|      1|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  | 1282|      1|})
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  |  Branch (1285:27): [True: 0, False: 1]
+  |  |  ------------------
+  ------------------
+  980|      0|    g_mutex_unlock_slowpath (mutex, prev);
+  981|      1|}
+
+g_mutex_lock:
+ 1282|      1|{
+ 1283|      1|  g_mutex_lock_impl (mutex);
+ 1284|      1|}
+g_mutex_unlock:
+ 1298|      1|{
+ 1299|      1|  g_mutex_unlock_impl (mutex);
+ 1300|      1|}
+
+gstring.c:g_nearest_pow:
+   42|    433|{
+   43|    433|  gsize n = num - 1;
+   44|       |
+   45|    433|  g_assert (num > 0 && num <= G_MAXSIZE / 2);
+  ------------------
+  |  |  275|    433|#define g_assert(expr)                  G_STMT_START { \
+  |  |  ------------------
+  |  |  |  | 1027|    433|#define G_STMT_START  do
+  |  |  ------------------
+  |  |  276|    433|                                             if G_LIKELY (expr) ; else \
+  |  |  ------------------
+  |  |  |  | 1284|    433|#define G_LIKELY(expr) (__builtin_expect (_G_BOOLEAN_EXPR(expr), 1))
+  |  |  |  |  ------------------
+  |  |  |  |  |  | 1283|    433|#define _G_BOOLEAN_EXPR(expr) _G_BOOLEAN_EXPR_IMPL (__COUNTER__, expr)
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1277|    433| G_GNUC_EXTENSION ({                            \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |   62|    433|#define G_GNUC_EXTENSION __extension__
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1278|    433|   int G_PASTE (_g_boolean_var_, uniq) = 0;     \
+  |  |  |  |  |  |  |  | 1279|  1.29k|   if (expr)                                    \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 433, False: 0]
+  |  |  |  |  |  |  |  |  |  Branch (1279:8): [True: 433, False: 0]
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1280|    433|      G_PASTE (_g_boolean_var_, uniq) = 1;      \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    433|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    433|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1281|    433|   G_PASTE (_g_boolean_var_, uniq);             \
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  903|    433|#define G_PASTE(identifier1,identifier2)      G_PASTE_ARGS (identifier1, identifier2)
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  |  |  |  |  902|    433|#define G_PASTE_ARGS(identifier1,identifier2) identifier1 ## identifier2
+  |  |  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  |  ------------------
+  |  |  |  |  |  |  |  | 1282|    433|})
+  |  |  |  |  |  |  ------------------
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1284:25): [True: 433, False: 0]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  |  |  277|    433|                                               g_assertion_message_expr (G_LOG_DOMAIN, __FILE__, __LINE__, G_STRFUNC, \
+  |  |  ------------------
+  |  |  |  |  935|      0|#define G_STRFUNC     ((const char*) (__func__))
+  |  |  ------------------
+  |  |  278|      0|                                                                         #expr); \
+  |  |  279|    433|                                        } G_STMT_END
+  |  |  ------------------
+  |  |  |  | 1035|    433|#define G_STMT_END    while (0)
+  |  |  |  |  ------------------
+  |  |  |  |  |  Branch (1035:30): [Folded, False: 433]
+  |  |  |  |  ------------------
+  |  |  ------------------
+  ------------------
+   46|       |
+   47|    433|  n |= n >> 1;
+   48|    433|  n |= n >> 2;
+   49|    433|  n |= n >> 4;
+   50|    433|  n |= n >> 8;
+   51|    433|  n |= n >> 16;
+   52|    433|#if GLIB_SIZEOF_SIZE_T == 8
+   53|    433|  n |= n >> 32;
+   54|    433|#endif
+   55|       |
+   56|    433|  return n + 1;
+   57|    433|}
+

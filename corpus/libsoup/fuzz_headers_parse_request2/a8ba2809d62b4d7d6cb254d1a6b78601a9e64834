@@ -1,0 +1,9 @@
+GET / HTTP/1.0
+HTTP/1.1
+Host: localhost
+Connection: keep-acalhost
+Connection: keep-alive
+X-Custom-Header-Fuzz: uÿÿÿÿmon_value
+A: 1
+B: 2
+Content-Type: text/htmf100-continueilenngth: 42

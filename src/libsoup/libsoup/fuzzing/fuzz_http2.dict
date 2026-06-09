@@ -1,0 +1,9 @@
+# Prefacio de conexión HTTP2
+"PRI * HTTP/2.0\x0d\x0a\x0d\x0aSM\x0d\x0a\x0d\x0a"
+"GET"
+"POST"
+"HTTP/2.0"
+# Headers
+"content-type"
+"content-length"
+"user-agent"

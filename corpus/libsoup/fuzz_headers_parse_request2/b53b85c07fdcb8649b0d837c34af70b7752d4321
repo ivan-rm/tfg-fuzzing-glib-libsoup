@@ -1,0 +1,13 @@
+ T HTTP/1.1
+Host: l45
+Excpet: 10GS/0-continlue
+A: 1
+B: 2                         
+                                S/0-continlue
+A: 1
+B: 2            "           
+            : keep-alive
+X-Custom-Headevalue
+A: 2
+B:  HTTP/1/0
+Type: teon

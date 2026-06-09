@@ -1,0 +1,36 @@
+GETET /index HTTP/1.1
+Hostl3
+Range: byte
+Bσσσσσσσh:C4‘ue
+D: 1
+Bσσσσσσσh: 42
+Range: byte
+Bσσσσσσσh:Cbyte
+Bσσσσσσσh:C4‘ue
+D: 1
+Bσσσσσσσh: 42
+Range: byte
+Bσσσσσσσh:C5‘gt:h1$ 2 /ind:C4‘ue
+D: 1
+Bσσσσσσσh: 42
+Range: byte
+Bσσσσσσσh:C4‘gt:h1$ 2 /index.html HTTP/1.1
+Hoostl2
+Range: byte
+Bσσσσσσσh:C4‘ue
+D: 1
+Bσσσσσσσh: 42
+Range: byte
+Bσσσσσσσh:C4‘gtΆ:h1$ 05‘gt:h1$ 2 /ind:C4‘ue
+D: 1
+Bσσσσσσσh: 42
+Range: byte
+Bσσσσσσσh:C4‘gt:h1$ 2 /index.html HTTP/1.1
+Hoostl2
+Range: byte
+Bσσσσσσσh:C4‘ue
+D: 1
+Bσσσσσσσh: 42
+Range: byte
+Bσσσσσσσh:C4‘gtΆ:h1$ 0
+:

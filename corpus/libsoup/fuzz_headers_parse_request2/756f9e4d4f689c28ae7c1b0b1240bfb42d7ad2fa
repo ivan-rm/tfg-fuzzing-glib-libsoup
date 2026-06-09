@@ -1,0 +1,15 @@
+GET /index.html HTTP/1.1
+Host: localhost
+Connection: keEp-alive
+X-Custom-He]der-Fuzz: uncommon_value
+A: 1
+B: 2
+Content-Type: text/html; charset=utf-8; charset=iso-8859-1
+Set-Cookie: id=a3fWa; Exp.ires=Wed, 21 Oct 2015 07:28:00 GTtS
+e-MCookie: session=123; Secure; HttpOnly
+LinkAAAAAAAAAAAAAAAA28:00 GTtS
+e-MCookie[ session=061; Secure; HttpOnly
+Link: </st GTtS
+e-MCookie: session=123; Secure; HttpOnly
+LinkAAAAAAAAAAAAAyle.css>; rel=preload; as=stylpOnly
+Lin/script.jt-Lengthrel=preloant-L=ngth: 42

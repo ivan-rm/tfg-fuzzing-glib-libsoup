@@ -1,0 +1,11 @@
+GET /index.html HTTP/1.1
+Hozt: localhost
+User-A-Agent:o izMlp/5."
+Accept:# 2/*
+Accept-Encodinge: n: k
+Accept-Encodinge: n: keep-algent:o izMlla/4."
+Accept: 2/*
+Accep/5."
+Accept:# 2/*
+Accept-Encodinge: n: keep-alive
+@X-Custom-Header: fuzzing

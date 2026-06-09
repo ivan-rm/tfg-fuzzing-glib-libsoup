@@ -1,0 +1,11 @@
+POST /ud HTTP/1.1
+Host:_ost
+Use`45
+Expect:1 00-coNtinue
+Cook`45
+Expect: 100-coNtinue
+r-Max-Fo:`45
+Expect: 100-coNtinue
+Cook`45
+Expect: 100-coNtinue
+Coorwards: 

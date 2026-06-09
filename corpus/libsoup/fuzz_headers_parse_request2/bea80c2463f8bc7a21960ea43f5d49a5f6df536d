@@ -1,0 +1,2 @@
+GET /index.html HTTP/1.1
+Content-Type: text/html; charse$=utf-8;tent-Length: 42

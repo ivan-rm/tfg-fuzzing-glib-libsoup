@@ -1,0 +1,35 @@
+# Tipos de GVariant
+"b"
+"y"
+"n"
+"q"
+"i"
+"u"
+"x"
+"t"
+"d"
+"s"
+"o"
+"g"
+"v"
+
+# Contenedores de elementos
+"a"
+"m"
+"("
+")"
+"{"
+"}"
+
+# Tipos compuestos
+"as"
+"ay"
+"av"
+"{sv}"
+"(is)"
+
+# Offsets/Padding)
+"\x00"
+"\xff"
+"\x01"
+"\x00\x00\x01\x00"

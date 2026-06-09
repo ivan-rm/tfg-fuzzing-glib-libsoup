@@ -1,0 +1,1294 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name='viewport' content='width=device-width,initial-scale=1'>
+    <meta charset='UTF-8'>
+    <link rel='stylesheet' type='text/css' href='../style.css'>
+    <!-- Custom style overrides -->
+    <style>
+      /* Copyright 2018 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+th, td {
+  padding: 5px 16px;
+}
+
+tbody td, tfoot td {
+  font-size: 14px;
+}
+
+thead th {
+  font-size: 16px;
+}
+
+thead th, tfoot td {
+  background-color: #f5f5f5;
+  border-left: 1px solid #e4e4e4;
+  border-right: 1px solid #e4e4e4;
+  color: #484848;
+  text-transform: uppercase;
+}
+
+tbody tr:hover td, tfoot tr:hover td {
+  background-color: #f5f5f5;
+  border-color: #e4e4e4 !important;
+}
+    </style>
+  </head>
+  <body>
+    <h2>Coverage Report</h2>
+    <p>
+      View results by:
+            <a href='directory_view_index.html'>Directories</a>
+              | <a href='file_view_index.html'>Files</a>
+          </p>
+    <div class='centered'><table>
+  <thead>
+    <tr>
+      <th class="column-entry-bold">Path</th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.LINE)" title=
+          "Line coverage is the percentage of code lines which have been executed at least once. Only executable lines within function bodies are considered to be code lines.">
+        Line Coverage
+      </th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.FUNCTION)" title=
+          "Function coverage is the percentage of functions which have been executed at least once. A function is considered to be executed if any of its instantiations are executed.">
+        Function Coverage
+      </th>
+      <th class="column-entry-bold" onclick="sortTable(SORT_COLUMN.REGION)" title=
+          "Region coverage is the percentage of code regions which have been executed at least once. A code region may span multiple lines (e.g in a large function body with no control flow). However, it's also possible for a single line to contain multiple code regions (e.g in 'return x || y &amp;&amp; z').">
+        Region Coverage
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz.h.html'>src/libsoup/fuzzing/fuzz.h</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (12/12)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (6/6)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_content_sniffer.c.html'>src/libsoup/fuzzing/fuzz_content_sniffer.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (25/25)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 96.43% (27/28)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_cookie_parse.c.html'>src/libsoup/fuzzing/fuzz_cookie_parse.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (8/8)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (18/18)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_date_time.c.html'>src/libsoup/fuzzing/fuzz_date_time.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (8/8)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (17/17)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_decode_data_uri.c.html'>src/libsoup/fuzzing/fuzz_decode_data_uri.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (10/10)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (13/13)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_header_parsing.c.html'>src/libsoup/fuzzing/fuzz_header_parsing.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (9/9)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (6/6)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_headers_parse_request.c.html'>src/libsoup/fuzzing/fuzz_headers_parse_request.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (13/13)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (4/4)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_headers_parse_request2.c.html'>src/libsoup/fuzzing/fuzz_headers_parse_request2.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 83.33% (30/36)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 75.00% (15/20)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_headers_parse_response.c.html'>src/libsoup/fuzzing/fuzz_headers_parse_response.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (12/12)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (3/3)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/fuzzing/fuzz_http2.c.html'>src/libsoup/fuzzing/fuzz_http2.c</a></pre>
+              </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (18/18)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (12/12)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/auth/soup-auth-basic.c.html'>src/libsoup/libsoup/auth/soup-auth-basic.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/65)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/auth/soup-auth-digest.c.html'>src/libsoup/libsoup/auth/soup-auth-digest.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/309)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/528)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/auth/soup-auth-manager.c.html'>src/libsoup/libsoup/auth/soup-auth-manager.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/486)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/549)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/auth/soup-auth-ntlm.c.html'>src/libsoup/libsoup/auth/soup-auth-ntlm.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/651)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/500)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/auth/soup-auth.c.html'>src/libsoup/libsoup/auth/soup-auth.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/282)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  4.17% (1/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  2.83% (23/812)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/auth/soup-connection-auth.c.html'>src/libsoup/libsoup/auth/soup-connection-auth.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/105)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/130)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/auth/soup-tls-interaction.c.html'>src/libsoup/libsoup/auth/soup-tls-interaction.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/63)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/cache/soup-cache-client-input-stream.c.html'>src/libsoup/libsoup/cache/soup-cache-client-input-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/43)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/62)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/cache/soup-cache-input-stream.c.html'>src/libsoup/libsoup/cache/soup-cache-input-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/163)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/290)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/cache/soup-cache.c.html'>src/libsoup/libsoup/cache/soup-cache.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/910)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1315)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/content-decoder/soup-brotli-decompressor.c.html'>src/libsoup/libsoup/content-decoder/soup-brotli-decompressor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/97)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/206)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/content-decoder/soup-content-decoder.c.html'>src/libsoup/libsoup/content-decoder/soup-content-decoder.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/113)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/89)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/content-decoder/soup-content-processor.c.html'>src/libsoup/libsoup/content-decoder/soup-content-processor.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 26.67% (4/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 40.00% (2/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.27% (37/102)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/content-decoder/soup-converter-wrapper.c.html'>src/libsoup/libsoup/content-decoder/soup-converter-wrapper.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/186)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/209)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/content-sniffer/soup-content-sniffer-stream.c.html'>src/libsoup/libsoup/content-sniffer/soup-content-sniffer-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/217)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/248)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/content-sniffer/soup-content-sniffer.c.html'>src/libsoup/libsoup/content-sniffer/soup-content-sniffer.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 93.55% (319/341)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 84.21% (16/19)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 93.49% (445/476)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/cookies/soup-cookie.c.html'>src/libsoup/libsoup/cookies/soup-cookie.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 40.22% (187/465)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 24.39% (10/41)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 29.46% (289/981)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/http1/soup-body-input-stream.c.html'>src/libsoup/libsoup/http1/soup-body-input-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/325)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/24)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/365)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/http1/soup-body-output-stream.c.html'>src/libsoup/libsoup/http1/soup-body-output-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/220)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/17)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/189)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/http1/soup-client-message-io-http1.c.html'>src/libsoup/libsoup/http1/soup-client-message-io-http1.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/691)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/36)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1059)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/http1/soup-message-io-data.c.html'>src/libsoup/libsoup/http1/soup-message-io-data.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/130)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/189)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/http1/soup-message-io-source.c.html'>src/libsoup/libsoup/http1/soup-message-io-source.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/42)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/http2/soup-body-input-stream-http2.c.html'>src/libsoup/libsoup/http2/soup-body-input-stream-http2.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 50.41% (122/242)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 52.17% (12/23)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 36.94% (140/379)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/http2/soup-client-message-io-http2.c.html'>src/libsoup/libsoup/http2/soup-client-message-io-http2.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1274)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/72)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2021)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/server/http1/soup-server-message-io-http1.c.html'>src/libsoup/libsoup/server/http1/soup-server-message-io-http1.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/681)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/21)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/928)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/server/http2/soup-server-message-io-http2.c.html'>src/libsoup/libsoup/server/http2/soup-server-message-io-http2.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/560)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/773)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/server/soup-message-body.c.html'>src/libsoup/libsoup/server/soup-message-body.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/116)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/217)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/server/soup-path-map.c.html'>src/libsoup/libsoup/server/soup-path-map.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/78)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/6)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/66)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/server/soup-server-connection.c.html'>src/libsoup/libsoup/server/soup-server-connection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/436)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/27)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1069)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/server/soup-server-message-io.c.html'>src/libsoup/libsoup/server/soup-server-message-io.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/23)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/10)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/server/soup-server-message.c.html'>src/libsoup/libsoup/server/soup-server-message.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/434)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/54)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1142)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-client-input-stream.c.html'>src/libsoup/libsoup/soup-client-input-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/156)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/155)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-client-message-io.c.html'>src/libsoup/libsoup/soup-client-message-io.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/57)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/18)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/23)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-connection-manager.c.html'>src/libsoup/libsoup/soup-connection-manager.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/351)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/718)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-connection.c.html'>src/libsoup/libsoup/soup-connection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/901)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/66)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1998)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-date-utils.c.html'>src/libsoup/libsoup/soup-date-utils.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 83.24% (149/179)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 77.78% (7/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 71.24% (218/306)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-filter-input-stream.c.html'>src/libsoup/libsoup/soup-filter-input-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/194)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/297)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-header-names.c.html'>src/libsoup/libsoup/soup-header-names.c</a></pre>
+              </td>
+            <td class='column-entry-yellow'>
+        <pre> 96.62% (143/148)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 80.00% (4/5)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 93.42% (71/76)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-headers.c.html'>src/libsoup/libsoup/soup-headers.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 63.74% (341/535)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 53.57% (15/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 42.44% (508/1197)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-http2-utils.c.html'>src/libsoup/libsoup/soup-http2-utils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/86)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/89)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-io-stream.c.html'>src/libsoup/libsoup/soup-io-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/137)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/189)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-logger-input-stream.c.html'>src/libsoup/libsoup/soup-logger-input-stream.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/114)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/15)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/155)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-logger.c.html'>src/libsoup/libsoup/soup-logger.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/454)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/33)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/381)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-message-headers.c.html'>src/libsoup/libsoup/soup-message-headers.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 51.96% (410/789)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 59.65% (34/57)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 44.49% (767/1724)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-message-metrics.c.html'>src/libsoup/libsoup/soup-message-metrics.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/74)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/19)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/494)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-message-queue-item.c.html'>src/libsoup/libsoup/soup-message-queue-item.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/30)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/5)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/53)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-message.c.html'>src/libsoup/libsoup/soup-message.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 25.34% (378/1492)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  8.80% (11/125)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 16.33% (557/3411)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-misc.c.html'>src/libsoup/libsoup/soup-misc.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 11.82% (13/110)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 18.18% (2/11)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  3.06% (7/229)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-multipart.c.html'>src/libsoup/libsoup/soup-multipart.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/198)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/254)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-session-feature.c.html'>src/libsoup/libsoup/soup-session-feature.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  3.23% (2/62)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 22.22% (2/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 13.03% (37/284)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-session.c.html'>src/libsoup/libsoup/soup-session.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1976)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/127)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4563)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-socket-properties.c.html'>src/libsoup/libsoup/soup-socket-properties.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/37)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/133)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-status.c.html'>src/libsoup/libsoup/soup-status.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/7)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/soup-uri-utils.c.html'>src/libsoup/libsoup/soup-uri-utils.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 45.21% (137/303)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 35.00% (7/20)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 26.65% (190/713)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/websocket/soup-websocket-connection.c.html'>src/libsoup/libsoup/websocket/soup-websocket-connection.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1311)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/72)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2809)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/websocket/soup-websocket-extension-deflate.c.html'>src/libsoup/libsoup/websocket/soup-websocket-extension-deflate.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/271)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/14)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/309)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/websocket/soup-websocket-extension-manager.c.html'>src/libsoup/libsoup/websocket/soup-websocket-extension-manager.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/64)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/109)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/websocket/soup-websocket-extension.c.html'>src/libsoup/libsoup/websocket/soup-websocket-extension.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/52)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/403)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='src/libsoup/libsoup/websocket/soup-websocket.c.html'>src/libsoup/libsoup/websocket/soup-websocket.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/465)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/838)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/glib-autocleanups.h.html'>usr/include/glib-2.0/glib/glib-autocleanups.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gmacros.h.html'>usr/include/glib-2.0/glib/gmacros.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gmain.h.html'>usr/include/glib-2.0/glib/gmain.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/12)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gmem.h.html'>usr/include/glib-2.0/glib/gmem.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 77.78% (7/9)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (1/1)</pre>
+      </td>
+            <td class='column-entry-green'>
+        <pre>100.00% (2/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gquark.h.html'>usr/include/glib-2.0/glib/gquark.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/9)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/20)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gstdio.h.html'>usr/include/glib-2.0/glib/gstdio.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/30)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/2)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gstrfuncs.h.html'>usr/include/glib-2.0/glib/gstrfuncs.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 38.46% (10/26)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 50.00% (1/2)</pre>
+      </td>
+            <td class='column-entry-yellow'>
+        <pre> 80.00% (12/15)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gstring.h.html'>usr/include/glib-2.0/glib/gstring.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 45.45% (20/44)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 33.33% (1/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 59.63% (65/109)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gthread.h.html'>usr/include/glib-2.0/glib/gthread.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/28)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/8)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/glib/gutils.h.html'>usr/include/glib-2.0/glib/gutils.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/38)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/3)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/gobject/gobject.h.html'>usr/include/glib-2.0/gobject/gobject.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/60)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/4)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='usr/include/glib-2.0/gobject/gtype.h.html'>usr/include/glib-2.0/gobject/gtype.h</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 51.43% (18/35)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 43.75% (7/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 42.86% (42/98)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='work/libsoup/soup-enum-types.c.html'>work/libsoup/soup-enum-types.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre> 11.44% (46/402)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 13.04% (3/23)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre> 11.27% (79/701)</pre>
+      </td>
+          </tr>
+        <tr class="light-row">
+      <td>
+                  <pre><a href='work/libsoup/soup-private-enum-types.c.html'>work/libsoup/soup-private-enum-types.c</a></pre>
+              </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/16)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/1)</pre>
+      </td>
+            <td class='column-entry-red'>
+        <pre>  0.00% (0/29)</pre>
+      </td>
+          </tr>
+      </tbody>
+      <tfoot>
+      <tr class="light-row-bold">
+        <td>
+          <pre>Totals</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre> 11.57% (2451/21193)</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre>  9.72% (147/1513)</pre>
+        </td>
+                <td class='column-entry-red'>
+          <pre>  9.48% (3610/38093)</pre>
+        </td>
+              </tr>
+    </tfoot>
+  </table>
+
+<script>
+  const SORT_COLUMN = {
+    LINE: 2,
+    FUNCTION: 3,
+    REGION: 4,
+  }
+
+  const SORT_TYPES = {
+    UNSET: -1,
+    PERCENT: 0,
+    AGGREGATE: 1,
+  }
+
+  var SORT_ORDER = {
+    [SORT_COLUMN.LINE]: [SORT_TYPES.UNSET],
+    [SORT_COLUMN.FUNCTION]: [SORT_TYPES.UNSET],
+    [SORT_COLUMN.REGION]: [SORT_TYPES.UNSET],
+  }
+
+  function sortTable(columnNumber) {
+    SORT_ORDER[columnNumber] = ++SORT_ORDER[columnNumber] % 2;
+
+    let columnSortOrder = SORT_ORDER[columnNumber];
+    let tbody = document.getElementsByTagName("tbody")[0];
+
+    [].slice.call(tbody.rows).sort(function(a, b) {
+      let aColumn = a.cells[columnNumber-1].textContent;
+      let bColumn = b.cells[columnNumber-1].textContent;
+
+      let aColumnCompare, bColumnCompare;
+      if (columnSortOrder == SORT_TYPES.PERCENT) {
+        aColumnCompare = parseFloat(/([0-9.]+)%/.exec(aColumn)[1]);
+        bColumnCompare = parseFloat(/([0-9.]+)%/.exec(bColumn)[1]);
+      } else {
+        aColumnCompare = parseInt(/\/(\d+)/.exec(aColumn)[1]);
+        bColumnCompare = parseInt(/\/(\d+)/.exec(bColumn)[1]);
+      }
+
+      return (
+          aColumnCompare < bColumnCompare ? -1:
+              aColumnCompare > bColumnCompare ? 1 : 0);
+    }).forEach(function(value, index) {
+      tbody.appendChild(value);
+    });
+  }
+
+</script>    </div>
+  </body>
+</html>

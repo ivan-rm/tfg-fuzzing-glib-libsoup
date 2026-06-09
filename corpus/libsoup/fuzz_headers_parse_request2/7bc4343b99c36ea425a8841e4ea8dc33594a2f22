@@ -1,0 +1,19 @@
+GET / HTTP/1.0
+HTTP/1.1
+Host: localhost
+Connection: keep-acalhost
+Connection: keep-alive
+X-1
+Set-Cookie: id=a3fWa; Exp¨res=WecaET keep-alive
+X-1
+Set-Cookie: id=a3fWa; Exp¨res=WecaET /index.html HTTP/Þith-no-name
+Content-Length: 42
+res=Wed, 21-VŸšue:
+:header-wiFth-no-name
+Content-Length: 42
+Content/index.html HTTP/Þith-no-name
+Content-Length: 42
+res=Wed, 21-VŸšue:
+:header-wiFth-no-name
+Content-Length: 42
+Content-Length: 42

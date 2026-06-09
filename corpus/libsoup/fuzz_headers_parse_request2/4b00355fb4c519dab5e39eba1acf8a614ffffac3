@@ -1,0 +1,7 @@
+POSTR ?upload HTTP/1.1
+charset:BC1C123
+Content-Length: 18063
+BC123
+Content-Length: 361
+-Exp360
+/

@@ -1,0 +1,10 @@
+OPTIONS * HTTP/1.1
+;Forwards: #* TP//0.1
+;Forwards: * TP/0.1
+;Forwards: *IONS * *1
+;Forwards: * TP//1.1
+;Forwards: * TP/0.1
+;Forwards: * 1.1
+;Forwards: * HTTPÑ«‘Œ–ÑHTTP 1
+;Forwards: * HTTPÑ«Œ‘Œ–ÑHTTD1
+e
